@@ -1,0 +1,36 @@
+INTRODUCTION
+============
+
+CLANN stand for `C library for Learning Appliance and Neural Networks`.
+Its was developed in a mastering engineering course of Artificial Neural
+Networks at the Federal University of Rio Grande do Norte (UFRN) [0]. In this
+course we have a very extensive and intensive teaching in both supervised and
+non-supervised learning techniques. The choice of C language was made based on
+its fastness, portability and embeddable capabilities. Mode information about
+CLANN can be find in its site:
+
+    http://www.dca.ufrn.br/~joaomedeiros/clann/
+
+
+BUILD
+=====
+
+CLANN is mainly designed to be a static incorporable library, but its perfectly
+possible use it as dynamic library too. So, the process of compilation depends
+on its use. To make the examples in ./test/ directory just type make in CLANN
+root directory.
+
+
+CONTACT
+=======
+
+If you have any quastions about the use of CLANN please send an e-mail to the
+contact below.
+
+Joao Paulo de Souza Medeiros <joaomedeiros@ufrnet.br>
+
+
+REFERENCES
+==========
+
+[0] http://www.ufrn.br/
