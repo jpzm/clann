@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Joao Paulo de Souza Medeiros
+ * Copyright (C) 2010-2011 Joao Paulo de Souza Medeiros
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -30,20 +30,19 @@
 /**
  *
  */
-struct element
+struct value
 {
     unsigned long int row;
     unsigned long int col;
     clann_real_type value;
-    struct element *next;
-}
+};
 
 /**
  * Sparse matrix structure
  */
 struct smatrix
 {
-    struct element *values;
+    clann_list_type *l_values;
     unsigned long int rows;
     unsigned long int cols;
 };
@@ -53,7 +52,7 @@ struct smatrix
  * Initialize a given matrix
  */
 inline void
-matrix_initialize(struct matrix *a,
+matrix_initialize(struct smatrix *a,
                   const unsigned long int rows,
                   const unsigned long int cols);
 
@@ -61,13 +60,13 @@ matrix_initialize(struct matrix *a,
  * Finalize a given matrix
  */
 inline void
-matrix_finalize(struct matrix *a);
+matrix_finalize(struct smatrix *a);
 
 /**
  * Return a matrix element
  */
 inline clann_real_type*
-matrix_value(const struct matrix *a,
+matrix_value(const struct smatrix *a,
              const unsigned int i,
              const unsigned int j);
 
@@ -75,72 +74,72 @@ matrix_value(const struct matrix *a,
  *
  */
 inline void
-matrix_fill(struct matrix *a,
+matrix_fill(struct smatrix *a,
             const clann_real_type v);
 
 /**
  *
  */
 inline void
-matrix_identity(struct matrix *a,
+matrix_identity(struct smatrix *a,
                 const unsigned int n);
 
 /**
  *
  */
 inline void
-matrix_copy(const struct matrix *a,
-            struct matrix *b);
+matrix_copy(const struct smatrix *a,
+            struct smatrix *b);
 
 /**
  *
  */
 inline void
-matrix_transpose(const struct matrix *a,
-                 struct matrix *b);
+matrix_transpose(const struct smatrix *a,
+                 struct smatrix *b);
 
 /**
  *
  */
-inline struct matrix*
-matrix_add(const struct matrix *a,
-           const struct matrix *b,
-           struct matrix *c);
+inline struct smatrix*
+matrix_add(const struct smatrix *a,
+           const struct smatrix *b,
+           struct smatrix *c);
 
 /**
  *
  */
-inline struct matrix*
-matrix_subtract(const struct matrix *a,
-                const struct matrix *b,
-                struct matrix *c);
+inline struct smatrix*
+matrix_subtract(const struct smatrix *a,
+                const struct smatrix *b,
+                struct smatrix *c);
 
 /**
  *
  */
-inline struct matrix*
-matrix_product(const struct matrix *a,
-               const struct matrix *b,
-               struct matrix *c);
+inline struct smatrix*
+matrix_product(const struct smatrix *a,
+               const struct smatrix *b,
+               struct smatrix *c);
 
 /**
  *
  */
-inline struct matrix*
-matrix_inverse(const struct matrix *a,
-               struct matrix *b);
+inline struct smatrix*
+matrix_inverse(const struct smatrix *a,
+               struct smatrix *b);
 
 /**
  *
  */
-inline struct matrix*
-matrix_pseudo_inverse(const struct matrix *a,
-                      struct matrix *b);
+inline struct smatrix*
+matrix_pseudo_inverse(const struct smatrix *a,
+                      struct smatrix *b);
 
 /**
  *
  */
 inline int
-matrix_isnull(const struct matrix *a);
+matrix_isnull(const struct smatrix *a);
 
 #endif
