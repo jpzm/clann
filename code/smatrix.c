@@ -1,0 +1,77 @@
+/**
+ * Copyright (C) 2010-2011 Joao Paulo de Souza Medeiros
+ *
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+
+#include "smatrix.h"
+
+void
+matrix_initialize(struct smatrix *a,
+                  const unsigned long int rows,
+                  const unsigned long int cols);
+
+void
+matrix_finalize(struct smatrix *a);
+
+clann_real_type*
+matrix_value(const struct smatrix *a,
+             const unsigned int i,
+             const unsigned int j);
+
+void
+matrix_fill(struct smatrix *a,
+            const clann_real_type v);
+
+void
+matrix_identity(struct smatrix *a,
+                const unsigned int n);
+
+void
+matrix_copy(const struct smatrix *a,
+            struct smatrix *b);
+
+void
+matrix_transpose(const struct smatrix *a,
+                 struct smatrix *b);
+
+struct smatrix*
+matrix_add(const struct smatrix *a,
+           const struct smatrix *b,
+           struct smatrix *c);
+
+struct smatrix*
+matrix_subtract(const struct smatrix *a,
+                const struct smatrix *b,
+                struct smatrix *c);
+
+struct smatrix*
+matrix_product(const struct smatrix *a,
+               const struct smatrix *b,
+               struct smatrix *c);
+
+struct smatrix*
+matrix_inverse(const struct smatrix *a,
+               struct smatrix *b);
+
+struct smatrix*
+matrix_pseudo_inverse(const struct smatrix *a,
+                      struct smatrix *b);
+
+int
+matrix_isnull(const struct smatrix *a);
+
