@@ -62,14 +62,17 @@ clann_bool_type
 clann_list_insert(clann_list_type **l, void *i)
 {
     clann_list_type *m;
-    
-    if ((m = malloc(sizeof(clann_list_type))))
-    {
-        m->info = i;
-        m->next = *l;
-        *l = m;
 
-        return true;
+    if (i)
+    {
+        if ((m = malloc(sizeof(clann_list_type))))
+        {
+            m->info = i;
+            m->next = *l;
+            *l = m;
+
+            return true;
+        }
     }
 
     return false;
