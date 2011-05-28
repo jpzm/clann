@@ -117,6 +117,12 @@ graph_create_adjacency_list(struct graph *g);
 /**
  *
  */
+void
+graph_destroy_adjacency_list(struct graph *g);
+
+/**
+ *
+ */
 struct edge *
 graph_add_edge(struct graph *g,
                struct node *na,

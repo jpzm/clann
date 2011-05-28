@@ -56,13 +56,10 @@ graph_copy(const struct graph *ga,
 }
 
 void
-graph_create_adjacency_list(struct graph *g)
+graph_destroy_adjacency_list(struct graph *g)
 {
     unsigned int i;
 
-    /**
-     * Clear list if it already exists
-     */
     if (g->l_near != NULL)
     {
         for (i = 0; i < g->n_node; i++)
@@ -70,6 +67,17 @@ graph_create_adjacency_list(struct graph *g)
 
         free(g->l_near);
     }
+}
+
+void
+graph_create_adjacency_list(struct graph *g)
+{
+    unsigned int i;
+
+    /**
+     * Clear list if it already exists
+     */
+    graph_destroy_adjacency_list(g);
 
     /**
      * Create a new adjacency list
