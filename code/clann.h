@@ -55,7 +55,7 @@ typedef unsigned char clann_u8_type;
 typedef unsigned short int clann_u16_type;
 typedef long double clann_real_type;
 typedef long int clann_int_type;
-typedef unsigned long int clann_uint_type;
+typedef unsigned long long int clann_uint_type;
 typedef clann_uint_type clann_id_type;
 typedef clann_uint_type clann_size_type;
 typedef enum {false, true} clann_bool_type;
