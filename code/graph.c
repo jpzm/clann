@@ -316,24 +316,36 @@ graph_spanning_tree(struct graph *g,
                     struct node *n)
 {
     struct tree *t = malloc(sizeof(struct tree));
-    struct tree_node *f;
-    clann_list_type *l, *e;
+    struct tree_node *f, *p;
+    struct node *m;
+    clann_list_type *list, *e;
+    clann_list_type *neighbor;
 
     tree_initialize(t);
     f = tree_add_node(t, NULL, (void *) n);
-    clann_list_insert(&l, f);
+    clann_list_insert(&list, f);
 
     /**
      *
      */
-    e = l;
-
-    while (clann_list_size(l))
+    do
     {
-        n = (struct node *) e->info;
+        e = list;
+        p = (struct tree_node *) e->info;
+        neighbor = graph_get_node_neighbors(g, (struct node *) p->info);
 
-        e = e->next;
+        while (neighbor)
+        {
+            m = (struct node *) neighbor->info;
+            f = tree_add_node(t, p, (void *) m);
+            clann_list_insert(&list, f);
+
+            neighbor = neighbor->next;
+        }
+
+        clann_list_remove(&list, e);
     }
+    while (clann_list_size(list));
 
     return t;
 }
