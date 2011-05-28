@@ -55,6 +55,47 @@ graph_copy(const struct graph *ga,
     return 0;
 }
 
+void
+graph_create_adjacency_list(struct graph *g)
+{
+    unsigned int i;
+
+    /**
+     * Clear list if it already exists
+     */
+    if (g->l_near != NULL)
+    {
+        for (i = 0; i < g->n_node; i++)
+            clann_list_finalize(g->l_near[i]);
+
+        free(g->l_near);
+    }
+
+    /**
+     * Create a new adjacency list
+     */
+    struct adjacency *a;
+
+    g->l_near = malloc(g->n_node * sizeof(clann_list_type *));
+
+    // Initializing lists
+    for (i = 0; i < g->n_edge; i++)
+        g->l_near[i] = NULL;
+
+    for (i = 0; i < g->n_edge; i++)
+    {
+        a = malloc(sizeof(struct adjacency));
+        a->edge = (struct edge *) g->l_edge[i].info;
+        a->node = a->edge->nb;
+        clann_list_insert(&g->l_near[a->edge->na->id], (void *) a);
+
+        a = malloc(sizeof(struct adjacency));
+        a->edge = (struct edge *) g->l_edge[i].info;
+        a->node = a->edge->na;
+        clann_list_insert(&g->l_near[a->edge->nb->id], (void *) a);
+    }
+}
+
 struct edge *
 graph_get_edge(struct graph *g,
                clann_id_type id)

@@ -56,8 +56,8 @@ struct node
  */
 struct adjacency
 {
-    struct node *n;
-    struct edge *e;
+    struct node *node;
+    struct edge *edge;
 };
 
 /**
@@ -75,7 +75,7 @@ struct graph
     /**
      * The adjacency list is indexed by the node's id.
      */
-    clann_list_type *l_adj;
+    clann_list_type **l_near;
 
     /**
      * This function tell if two nodes have the same information
@@ -107,6 +107,12 @@ graph_finalize(struct graph *g);
 int
 graph_copy(const struct graph *ga,
            struct graph *gb);
+
+/**
+ *
+ */
+void
+graph_create_adjacency_list(struct graph *g);
 
 /**
  *
