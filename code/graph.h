@@ -52,6 +52,15 @@ struct node
 };
 
 /**
+ *
+ */
+struct adjacency
+{
+    struct node *n;
+    struct edge *e;
+};
+
+/**
  * Graph structure
  */
 struct graph
@@ -62,6 +71,11 @@ struct graph
     clann_list_type *l_edge;
     clann_bool_type directed;
     clann_real_type clustering;
+
+    /**
+     * The adjacency list is indexed by the node's id.
+     */
+    clann_list_type *l_adj;
 
     /**
      * This function tell if two nodes have the same information
@@ -86,8 +100,8 @@ graph_finalize(struct graph *g);
 /**
  * Creates a copy of a graph.
  *
- * @param g_a   Pointer to a graph structure.
- * @param g_b   Pointer to a uninitialized graph structure.
+ * @param ga    Pointer to a graph structure.
+ * @param gb    Pointer to a uninitialized graph structure.
  * @return      Return 0 (zero) for error and 1 (one) for success.
  */
 int
