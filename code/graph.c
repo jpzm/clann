@@ -44,6 +44,7 @@ graph_finalize(struct graph *g)
 {
     clann_list_finalize(graph_get_edge_list(g));
     clann_list_finalize(graph_get_node_list(g));
+    graph_destroy_adjacency_list(g);
     free((void *) g);
 }
 
