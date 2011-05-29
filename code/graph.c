@@ -94,14 +94,14 @@ graph_create_adjacency_list(struct graph *g)
     for (i = 0; i < g->n_edge; i++)
     {
         a = malloc(sizeof(struct adjacency));
-        a->edge = (struct edge *) g->l_edge[i].info;
-        a->node = a->edge->nb;
-        clann_list_insert(&g->l_near[a->edge->na->id], (void *) a);
+        a->e = (struct edge *) g->l_edge[i].info;
+        a->n = a->e->nb;
+        clann_list_insert(&g->l_near[a->e->na->id], (void *) a);
 
         a = malloc(sizeof(struct adjacency));
-        a->edge = (struct edge *) g->l_edge[i].info;
-        a->node = a->edge->na;
-        clann_list_insert(&g->l_near[a->edge->nb->id], (void *) a);
+        a->e = (struct edge *) g->l_edge[i].info;
+        a->n = a->e->na;
+        clann_list_insert(&g->l_near[a->e->nb->id], (void *) a);
     }
 }
 

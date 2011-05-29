@@ -56,8 +56,8 @@ struct node
  */
 struct adjacency
 {
-    struct node *node;
-    struct edge *edge;
+    struct node *n;
+    struct edge *e;
 };
 
 /**
