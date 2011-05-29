@@ -9,7 +9,8 @@ non-supervised learning techniques. The choice of C language was made based on
 its fastness, portability and embeddable capabilities. Mode information about
 CLANN can be find in its site:
 
-    http://www.dca.ufrn.br/~joaomedeiros/clann/
+    http://labepi.cerescaico.ufrn.br/~jpsm/clann/
+    http://labepi.cerescaico.ufrn.br/redmine/projects/clann/
 
 
 BUILD
