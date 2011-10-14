@@ -262,7 +262,7 @@ training_thread(void *arg)
 {
     unsigned int i;
 
-    som_train(&ann, &x, epochs);
+    som_train_incremental(&ann, &x, epochs);
     som_save(&ann, (const char*) arg);
 
     /**
@@ -314,7 +314,7 @@ main(int argc, char *argv[])
 
         som_initialize(&ann, x.cols, arch);
         ann.epoch = atoi(argv[3]);
-        ann.step = 100;
+        ann.step = 10;
 
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);

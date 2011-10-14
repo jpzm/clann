@@ -78,18 +78,46 @@ som_finalize(struct som *ann);
 /**
  *
  */
-inline void
-som_training(struct som *ann,
-             struct matrix *x,
-             unsigned int epochs);
+void
+som_train_incremental(struct som *ann,
+                      struct matrix *x,
+                      unsigned int epochs);
+
+/**
+ *
+ */
+void
+som_train_batch(struct som *ann,
+                struct matrix *x,
+                unsigned int epochs);
 
 /**
  *
  */
 inline void 
-som_adjust_weights(struct som *ann,
-                   clann_real_type *x,
-                   clann_real_type *winner);
+som_incremental_adjust_of_weights(struct som *ann,
+                                  clann_real_type *x,
+                                  clann_real_type *winner);
+
+/**
+ *
+ */
+inline void 
+som_batch_adjust_of_weights(struct som *ann,
+                            clann_real_type *x,
+                            clann_real_type *winner);
+
+/**
+ *
+ */
+inline void
+som_adjust_width(struct som *ann);
+
+/**
+ *
+ */
+inline void
+som_adjust_learning_rate(struct som *ann);
 
 /**
  *
@@ -98,6 +126,14 @@ inline clann_real_type*
 som_grid_get_weights(struct som_grid *grid,
                      unsigned int i,
                      unsigned int j);
+
+/**
+ *
+ */
+inline void
+som_find_winner_neuron(struct som *ann,
+                       clann_real_type *x,
+                       clann_real_type *winner);
 
 /**
  *

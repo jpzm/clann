@@ -64,47 +64,63 @@ som_grid_get_weights(struct som_grid *grid,
 }
 
 void
-som_training(struct som *ann,
-             struct matrix *x,
-             unsigned int epochs)
+som_adjust_width(struct som *ann)
 {
-    clann_real_type winner[2], *sample, *neuron, d, min, aux;
-    unsigned int i, j, k, mess[x->rows];
+    clann_real_type aux;
 
-    for (i = 0; i < x->rows; i++)
-        mess[i] = i;
+    aux = - (clann_real_type) ann->epoch / ann->const_1;
+    aux = ann->width * CLANN_EXP(aux);
+    ann->actual_width = 2 * aux * aux;
+}
 
-    while (ann->epoch < epochs)
+void
+som_adjust_learning_rate(struct som *ann)
+{
+    clann_real_type aux;
+
+    aux = CLANN_EXP(-((clann_real_type) ann->epoch / ann->const_2));
+    ann->actual_learning_rate = ann->learning_rate * aux;
+}
+
+clann_real_type
+som_compute_neighborhood_distance(struct som *ann,
+                                  clann_real_type *p,
+                                  clann_real_type *winner)
+{
+    return CLANN_EXP(-CLANN_POW(metric_euclidean(p, winner, 2), 2) /
+                      ann->actual_width);
+}
+
+void
+som_train_incremental(struct som *ann,
+                      struct matrix *x,
+                      unsigned int epochs)
+{
+    clann_real_type winner[2], *sample;
+    unsigned int s, mess[x->rows];
+
+    /*
+     * Index vector used to shuffle the input presentation sequence
+     */
+    for (s = 0; s < x->rows; s++)
+        mess[s] = s;
+
+    while (ann->epoch <= epochs)
     {
         clann_shuffle(mess, x->rows);
 
-        aux = CLANN_EXP(-(ann->epoch / ann->const_2));
-        ann->actual_learning_rate = ann->learning_rate * aux;
+        som_adjust_width(ann);
+        som_adjust_learning_rate(ann);
 
-        aux = ann->width * CLANN_EXP(-ann->epoch / ann->const_1);
-        ann->actual_width = 2 * CLANN_POW(aux, 2);
-
-        for (k = 0; k < x->rows; k++)
+        /*
+         * For each input sample `s'
+         */
+        for (s = 0; s < x->rows; s++)
         {
-            min = (clann_real_type) INT_MAX;
+            sample = matrix_value(x, mess[s], 0);
 
-            sample = matrix_value(x, mess[k], 0);
-
-            for (i = 0; i < ann->grid.x_len; i++)
-                for (j = 0; j < ann->grid.y_len; j++)
-                {
-                    neuron = som_grid_get_weights(&ann->grid, i, j);
-                    d = metric_euclidean(sample, neuron, x->cols);
-
-                    if (d < min)
-                    {
-                        min = d;
-                        winner[0] = (clann_real_type) i;
-                        winner[1] = (clann_real_type) j;
-                    }
-                }
-
-            som_adjust_weights(ann, sample, winner);
+            som_find_winner_neuron(ann, sample, winner);
+            som_incremental_adjust_of_weights(ann, sample, winner);
         }
 
 #if CLANN_VERBOSE
@@ -118,9 +134,42 @@ som_training(struct som *ann,
 }
 
 void
-som_adjust_weights(struct som *ann,
-                   clann_real_type *x,
-                   clann_real_type *winner)
+som_train_batch(struct som *ann,
+                struct matrix *x,
+                unsigned int epochs)
+{
+    clann_real_type winner[2], *sample;
+    unsigned int s;
+
+    while (ann->epoch <= epochs)
+    {
+        som_adjust_width(ann);
+
+        /*
+         * For each input sample `s'
+         */
+        for (s = 0; s < x->rows; s++)
+        {
+            sample = matrix_value(x, s, 0);
+
+            som_find_winner_neuron(ann, sample, winner);
+            som_batch_adjust_of_weights(ann, sample, winner);
+        }
+
+#if CLANN_VERBOSE
+        printf("N. [SOM] Width: "CLANN_PRINTF", Rate: "CLANN_PRINTF" (%d).\n",
+               ann->actual_width,
+               ann->actual_learning_rate,
+               ann->epoch);
+#endif
+        ann->epoch += ann->step;
+    }
+}
+
+void
+som_incremental_adjust_of_weights(struct som *ann,
+                                  clann_real_type *x,
+                                  clann_real_type *winner)
 {
     clann_real_type *w, h, p[2];
     unsigned int i, j, k;
@@ -131,13 +180,42 @@ som_adjust_weights(struct som *ann,
             p[0] = (clann_real_type) i;
             p[1] = (clann_real_type) j;
 
-            h = CLANN_POW(metric_euclidean(p, winner, 2), 2);
-            h = CLANN_EXP(-h / ann->actual_width);
-
+            h = som_compute_neighborhood_distance(ann, p, winner);
             w = som_grid_get_weights(&ann->grid, i, j);
 
             for (k = 0; k < ann->input_size; k++)
                 w[k] += ann->actual_learning_rate * h * (x[k] - w[k]);
+        }
+}
+
+void
+som_batch_adjust_of_weights(struct som *ann,
+                            clann_real_type *x,
+                            clann_real_type *winner)
+{
+    // TODO
+}
+
+void
+som_find_winner_neuron(struct som *ann,
+                       clann_real_type *x,
+                       clann_real_type *winner)
+{
+    clann_real_type *neuron, d, min = (clann_real_type) INT_MAX;
+    unsigned int i, j;
+
+    for (i = 0; i < ann->grid.x_len; i++)
+        for (j = 0; j < ann->grid.y_len; j++)
+        {
+            neuron = som_grid_get_weights(&ann->grid, i, j);
+            d = metric_euclidean(x, neuron, ann->input_size);
+
+            if (d < min)
+            {
+                min = d;
+                winner[0] = (clann_real_type) i;
+                winner[1] = (clann_real_type) j;
+            }
         }
 }
 
@@ -190,5 +268,6 @@ int
 som_open(struct som *ann,
          const char *file)
 {
+    // TODO
     return 0;
 }
