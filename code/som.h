@@ -33,6 +33,9 @@
 #include "reader.h"
 #include "clann.h"
 
+#define SOM_GRID_RECTANGULAR    0
+#define SOM_GRID_CIRCULAR       1
+#define SOM_GRID_SPHERICAL      2
 
 /**
  * Self-Organized Map structure

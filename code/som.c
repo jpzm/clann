@@ -78,10 +78,10 @@ som_training(struct som *ann,
     {
         clann_shuffle(mess, x->rows);
 
-        aux = CLANN_EXP(-((clann_real_type) ann->epoch / ann->const_2));
+        aux = CLANN_EXP(-(ann->epoch / ann->const_2));
         ann->actual_learning_rate = ann->learning_rate * aux;
 
-        aux = ann->width * CLANN_EXP(-(clann_real_type) ann->epoch / ann->const_1);
+        aux = ann->width * CLANN_EXP(-ann->epoch / ann->const_1);
         ann->actual_width = 2 * CLANN_POW(aux, 2);
 
         for (k = 0; k < x->rows; k++)
