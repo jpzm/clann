@@ -49,6 +49,7 @@
 #define FILE_HEADER_NARX    "NARX"
 
 #define CLANN_SWAP(a,b)     {(a) += (b); (b) = (a) - (b); (a) -= (b);}
+#define CLANN_SCALE(v,a,b)  (2 * (((v) - (b)) / ((a) - (b))) - 1)
 
 typedef unsigned char clann_byte_type;
 typedef unsigned char clann_u8_type;
@@ -127,8 +128,9 @@ clann_rand(const clann_real_type min,
 /**
  *
  */
-long int clann_randint(const clann_int_type min,
-                       const clann_int_type max);
+long int
+clann_randint(const clann_int_type min,
+              const clann_int_type max);
 
 /**
  *
