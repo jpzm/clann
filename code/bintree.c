@@ -84,8 +84,6 @@ bintree_search_node_from(struct bintree *t,
                          struct bintree_node *r,
                          struct bintree_node *n)
 {
-    struct bintree_node *p = r;
-
     if (t->f_node_eq(r, n))
         return r;
 
