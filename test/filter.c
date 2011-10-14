@@ -25,7 +25,7 @@
 #include "../code/lms.h"
 
 
-#define USAGE "Usage: questao7 <learing_rate> <number_of_iterations>\n"
+#define USAGE "Usage: filter <learing_rate> <number_of_iterations>\n"
 
 
 double sf(double n)
