@@ -172,12 +172,12 @@ clann_real_type clann_factorial(const clann_uint_type v)
 clann_real_type clann_binomial(const clann_uint_type n,
                                const clann_uint_type k)
 {
+    unsigned int i;
+
     if (k < 0 || k > n)
         return 0;
 
-    unsigned int i;
-    clann_real_type a = 1,
-               b = 1;
+    clann_real_type a = 1, b = 1;
 
     for (i = 0; i < k; i++)
     {

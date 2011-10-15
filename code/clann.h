@@ -30,6 +30,7 @@
 
 #define CLANN_S_PRINTF      "%.1Lf"
 #define CLANN_PRINTF        "%.10Lf"
+#define CLANN_SIZE_PRINTF   "%llu"
 #define CLANN_SCANF         "%Lf"
 #define CLANN_POW           powl
 #define CLANN_SQRT          sqrtl
@@ -40,7 +41,7 @@
 #define CLANN_ATAN2         atan2l
 #define CLANN_FABS          fabsl
 
-#define CLANN_VERBOSE       0
+#define CLANN_VERBOSE       1
 #define CLANN_DEBUG         1
 
 #define FILE_HEADER_MLP     "MLP"
