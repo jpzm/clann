@@ -25,6 +25,7 @@
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,28 +34,38 @@
 #include "reader.h"
 #include "clann.h"
 
-#define SOM_GRID_RECTANGULAR    0
-#define SOM_GRID_CIRCULAR       1
-#define SOM_GRID_SPHERICAL      2
+#define SOM_GRID_1D 1
+#define SOM_GRID_2D 2
+#define SOM_GRID_3D 3
+
+typedef enum
+{
+    SOM_GRID_LINE,
+    SOM_GRID_SQUARE,
+    SOM_GRID_CUBE
+} som_grid_type;
+
 
 /**
  * Self-Organized Map structure
  */
 struct som_grid
 {
-    unsigned int x_len;
-    unsigned int y_len;
+    struct matrix indexes;
     struct matrix weights;
+    clann_size_type width;
+    clann_size_type dimension;
+    clann_size_type n_neurons;
 };
 
 struct som
 {
-    unsigned int input_size;
-    clann_real_type width;
+    clann_size_type input_size;
     clann_real_type learning_rate;
     clann_real_type const_1;
     clann_real_type const_2;
     struct som_grid grid;
+    som_grid_type grid_type;
     unsigned int step;
     volatile unsigned int epoch;
     volatile clann_real_type actual_width;
@@ -66,14 +77,24 @@ struct som
  */
 inline void
 som_initialize(struct som *ann,
-               unsigned int input_size,
-               unsigned int *dimension);
+               som_grid_type grid_type,
+               clann_size_type input_size,
+               clann_size_type width);
 
 /**
  *
  */
 inline void
 som_finalize(struct som *ann);
+
+/**
+ *
+ */
+void
+som_grid_rectangular_indexes(struct som *ann,
+                             clann_size_type index,
+                             clann_real_type *buffer,
+                             clann_size_type *count);
 
 /**
  *
@@ -123,9 +144,8 @@ som_adjust_learning_rate(struct som *ann);
  *
  */
 inline clann_real_type*
-som_grid_get_weights(struct som_grid *grid,
-                     unsigned int i,
-                     unsigned int j);
+som_grid_get_weights(struct som *ann,
+                     unsigned int index);
 
 /**
  *
@@ -133,7 +153,7 @@ som_grid_get_weights(struct som_grid *grid,
 inline void
 som_find_winner_neuron(struct som *ann,
                        clann_real_type *x,
-                       clann_real_type *winner);
+                       clann_real_type **winner);
 
 /**
  *

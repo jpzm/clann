@@ -24,29 +24,87 @@
 
 void
 som_initialize(struct som *ann,
-               unsigned int input_size,
-               unsigned int *dimension)
+               som_grid_type grid_type,
+               clann_size_type input_size,
+               clann_size_type width)
 {
     ann->input_size = input_size;
-    ann->width = (dimension[0] > dimension[1] ? dimension[0] : dimension[1]);
+    ann->grid.width = width;
     ann->learning_rate = 0.1;
-    ann->const_1 = 1000 / CLANN_LOG(ann->width);
+    ann->const_1 = 1000 / CLANN_LOG(ann->grid.width);
     ann->const_2 = 1000;
     ann->step = 1;
-    ann->epoch = 0;
+    ann->epoch = 1;
+    ann->grid_type = grid_type;
 
-    ann->grid.x_len = dimension[0];
-    ann->grid.y_len = dimension[1];
+    switch (ann->grid_type)
+    {
+        case SOM_GRID_LINE:
+            ann->grid.dimension = SOM_GRID_1D;
+            break;
+        case SOM_GRID_SQUARE:
+            ann->grid.dimension = SOM_GRID_2D;
+            break;
+        case SOM_GRID_CUBE:
+            ann->grid.dimension = SOM_GRID_3D;
+    }
+
+    ann->grid.n_neurons = CLANN_POW(ann->grid.width, ann->grid.dimension);
+
+    matrix_initialize(&ann->grid.indexes,
+                      ann->grid.n_neurons,
+                      ann->grid.dimension);
 
     matrix_initialize(&ann->grid.weights,
-                      ann->grid.x_len * ann->grid.y_len,
+                      ann->grid.n_neurons,
                       ann->input_size);
 
-    unsigned int i, j, k;
-    for (i = 0; i < ann->grid.x_len; i++)
-        for (j = 0; j < ann->grid.y_len; j++)
-            for (k = 0; k < ann->input_size; k++)
-                som_grid_get_weights(&ann->grid, i, j)[k] = clann_rand(-1, 1);
+    matrix_fill_rand(&ann->grid.weights, -1, 1);
+
+    /*
+     * Generate the indexes
+     */
+    clann_size_type count = 0;
+    clann_real_type *buffer;
+    
+    buffer = malloc(sizeof(clann_real_type) * ann->grid.dimension);
+
+    switch (ann->grid_type)
+    {
+        case SOM_GRID_LINE:
+        case SOM_GRID_SQUARE:
+        case SOM_GRID_CUBE:
+            som_grid_rectangular_indexes(ann, 0, buffer, &count);
+    }
+
+    free(buffer);
+}
+
+void
+som_grid_rectangular_indexes(struct som *ann,
+                             clann_size_type index,
+                             clann_real_type *buffer,
+                             clann_size_type *count)
+{
+    unsigned int i;
+
+    if (index < ann->grid.dimension)
+    {
+        for (i = 0; i < ann->grid.width; i++)
+        {
+            buffer[index] = i;
+            som_grid_rectangular_indexes(ann, index + 1, buffer, count);
+        }
+    }
+    else
+    {
+        for (i = 0; i < ann->grid.dimension; i++)
+        {
+            *matrix_value(&ann->grid.indexes, *count, i) = buffer[i];
+        }
+        *count += 1;
+    }
+        
 }
 
 void
@@ -56,11 +114,10 @@ som_finalize(struct som *ann)
 }
 
 clann_real_type*
-som_grid_get_weights(struct som_grid *grid,
-                     unsigned int i,
-                     unsigned int j)
+som_grid_get_weights(struct som *ann,
+                     unsigned int index)
 {
-    return matrix_value(&grid->weights, i * grid->y_len + j, 0);
+    return matrix_value(&ann->grid.weights, index, 0);
 }
 
 void
@@ -69,7 +126,7 @@ som_adjust_width(struct som *ann)
     clann_real_type aux;
 
     aux = - (clann_real_type) ann->epoch / ann->const_1;
-    aux = ann->width * CLANN_EXP(aux);
+    aux = ann->grid.width * CLANN_EXP(aux);
     ann->actual_width = 2 * aux * aux;
 }
 
@@ -87,8 +144,8 @@ som_compute_neighborhood_distance(struct som *ann,
                                   clann_real_type *p,
                                   clann_real_type *winner)
 {
-    return CLANN_EXP(-CLANN_POW(metric_euclidean(p, winner, 2), 2) /
-                      ann->actual_width);
+    clann_real_type d = metric_euclidean(p, winner, ann->grid.dimension);
+    return CLANN_EXP(-CLANN_POW(d, 2) / ann->actual_width);
 }
 
 void
@@ -96,7 +153,7 @@ som_train_incremental(struct som *ann,
                       struct matrix *x,
                       unsigned int epochs)
 {
-    clann_real_type winner[2], *sample;
+    clann_real_type *sample, *winner = NULL;
     unsigned int s, mess[x->rows];
 
     /*
@@ -119,7 +176,7 @@ som_train_incremental(struct som *ann,
         {
             sample = matrix_value(x, mess[s], 0);
 
-            som_find_winner_neuron(ann, sample, winner);
+            som_find_winner_neuron(ann, sample, &winner);
             som_incremental_adjust_of_weights(ann, sample, winner);
         }
 
@@ -138,7 +195,7 @@ som_train_batch(struct som *ann,
                 struct matrix *x,
                 unsigned int epochs)
 {
-    clann_real_type winner[2], *sample;
+    clann_real_type *sample, *winner = NULL;
     unsigned int s;
 
     while (ann->epoch <= epochs)
@@ -152,7 +209,7 @@ som_train_batch(struct som *ann,
         {
             sample = matrix_value(x, s, 0);
 
-            som_find_winner_neuron(ann, sample, winner);
+            som_find_winner_neuron(ann, sample, &winner);
             som_batch_adjust_of_weights(ann, sample, winner);
         }
 
@@ -171,21 +228,18 @@ som_incremental_adjust_of_weights(struct som *ann,
                                   clann_real_type *x,
                                   clann_real_type *winner)
 {
-    clann_real_type *w, h, p[2];
-    unsigned int i, j, k;
+    clann_real_type *w, *p, h;
+    clann_size_type i, k;
 
-    for (i = 0; i < ann->grid.x_len; i++)
-        for (j = 0; j < ann->grid.y_len; j++)
-        {
-            p[0] = (clann_real_type) i;
-            p[1] = (clann_real_type) j;
+    for (i = 0; i < ann->grid.n_neurons; i++)
+    {
+        p = matrix_value(&ann->grid.indexes, i, 0);
+        w = matrix_value(&ann->grid.weights, i, 0);
+        h = som_compute_neighborhood_distance(ann, p, winner);
 
-            h = som_compute_neighborhood_distance(ann, p, winner);
-            w = som_grid_get_weights(&ann->grid, i, j);
-
-            for (k = 0; k < ann->input_size; k++)
-                w[k] += ann->actual_learning_rate * h * (x[k] - w[k]);
-        }
+        for (k = 0; k < ann->input_size; k++)
+            w[k] += ann->actual_learning_rate * h * (x[k] - w[k]);
+    }
 }
 
 void
@@ -199,24 +253,22 @@ som_batch_adjust_of_weights(struct som *ann,
 void
 som_find_winner_neuron(struct som *ann,
                        clann_real_type *x,
-                       clann_real_type *winner)
+                       clann_real_type **winner)
 {
-    clann_real_type *neuron, d, min = (clann_real_type) INT_MAX;
-    unsigned int i, j;
+    clann_real_type *w, distance, minimun = (clann_real_type) INT_MAX;
+    clann_size_type i;
 
-    for (i = 0; i < ann->grid.x_len; i++)
-        for (j = 0; j < ann->grid.y_len; j++)
+    for (i = 0; i < ann->grid.n_neurons; i++)
+    {
+        w = matrix_value(&ann->grid.weights, i, 0);
+        distance = metric_euclidean(x, w, ann->input_size);
+
+        if (distance < minimun)
         {
-            neuron = som_grid_get_weights(&ann->grid, i, j);
-            d = metric_euclidean(x, neuron, ann->input_size);
-
-            if (d < min)
-            {
-                min = d;
-                winner[0] = (clann_real_type) i;
-                winner[1] = (clann_real_type) j;
-            }
+            minimun = distance;
+            *winner = matrix_value(&ann->grid.indexes, i, 0);
         }
+    }
 }
 
 int
@@ -231,11 +283,8 @@ som_save(struct som *ann,
 
         fprintf(fd, "%s\n", FILE_HEADER_SOM);
 
-        fprintf(fd, "%d ", ann->grid.x_len);
-        fprintf(fd, "%d\n", ann->grid.y_len);
-
-        fprintf(fd, "%d ", ann->input_size);
-        fprintf(fd, CLANN_PRINTF" ", ann->width);
+        fprintf(fd, CLANN_SIZE_PRINTF" ", ann->input_size);
+        fprintf(fd, CLANN_SIZE_PRINTF" ", ann->grid.width);
         fprintf(fd, CLANN_PRINTF" ", ann->learning_rate);
         fprintf(fd, CLANN_PRINTF" ", ann->const_1);
         fprintf(fd, CLANN_PRINTF"\n", ann->const_2);
