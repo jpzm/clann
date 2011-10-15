@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros.
+ * Copyright (C) 2008-2011 Joao Paulo de Souza Medeiros.
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -38,12 +38,11 @@
 #define INPUT       2
 #define AXIS        3
 
-#define USAGE "Usage: som_training <training-file>\n"\
-              "                    <architecture>\n"\
-              "                    <start-epoch>\n"\
-              "                    <end-epoch>\n"\
-              "                    <som-file-to-save>\n"\
-              "                    <file-to-save-mesh>\n"
+#define USAGE "Usage: som.o <training-file>\n"\
+              "             <mesh-type>\n"\
+              "             <width>\n"\
+              "             <start-epoch>\n"\
+              "             <end-epoch>\n"
 
 
 unsigned int show[4] = {1, 1, 1, 1};
@@ -117,7 +116,7 @@ cb_display(void)
 
     /**
      * Display the connections of SOM
-     */
+     *
     if (show[MESH])
     {
         glColor3f(0.0, 0.0, 0.0);
@@ -153,7 +152,7 @@ cb_display(void)
 
             glEnd();
         }
-    }
+    }*/
 
     /**
      * Display the output neurons
@@ -165,7 +164,7 @@ cb_display(void)
 
         glBegin(GL_POINTS);
 
-        for (j = 0; j < ann.grid.weights.rows; j++)
+        for (j = 0; j < ann.grid.n_neurons; j++)
         {
             w = matrix_value(&ann.grid.weights, j, 0);
 
@@ -260,34 +259,7 @@ cb_keyboard(unsigned char key, int x, int y)
 void*
 training_thread(void *arg)
 {
-    unsigned int i;
-
     som_train_incremental(&ann, &x, epochs);
-    som_save(&ann, (const char*) arg);
-
-    /**
-     * Saving file
-     */
-    FILE *fd;
-
-    if ((fd = fopen(file, "w")))
-    {
-
-        for (i = 0; i < ann.grid.weights.rows; i++)
-        {
-            fprintf(fd,
-                    CLANN_PRINTF " " CLANN_PRINTF " " CLANN_PRINTF"\n",
-                    *matrix_value(&ann.grid.weights, i, X),
-                    *matrix_value(&ann.grid.weights, i, Y),
-                    *matrix_value(&ann.grid.weights, i, Z));
-        }
-
-        fclose(fd);
-
-        printf("File saved.\n");
-    }
-    else
-        printf("Error opening file for writing.\n");
 
     return NULL;
 }
@@ -295,26 +267,17 @@ training_thread(void *arg)
 int
 main(int argc, char *argv[])
 {
-    if (argc == 7)
+    if (argc == 6)
     {
-        file = argv[6];
-
         clann_initialize();
 
-        epochs = atoi(argv[4]);
-
-        matrix_initialize(&a, 0, 0);
-        reader_extract_numbers(&a, argv[2]);
-
         reader_read_data_file(argv[1], &x);
+        clann_size_type width = atoi(argv[3]);
+        ann.epoch = atoi(argv[4]);
+        epochs = atoi(argv[5]);
 
-        unsigned int i, arch[a.cols];
-        for (i = 0; i < a.cols; i++)
-            arch[i] = (unsigned int) a.values[i];
-
-        som_initialize(&ann, x.cols, arch);
-        ann.epoch = atoi(argv[3]);
-        ann.step = 10;
+        som_initialize(&ann, atoi(argv[2]), x.cols, width);
+        ann.step = 100;
 
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -326,7 +289,7 @@ main(int argc, char *argv[])
         glutIdleFunc(cb_idle);
         glutKeyboardFunc(cb_keyboard);
 
-        pthread_create(&thread, NULL, training_thread, (void *) argv[5]);
+        pthread_create(&thread, NULL, training_thread, (void *) NULL);
 
         glutMainLoop();
     }
