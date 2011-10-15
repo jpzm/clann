@@ -65,6 +65,16 @@ matrix_fill(struct matrix *a,
 }
 
 void
+matrix_fill_rand(struct matrix *a,
+                 clann_real_type min,
+                 clann_real_type max)
+{
+    unsigned int i;
+    for (i = 0; i < a->rows * a->cols; i++)
+        a->values[i] = clann_rand(min, max);
+}
+
+void
 matrix_identity(struct matrix *a,
                 const unsigned int n)
 {

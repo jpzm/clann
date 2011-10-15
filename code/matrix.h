@@ -72,6 +72,14 @@ matrix_fill(struct matrix *a,
  *
  */
 inline void
+matrix_fill_rand(struct matrix *a,
+                 clann_real_type min,
+                 clann_real_type max);
+
+/**
+ *
+ */
+inline void
 matrix_identity(struct matrix *a,
                 const unsigned int n);
 
