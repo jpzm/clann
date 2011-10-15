@@ -24,15 +24,6 @@ matrix_module = Extension('matrix',
                           extra_compile_args = ['-Wall', '-ggdb'],
                           sources = ['matrix.c'])
 
-som_module = Extension('som',
-                       include_dirs = ['../'],
-                       extra_objects = ['../code/som.o',
-                                        '../code/clann.o',
-                                        '../code/metric.o',
-                                        '../code/matrix.o'],
-                       extra_compile_args = ['-Wall', '-ggdb'],
-                       sources = ['som.c'])
-
 metric_module = Extension('metric',
                           include_dirs = ['../'],
                           extra_objects = ['../code/metric.o',
@@ -46,5 +37,4 @@ setup (name = 'clann',
        author_email='joaomedeiros@dca.ufrn.br',
        description = 'This is the CLANN package',
        ext_modules = [matrix_module,
-                      som_module,
                       metric_module])
