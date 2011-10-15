@@ -35,9 +35,9 @@ som_initialize(struct som *ann,
     ann->const_2 = 1000;
     ann->step = 1;
     ann->epoch = 1;
-    ann->grid_type = grid_type;
+    ann->grid.type = grid_type;
 
-    switch (ann->grid_type)
+    switch (ann->grid.type)
     {
         case SOM_GRID_LINE:
             ann->grid.dimension = SOM_GRID_1D;
@@ -49,6 +49,9 @@ som_initialize(struct som *ann,
             ann->grid.dimension = SOM_GRID_3D;
     }
 
+    /*
+     * Compute the number of neurons and initialize weights
+     */
     ann->grid.n_neurons = CLANN_POW(ann->grid.width, ann->grid.dimension);
 
     matrix_initialize(&ann->grid.indexes,
@@ -69,22 +72,16 @@ som_initialize(struct som *ann,
     
     buffer = malloc(sizeof(clann_real_type) * ann->grid.dimension);
 
-    switch (ann->grid_type)
-    {
-        case SOM_GRID_LINE:
-        case SOM_GRID_SQUARE:
-        case SOM_GRID_CUBE:
-            som_grid_rectangular_indexes(ann, 0, buffer, &count);
-    }
+    som_grid_indexes(ann, 0, buffer, &count);
 
     free(buffer);
 }
 
 void
-som_grid_rectangular_indexes(struct som *ann,
-                             clann_size_type index,
-                             clann_real_type *buffer,
-                             clann_size_type *count)
+som_grid_indexes(struct som *ann,
+                 clann_size_type index,
+                 clann_real_type *buffer,
+                 clann_size_type *count)
 {
     unsigned int i;
 
@@ -93,18 +90,15 @@ som_grid_rectangular_indexes(struct som *ann,
         for (i = 0; i < ann->grid.width; i++)
         {
             buffer[index] = i;
-            som_grid_rectangular_indexes(ann, index + 1, buffer, count);
+            som_grid_indexes(ann, index + 1, buffer, count);
         }
     }
     else
     {
         for (i = 0; i < ann->grid.dimension; i++)
-        {
             *matrix_value(&ann->grid.indexes, *count, i) = buffer[i];
-        }
         *count += 1;
     }
-        
 }
 
 void
@@ -145,7 +139,7 @@ som_compute_neighborhood_distance(struct som *ann,
                                   clann_real_type *winner)
 {
     clann_real_type d = metric_euclidean(p, winner, ann->grid.dimension);
-    return CLANN_EXP(-CLANN_POW(d, 2) / ann->actual_width);
+    return CLANN_EXP(- (d * d) / ann->actual_width);
 }
 
 void

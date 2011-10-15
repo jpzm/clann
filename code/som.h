@@ -51,11 +51,12 @@ typedef enum
  */
 struct som_grid
 {
-    struct matrix indexes;
-    struct matrix weights;
+    som_grid_type type;
     clann_size_type width;
     clann_size_type dimension;
     clann_size_type n_neurons;
+    struct matrix indexes;
+    struct matrix weights;
 };
 
 struct som
@@ -65,7 +66,6 @@ struct som
     clann_real_type const_1;
     clann_real_type const_2;
     struct som_grid grid;
-    som_grid_type grid_type;
     unsigned int step;
     volatile unsigned int epoch;
     volatile clann_real_type actual_width;
@@ -91,10 +91,10 @@ som_finalize(struct som *ann);
  *
  */
 void
-som_grid_rectangular_indexes(struct som *ann,
-                             clann_size_type index,
-                             clann_real_type *buffer,
-                             clann_size_type *count);
+som_grid_indexes(struct som *ann,
+                 clann_size_type index,
+                 clann_real_type *buffer,
+                 clann_size_type *count);
 
 /**
  *
