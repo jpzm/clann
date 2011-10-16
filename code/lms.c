@@ -43,7 +43,7 @@ lms_learn(struct neuron *n,
 #endif
 
     unsigned int i;
-    for (i = 0; i < n->number_of_weights; i++)
+    for (i = 0; i < n->n_weights; i++)
         n->weights[i] += l->learing_rate * n->error * x[i];
 
     n->weights[i] += l->learing_rate * n->error * 1.0;
