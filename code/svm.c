@@ -304,7 +304,7 @@ svm_compute_kernel(struct svm *s,
             for (i = 0; i < s->input_size; i++)
                 v += CLANN_POW(a[i] - b[i], 2);
 
-            return function_green_gaussian(&s->rbf_width, &v);
+            return function_green_gaussian(s->rbf_width, v);
 
         case SVM_TYPE_MLP:
 
@@ -313,7 +313,7 @@ svm_compute_kernel(struct svm *s,
 
             v = s->mlp_kappa * v + s->mlp_vartheta;
 
-            return function_tanh(&v);
+            return function_tanh(v);
 
         case SVM_TYPE_POLY:
 
