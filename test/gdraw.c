@@ -1,4 +1,16 @@
+/**
+ * main.c
+ *
+ * Test EggClockFace in a GtkWindow
+ *
+ * (c) 2005, Davyd Madeley
+ *
+ * Authors:
+ *   Davyd Madeley <davyd@madeley.id.au>
+ */
+
 #include <gtk/gtk.h>
+
 #include "../code/gdraw.h"
 
 int

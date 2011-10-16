@@ -51,10 +51,9 @@ int main(int argc, char** argv)
     fft(&cx, &n, FFT_FORWARD);
 
     for (i = 0; i < n; i++)
-        printf("%f %fi\n", creal(cx[i]), cimag(cx[i]));
-
-    free(cx);
-    matrix_finalize(&x);
+        printf("%f %fi\n",
+                creal(cx[i]),
+                cimag(cx[i]));
 
     return 0;
 }
