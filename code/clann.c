@@ -104,7 +104,8 @@ clann_list_remove(clann_list_type **l, void *i)
     return false;
 }
 
-void clann_initialize()
+void
+clann_initialize()
 {
     FILE *fp = fopen("/dev/urandom", "r");
     unsigned int foo;
@@ -127,8 +128,9 @@ void clann_initialize()
     srand(foo);
 }
 
-void clann_shuffle(unsigned int *list,
-                   unsigned int length)
+void
+clann_shuffle(unsigned int *list,
+              unsigned int length)
 {
     unsigned int i, ri, a;
     for (i = 0; i < length; i++)
@@ -141,24 +143,28 @@ void clann_shuffle(unsigned int *list,
     }
 }
 
-clann_real_type clann_nrand()
+clann_real_type
+clann_nrand()
 {
     return rand() / (RAND_MAX + 1.0);
 }
 
-clann_real_type clann_rand(const clann_real_type min,
-                           const clann_real_type max)
+clann_real_type
+clann_rand(const clann_real_type min,
+           const clann_real_type max)
 {
     return (max - min) * clann_nrand() + min;
 }
 
-clann_int_type clann_randint(const clann_int_type min,
-                             const clann_int_type max)
+clann_int_type
+clann_randint(const clann_int_type min,
+              const clann_int_type max)
 {
     return (clann_int_type) rint((max - min) * clann_nrand() + min);
 }
 
-clann_real_type clann_factorial(const clann_uint_type v)
+clann_real_type
+clann_factorial(const clann_uint_type v)
 {
     clann_real_type a = 1;
     unsigned int i;
@@ -169,8 +175,9 @@ clann_real_type clann_factorial(const clann_uint_type v)
     return a;
 }
 
-clann_real_type clann_binomial(const clann_uint_type n,
-                               const clann_uint_type k)
+clann_real_type
+clann_binomial(const clann_uint_type n,
+               const clann_uint_type k)
 {
     unsigned int i;
 
@@ -188,12 +195,14 @@ clann_real_type clann_binomial(const clann_uint_type n,
     return a / b;
 }
 
-clann_uint_type clann_nextpow2(clann_uint_type n)
+clann_uint_type
+clann_nextpow2(clann_uint_type n)
 {
+    unsigned int i = 2;
+
     if (n == 0)
         return 1;
 
-    unsigned int i = 2;
     while (i < n)
         i *= 2;
 
