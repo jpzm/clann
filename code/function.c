@@ -59,5 +59,5 @@ clann_real_type
 function_green_gaussian(const clann_real_type *o,
                         const clann_real_type *v)
 {
-    return CLANN_EXP(-((*v) / (2 * CLANN_POW(*o, 2))));
+    return CLANN_EXP(-((*v) / (2 * (*o) * (*o))));
 }
