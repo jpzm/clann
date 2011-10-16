@@ -56,7 +56,7 @@ typedef unsigned char clann_byte_type;
 typedef unsigned char clann_u8_type;
 typedef unsigned short int clann_u16_type;
 typedef long double clann_real_type;
-typedef long int clann_int_type;
+typedef long long int clann_int_type;
 typedef unsigned long long int clann_uint_type;
 typedef clann_uint_type clann_id_type;
 typedef clann_uint_type clann_size_type;
@@ -104,8 +104,8 @@ clann_list_remove(clann_list_type **l, void *i);
  *
  */
 inline void
-clann_shuffle(unsigned int *list,
-              unsigned int length);
+clann_shuffle(clann_int_type *list,
+              clann_size_type length);
 
 /**
  *
@@ -129,7 +129,7 @@ clann_rand(const clann_real_type min,
 /**
  *
  */
-long int
+clann_int_type
 clann_randint(const clann_int_type min,
               const clann_int_type max);
 

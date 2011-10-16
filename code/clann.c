@@ -129,8 +129,8 @@ clann_initialize()
 }
 
 void
-clann_shuffle(unsigned int *list,
-              unsigned int length)
+clann_shuffle(clann_int_type *list,
+              clann_size_type length)
 {
     unsigned int i, ri, a;
     for (i = 0; i < length; i++)
