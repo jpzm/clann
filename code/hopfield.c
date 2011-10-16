@@ -59,4 +59,6 @@ clann_list_type *
 hopfield_find_spurious_states(struct hopfield *ann)
 {
     // TODO: all of it.
+
+    return NULL;
 }
