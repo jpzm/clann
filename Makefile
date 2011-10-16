@@ -12,6 +12,12 @@ all:
 		../code/clann.o \
 		../code/statistic.o \
 		../code/reader.o
+	cd test; cc -ggdb -Wall -lm lms.c -o lms.o \
+		../code/matrix.o \
+		../code/clann.o \
+		../code/function.o \
+		../code/lms.o \
+		../code/neuron.o
 	cd test; cc -ggdb -Wall -lm rbf.c -o rbf.o \
 		../code/rbf.o \
 		../code/matrix.o \

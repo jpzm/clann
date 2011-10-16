@@ -38,8 +38,8 @@ rbf_initialize(struct rbf *ann,
     ann->learning_strategy = RBF_LEARNING_SELF_ORGANIZED;
     ann->green_function = FUNCTION_GREEN_GAUSSIAN;
 
-    ann->desired_error = 1e-7;
-    ann->noticeable_change_rate = 1e-7;
+    ann->desired_error = 1e-10;
+    ann->noticeable_change_rate = 1e-10;
 
     ann->learning_rate_centers = 1e-5;
     ann->learning_rate_weights = 1e-3;
@@ -203,9 +203,12 @@ rbf_learning_self_organized(struct rbf *ann,
     rbf_initialize_centers_at_random(ann, x);
     rbf_compute_center_widths(ann);
 
+    /*
+     *
+     */
     do
     {
-        i = (int) clann_rand(0, x->rows - 1);
+        i = clann_randint(0, x->rows - 1);
 
         for (j = 0; j < ann->centers.cols; j++)
         {
@@ -242,7 +245,7 @@ rbf_learning_self_organized(struct rbf *ann,
         for (s = 0; s < ann->centers.cols; s++)
             e += c[s];
 
-        e /= ann->centers.cols;
+        e = e / ann->centers.cols;
     }
     while (e > ann->noticeable_change_rate);
 
@@ -254,7 +257,7 @@ rbf_learning_self_organized(struct rbf *ann,
     /*
      *
      */
-    struct neuron n[ann->output_size];
+    struct neuron *n = malloc(sizeof(struct neuron) * ann->output_size);
     struct lms l;
 
     lms_initialize(&l, ann->learning_rate_weights);
@@ -278,7 +281,7 @@ rbf_learning_self_organized(struct rbf *ann,
                 lms_learn(&n[j],
                           &l,
                           matrix_value(&ann->green, i, 0),
-                          matrix_value(d, j, 0));
+                          matrix_value(d, i, j));
 
                 e += CLANN_POW(n[j].error, 2);
             }
@@ -287,6 +290,12 @@ rbf_learning_self_organized(struct rbf *ann,
         e = e / ann->n_inputs;
     }
     while (e > ann->desired_error);
+
+    for (s = 0; s < ann->output_size; s++)
+        for (i = 0; i < ann->n_centers + 1; i++)
+            *matrix_value(&ann->weights, i, s) = n[s].weights[i];
+
+    free(n);
 }
 
 

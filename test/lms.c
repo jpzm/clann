@@ -51,15 +51,15 @@ double v2f(double v2, double v)
 
 int main(int argc, char *argv[])
 {
-    double s, x, v, v1 = 0, v2 = 0, input[7];
+    clann_real_type s, x, v, v1 = 0, v2 = 0, input[7];
     int iter, epochs, count = 7;
     struct neuron n;
     struct lms l;
 
     if (argc == 3)
     {
-        initialize_neuron(&n, &count);
-        initialize_lms(&l, atof(argv[1]));
+        neuron_initialize(&n, count);
+        lms_initialize(&l, atof(argv[1]));
 
         while (count--) input[count] = 0;
 
@@ -80,9 +80,10 @@ int main(int argc, char *argv[])
             input[6] = 1;
             input[0] = v2;
 
-            lms_function(&n, &l, input, x);
+            lms_learn(&n, &l, input, &x);
 
-            printf("%lf %lf %lf %lf\n", s, x, v, l.error);
+            printf(CLANN_PRINTF" "CLANN_PRINTF" "CLANN_PRINTF" "\
+                    CLANN_PRINTF"\n", s, x, v, n.error);
         }
 
         free((void*) n.weights);
