@@ -249,7 +249,7 @@ rbf_learning_self_organized(struct rbf *ann,
     }
     while (e > ann->noticeable_change_rate);
 
-    free(c);
+    free((void *) c);
 
     rbf_compute_green(ann, x);
     rbf_compute_weights(ann, d);
@@ -295,7 +295,7 @@ rbf_learning_self_organized(struct rbf *ann,
         for (i = 0; i < ann->n_centers + 1; i++)
             *matrix_value(&ann->weights, i, s) = n[s].weights[i];
 
-    free(n);
+    free((void *) n);
 }
 
 
