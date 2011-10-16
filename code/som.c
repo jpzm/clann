@@ -147,8 +147,8 @@ som_train_incremental(struct som *ann,
                       struct matrix *x,
                       unsigned int epochs)
 {
+    clann_size_type s, *mess = malloc(sizeof(clann_size_type) * x->rows);
     clann_real_type *sample, *winner = NULL;
-    unsigned int s, mess[x->rows];
 
     /*
      * Index vector used to shuffle the input presentation sequence
@@ -158,7 +158,7 @@ som_train_incremental(struct som *ann,
 
     while (ann->epoch <= epochs)
     {
-        clann_shuffle(mess, x->rows);
+        clann_shuffle((clann_int_type *) mess, x->rows);
 
         som_adjust_width(ann);
         som_adjust_learning_rate(ann);
@@ -182,6 +182,8 @@ som_train_incremental(struct som *ann,
 #endif
         ann->epoch += ann->step;
     }
+
+    free((void *) mess);
 }
 
 void
