@@ -255,3 +255,18 @@ matrix_isnull(const struct matrix *a)
 
     return 0;
 }
+
+void
+matrix_print(const struct matrix *a)
+{
+    clann_size_type i, j;
+
+    printf("["CLANN_SIZE_PRINTF", "CLANN_SIZE_PRINTF"]\n", a->rows, a->cols);
+    
+    for (i = 0; i < a->rows; i++)
+    {
+        for (j = 0; j < a->cols; j++)
+            printf(CLANN_PRINTF" ", *matrix_value(a, i, j));
+        printf("\n");
+    }
+}

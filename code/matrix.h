@@ -32,8 +32,8 @@
 struct matrix
 {
     clann_real_type *values;
-    unsigned int rows;
-    unsigned int cols;
+    clann_size_type rows;
+    clann_size_type cols;
     clann_real_type max;
     clann_real_type min;
 };
@@ -140,5 +140,11 @@ matrix_pseudo_inverse(const struct matrix *a,
  */
 inline int
 matrix_isnull(const struct matrix *a);
+
+/**
+ *
+ */
+void
+matrix_print(const struct matrix *a);
 
 #endif
