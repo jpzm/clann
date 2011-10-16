@@ -34,14 +34,16 @@ int main(int argc, char **argv)
     reader_read_double_data_file(argv[1], &x, &d);
 
     rbf_initialize(&r, 2, 1, 4, 4);
-    r.learning_strategy = RBF_LEARNING_FIXED;
     rbf_learn(&r, &x, &d);
 
+    printf("input:\n");
+    matrix_print(&x);
+
+    printf("output:\n");
     for (i = 0; i < x.rows; i++)
     {
-        rbf_compute_output(&r, &x.values[i]);
-        printf("input[%d,%d]", (int) x.values[2 * i], (int) x.values[2 * i + 1]);
-        printf(" -> output = " CLANN_PRINTF " \n", r.output[0]);
+        rbf_compute_output(&r, matrix_value(&x, i, 0));
+        printf(CLANN_PRINTF "\n", r.output[0]);
     }
 
     return 0;

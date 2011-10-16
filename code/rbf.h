@@ -128,7 +128,7 @@ rbf_compute_weights(struct rbf *ann,
  */
 inline void
 rbf_compute_output(struct rbf *ann,
-                   const clann_real_type *x);
+                   clann_real_type *x);
 
 /**
  *

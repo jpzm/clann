@@ -38,8 +38,8 @@ rbf_initialize(struct rbf *ann,
     ann->learning_strategy = RBF_LEARNING_SELF_ORGANIZED;
     ann->green_function = FUNCTION_GREEN_GAUSSIAN;
 
-    ann->desired_error = 1e-5;
-    ann->noticeable_change_rate = 1e-5;
+    ann->desired_error = 1e-7;
+    ann->noticeable_change_rate = 1e-7;
 
     ann->learning_rate_centers = 1e-5;
     ann->learning_rate_weights = 1e-3;
@@ -144,11 +144,11 @@ rbf_compute_weights(struct rbf *ann,
 
 void
 rbf_compute_output(struct rbf *ann,
-                   const clann_real_type *x)
+                   clann_real_type *x)
 {
     clann_real_type v;
+    clann_size_type i, j, s;
 
-    unsigned int i, j, s;
     for (i = 0; i < ann->output_size; i++)
     {
         ann->output[i] = 0;
@@ -251,7 +251,7 @@ rbf_learning_self_organized(struct rbf *ann,
     rbf_compute_green(ann, x);
     rbf_compute_weights(ann, d);
 
-    /**
+    /*
      *
      */
     struct neuron n[ann->output_size];
@@ -284,7 +284,7 @@ rbf_learning_self_organized(struct rbf *ann,
             }
         }
 
-        e /= ann->n_inputs;
+        e = e / ann->n_inputs;
     }
     while (e > ann->desired_error);
 }
@@ -329,6 +329,9 @@ rbf_initialize_centers_at_random(struct rbf *ann,
     clann_size_type *s, i, j, c = 0;
     clann_bool_type equal_flag = false;
 
+    /*
+     * Select centers from input a random
+     */
     s = malloc(sizeof(clann_size_type) * ann->n_centers);
 
     while (c < ann->n_centers)
