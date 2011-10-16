@@ -46,10 +46,10 @@ struct rbf
     struct matrix green;
     struct matrix centers;
     struct matrix weights;
-    unsigned int number_of_inputs;
-    unsigned int number_of_centers;
-    unsigned int input_size;
-    unsigned int output_size;
+    clann_size_type n_inputs;
+    clann_size_type n_centers;
+    clann_size_type input_size;
+    clann_size_type output_size;
     unsigned int green_function;
     unsigned int learning_strategy;
     clann_real_type *output;
@@ -66,22 +66,22 @@ struct rbf
  * Initialize an given RBF
  */
 inline void
-rbf_initialize(struct rbf *r,
-               const unsigned int input_size,
-               const unsigned int output_size,
-               const unsigned int number_of_inputs,
-               const unsigned int number_of_centers);
+rbf_initialize(struct rbf *ann,
+               clann_size_type input_size,
+               clann_size_type output_size,
+               clann_size_type n_inputs,
+               clann_size_type n_centers);
 /**
  *
  */
 inline void
-rbf_finalize(struct rbf *r);
+rbf_finalize(struct rbf *ann);
 
 /**
  *
  */
 inline void
-rbf_learn(struct rbf *r,
+rbf_learn(struct rbf *ann,
           const struct matrix *x,
           const struct matrix *d);
 
@@ -89,7 +89,7 @@ rbf_learn(struct rbf *r,
  *
  */
 inline void
-rbf_learning_with_fixed_centers(struct rbf *r,
+rbf_learning_with_fixed_centers(struct rbf *ann,
                                 const struct matrix *x,
                                 const struct matrix *d);
 
@@ -97,7 +97,7 @@ rbf_learning_with_fixed_centers(struct rbf *r,
  *
  */
 inline void
-rbf_learning_supervised(struct rbf *r,
+rbf_learning_supervised(struct rbf *ann,
                         const struct matrix *x,
                         const struct matrix *d);
 
@@ -105,7 +105,7 @@ rbf_learning_supervised(struct rbf *r,
  *
  */
 inline void
-rbf_learning_self_organized(struct rbf *r,
+rbf_learning_self_organized(struct rbf *ann,
                             const struct matrix *x,
                             const struct matrix *d);
 
@@ -113,33 +113,34 @@ rbf_learning_self_organized(struct rbf *r,
  *
  */
 inline void
-rbf_compute_green(struct rbf *r,
+rbf_compute_green(struct rbf *ann,
                   const struct matrix *x);
 
 /**
  *
  */
 inline void
-rbf_compute_weights(struct rbf *r,
+rbf_compute_weights(struct rbf *ann,
                     const struct matrix *d);
 
 /**
  *
  */
 inline void
-rbf_compute_output(struct rbf *r,
+rbf_compute_output(struct rbf *ann,
                    const clann_real_type *x);
 
 /**
  *
  */
 inline void
-rbf_initialize_centers_at_random(struct rbf *r);
+rbf_initialize_centers_at_random(struct rbf *ann,
+                                 const struct matrix *x);
 
 /**
  *
  */
 inline void
-rbf_compute_center_widths(struct rbf *r);
+rbf_compute_center_widths(struct rbf *ann);
 
 #endif

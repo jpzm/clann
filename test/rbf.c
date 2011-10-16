@@ -26,24 +26,23 @@
 int main(int argc, char **argv)
 {
     struct rbf r;
-    struct matrix x, d, input_val;
+    struct matrix x, d;
     unsigned int i;
 
     clann_initialize();
 
     reader_read_double_data_file(argv[1], &x, &d);
 
-    matrix_initialize(&input_val, 1, 2);
-
-    *matrix_value(&input_val, 0, 0) = 1;
-    *matrix_value(&input_val, 0, 1) = 1;
-
-    rbf_initialize(&r, 2, 1, 4, 2);
+    rbf_initialize(&r, 2, 1, 4, 4);
+    r.learning_strategy = RBF_LEARNING_FIXED;
     rbf_learn(&r, &x, &d);
-    rbf_compute_output(&r, &input_val.values[0]);
 
-    for (i = 0; i < r.output_size; i++)
-        printf("output[%d]= " CLANN_PRINTF " \n", i, r.output[i]);
+    for (i = 0; i < x.rows; i++)
+    {
+        rbf_compute_output(&r, &x.values[i]);
+        printf("input[%d,%d]", (int) x.values[2 * i], (int) x.values[2 * i + 1]);
+        printf(" -> output = " CLANN_PRINTF " \n", r.output[0]);
+    }
 
     return 0;
 }
