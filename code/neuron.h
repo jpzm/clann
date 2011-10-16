@@ -36,7 +36,7 @@ struct neuron
     volatile clann_real_type *old_weights;
     volatile clann_real_type output;
     volatile clann_real_type error;
-    unsigned int number_of_weights;
+    unsigned int n_weights;
     unsigned int activation_function;
 };
 
@@ -46,7 +46,7 @@ struct neuron
  */
 inline void
 neuron_initialize(struct neuron *n,
-                  const unsigned int number_of_weights);
+                  const unsigned int n_weights);
 
 /**
  * Initialize an given neuron

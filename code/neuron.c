@@ -24,18 +24,18 @@
 
 void
 neuron_initialize(struct neuron *n,
-                  const unsigned int number_of_weights)
+                  const unsigned int n_weights)
 {
-    n->number_of_weights = number_of_weights;
+    n->n_weights = n_weights;
     n->activation_function = FUNCTION_LINEAR;
-    n->weights = malloc(sizeof(clann_real_type) * (n->number_of_weights + 1));
-    n->old_weights = malloc(sizeof(clann_real_type) * (n->number_of_weights + 1));
+    n->weights = malloc(sizeof(clann_real_type) * (n->n_weights + 1));
+    n->old_weights = malloc(sizeof(clann_real_type) * (n->n_weights + 1));
 
     n->output = 0;
     n->error = 0;
 
     unsigned int i;
-    for (i = 0; i <= n->number_of_weights; i++)
+    for (i = 0; i <= n->n_weights; i++)
     {
         n->weights[i] = clann_rand(-1, 1);
         n->old_weights[i] = 0;
@@ -48,7 +48,7 @@ neuron_finalize(struct neuron *n)
     free((void *) n->weights);
     free((void *) n->old_weights);
 
-    n->number_of_weights = 0;
+    n->n_weights = 0;
 }
 
 void
@@ -58,7 +58,7 @@ neuron_compute_output(struct neuron *n,
     clann_real_type sum = 0;
 
     unsigned int i;
-    for (i = 0; i < n->number_of_weights; i++)
+    for (i = 0; i < n->n_weights; i++)
         sum += n->weights[i] * x[i];
 
     sum += n->weights[i] * 1.0;
@@ -70,19 +70,19 @@ neuron_compute_output(struct neuron *n,
             break;
 
         case FUNCTION_STEP:
-            n->output = function_step(&sum);
+            n->output = function_step(sum);
             break;
 
         case FUNCTION_SIGNAL:
-            n->output = function_signal(&sum);
+            n->output = function_signal(sum);
             break;
 
         case FUNCTION_SIGMOID:
-            n->output = function_sigmoid(&sum);
+            n->output = function_sigmoid(sum);
             break;
 
         case FUNCTION_HYPERBOLIC_TANGENT:
-            n->output = function_tanh(&sum);
+            n->output = function_tanh(sum);
             break;
 
         default:
