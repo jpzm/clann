@@ -56,8 +56,8 @@ function_tanh(const clann_real_type *v)
 }
 
 clann_real_type
-function_green_gaussian(const clann_real_type *o,
-                        const clann_real_type *v)
+function_green_gaussian(const clann_real_type *sigma,
+                        const clann_real_type *value)
 {
-    return CLANN_EXP(-((*v) / (2 * (*o) * (*o))));
+    return CLANN_EXP(-((*value) / (2 * (*sigma) * (*sigma))));
 }
