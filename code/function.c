@@ -23,9 +23,9 @@
 
 
 clann_real_type
-function_step(const clann_real_type *v)
+function_step(const clann_real_type value)
 {
-    if (*v >= 0)
+    if (value >= 0)
         return 1;
 
     return 0;
@@ -33,31 +33,31 @@ function_step(const clann_real_type *v)
 
 
 clann_real_type
-function_signal(const clann_real_type *v)
+function_signal(const clann_real_type value)
 {
-    if (*v >= 0)
+    if (value >= 0)
         return 1;
 
     return -1;
 }
 
 clann_real_type
-function_sigmoid(const clann_real_type *v)
+function_sigmoid(const clann_real_type value)
 {
-    clann_real_type a = CLANN_EXP(-(*v));
+    clann_real_type a = CLANN_EXP(-(value));
     return 1 / (1 + a);
 }
 
 clann_real_type
-function_tanh(const clann_real_type *v)
+function_tanh(const clann_real_type value)
 {
-    clann_real_type a = CLANN_EXP(2 * (*v));
+    clann_real_type a = CLANN_EXP(2 * (value));
     return (a - 1) / (a + 1);
 }
 
 clann_real_type
-function_green_gaussian(const clann_real_type *sigma,
-                        const clann_real_type *value)
+function_green_gaussian(const clann_real_type sigma,
+                        const clann_real_type value)
 {
-    return CLANN_EXP(-((*value) / (2 * (*sigma) * (*sigma))));
+    return CLANN_EXP(-((value) / (2 * (sigma) * (sigma))));
 }

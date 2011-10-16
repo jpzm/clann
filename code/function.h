@@ -40,32 +40,32 @@
  * Activation step function
  */
 inline clann_real_type
-function_step(const clann_real_type *v);
+function_step(const clann_real_type value);
 
 /**
  * Activation signal function
  */
 inline clann_real_type
-function_signal(const clann_real_type *v);
+function_signal(const clann_real_type value);
 
 /**
  * Activation sigmoid function
  */
 inline clann_real_type
-function_sigmoid(const clann_real_type *v);
+function_sigmoid(const clann_real_type value);
 
 /**
  * Activation hyperbolic tangent function
  */
 inline clann_real_type
-function_tanh(const clann_real_type *v);
+function_tanh(const clann_real_type value);
 
 
 /**
  * Green Gaussian function
  */
 inline clann_real_type
-function_green_gaussian(const clann_real_type *o,
-                        const clann_real_type *v);
+function_green_gaussian(const clann_real_type sigma,
+                        const clann_real_type value);
 
 #endif
