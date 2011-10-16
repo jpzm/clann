@@ -31,15 +31,35 @@ metric_scale(clann_real_type value,
 }
 
 clann_real_type
+metric_euclidean_pow2(const clann_real_type *a,
+                      const clann_real_type *b,
+                      const unsigned int length)
+{
+    clann_real_type e, sum = 0;
+
+    unsigned int i;
+    for (i = 0; i < length; i++)
+    {
+        e = a[i] - b[i];
+        sum += e * e;
+    }
+
+    return sum;
+}
+
+clann_real_type
 metric_euclidean(const clann_real_type *a,
                  const clann_real_type *b,
                  const unsigned int length)
 {
-    clann_real_type sum = 0;
+    clann_real_type e, sum = 0;
 
     unsigned int i;
     for (i = 0; i < length; i++)
-        sum += CLANN_POW(a[i] - b[i], 2);
+    {
+        e = a[i] - b[i];
+        sum += e * e;
+    }
 
     return CLANN_SQRT(sum);
 }

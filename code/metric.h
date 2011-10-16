@@ -40,6 +40,14 @@ metric_scale(clann_real_type value,
  *
  */
 inline clann_real_type
+metric_euclidean_pow2(const clann_real_type *a,
+                      const clann_real_type *b,
+                      const unsigned int length);
+
+/**
+ *
+ */
+inline clann_real_type
 metric_euclidean(const clann_real_type *a,
                  const clann_real_type *b,
                  const unsigned int length);
