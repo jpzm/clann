@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
+ * Copyright (C) 2008-2011 Joao Paulo de Souza Medeiros
  * Copyright (C) 2009 Adriano Monteiro Marques
  *
  * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
@@ -28,7 +28,9 @@
 #include <math.h>
 #include "clann.h"
 #include "function.h"
+#include "kmeans.h"
 #include "matrix.h"
+#include "metric.h"
 #include "neuron.h"
 #include "lms.h"
 

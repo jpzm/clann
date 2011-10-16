@@ -20,7 +20,9 @@ all:
 		../code/neuron.o
 	cd test; cc -ggdb -Wall -lm rbf.c -o rbf.o \
 		../code/rbf.o \
+		../code/kmeans.o \
 		../code/matrix.o \
+		../code/metric.o \
 		../code/neuron.o \
 		../code/function.o \
 		../code/clann.o \

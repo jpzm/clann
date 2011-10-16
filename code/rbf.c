@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
+ * Copyright (C) 2008-2011 Joao Paulo de Souza Medeiros
  * Copyright (C) 2009 Adriano Monteiro Marques
  *
  * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
@@ -34,23 +34,29 @@ rbf_initialize(struct rbf *ann,
     ann->output_size = output_size;
     ann->n_inputs = n_inputs;
     ann->n_centers = n_centers;
+    
+    if (ann->n_centers > ann->n_inputs)
+    {
+        printf("E. [RBF] Number of centers exceeds number of inputs.\n");
+        exit(EXIT_FAILURE);
+    }
 
     ann->learning_strategy = RBF_LEARNING_SELF_ORGANIZED;
     ann->green_function = FUNCTION_GREEN_GAUSSIAN;
 
-    ann->desired_error = 1e-10;
-    ann->noticeable_change_rate = 1e-10;
+    ann->desired_error = 1e-5;
+    ann->noticeable_change_rate = 2 * 1e-3;
 
-    ann->learning_rate_centers = 1e-5;
+    ann->learning_rate_centers = 1e-3;
     ann->learning_rate_weights = 1e-3;
     ann->learning_rate_spreads = 1e-3;
 
     ann->output = malloc(sizeof(clann_real_type) * output_size);
     ann->centers_width = malloc(sizeof(clann_real_type) * n_centers);
 
-    matrix_initialize(&ann->green, n_inputs, n_centers + 1);
-    matrix_initialize(&ann->centers, input_size, n_centers);
-    matrix_initialize(&ann->weights, n_centers + 1, output_size);
+    matrix_initialize(&ann->green, ann->n_inputs, ann->n_centers + 1);
+    matrix_initialize(&ann->centers, ann->n_centers, ann->input_size);
+    matrix_initialize(&ann->weights, ann->n_centers + 1, ann->output_size);
 }
 
 void
@@ -96,21 +102,17 @@ void
 rbf_compute_green(struct rbf *ann,
                   const struct matrix *x)
 {
-    unsigned int i, j, s;
+    clann_size_type i, j;
     clann_real_type v;
 
     for (i = 0; i < ann->green.rows; i++)
     {
         for (j = 0; j < ann->green.cols - 1; j++)
         {
-            v = 0;
-
-            for (s = 0; s < ann->input_size; s++)
-                v += CLANN_POW(*matrix_value(x, i, s) -
-                               *matrix_value(&ann->centers, s, j),
-                               2);
-
-            v = function_green_gaussian(&ann->centers_width[j], &v);
+            v = metric_euclidean_pow2(matrix_value(x, i, 0),
+                                      matrix_value(&ann->centers, j, 0),
+                                      ann->input_size);
+            v = function_green_gaussian(ann->centers_width[j], v);
             *matrix_value(&ann->green, i, j) = v;
         }
 
@@ -147,7 +149,7 @@ rbf_compute_output(struct rbf *ann,
                    clann_real_type *x)
 {
     clann_real_type v;
-    clann_size_type i, j, s;
+    clann_size_type i, j;
 
     for (i = 0; i < ann->output_size; i++)
     {
@@ -155,12 +157,10 @@ rbf_compute_output(struct rbf *ann,
 
         for (j = 0; j < ann->n_centers; j++)
         {
-            v = 0;
-
-            for (s = 0; s < ann->input_size; s++)
-                v += CLANN_POW(x[s] - *matrix_value(&ann->centers, s, j), 2);
-
-            v = function_green_gaussian(&ann->centers_width[j], &v);
+            v = metric_euclidean_pow2(x,
+                                      matrix_value(&ann->centers, j, 0),
+                                      ann->input_size);
+            v = function_green_gaussian(ann->centers_width[j], v);
 
             ann->output[i] += *matrix_value(&ann->weights, j, i) * v;
         }
@@ -195,79 +195,47 @@ rbf_learning_self_organized(struct rbf *ann,
                             const struct matrix *x,
                             const struct matrix *d)
 {
-    unsigned int i, j, s, k = 0;
-    clann_real_type *c, v, e = 0;
-
-    c = malloc(sizeof(clann_real_type) * ann->centers.cols);
-
-    rbf_initialize_centers_at_random(ann, x);
-    rbf_compute_center_widths(ann);
-
-    /*
-     *
-     */
-    do
-    {
-        i = clann_randint(0, x->rows - 1);
-
-        for (j = 0; j < ann->centers.cols; j++)
-        {
-            v = 0;
-
-            for (s = 0; s < ann->centers.rows; s++)
-                v += CLANN_POW(*matrix_value(x, i, s) -
-                               *matrix_value(&ann->centers, s, j),
-                               2);
-
-            if (v < e || j == 0)
-            {
-                k = j;
-                e = v;
-            }
-        }
-
-        e = 0;
-
-        for (s = 0; s < ann->centers.rows; s++)
-        {
-            e += *matrix_value(&ann->centers, s, k);
-
-            v = *matrix_value(x, i, s) - *matrix_value(&ann->centers, s, k);
-            v = ann->learning_rate_centers * v;
-            *matrix_value(&ann->centers, s, k) += v;
-
-            e -= *matrix_value(&ann->centers, s, k);
-        }
-
-        c[k] = CLANN_POW(e, 2);
-        e = 0;
-
-        for (s = 0; s < ann->centers.cols; s++)
-            e += c[s];
-
-        e = e / ann->centers.cols;
-    }
-    while (e > ann->noticeable_change_rate);
-
-    free((void *) c);
-
-    rbf_compute_green(ann, x);
-    rbf_compute_weights(ann, d);
-
-    /*
-     *
-     */
-    struct neuron *n = malloc(sizeof(struct neuron) * ann->output_size);
+    clann_size_type i, j;
+    clann_real_type v, e;
+    struct kmeans k;
+    struct neuron *n;
     struct lms l;
+
+    /*
+     * K-means clustering algorthm
+     */
+    rbf_initialize_centers_at_random(ann, x);
+    k.n_centers = ann->n_centers;
+    k.center_size = ann->input_size;
+    k.noticeable_change_rate = ann->noticeable_change_rate;
+    k.centers = ann->centers;
+
+    kmeans_train(&k, x, ann->learning_rate_centers);
+
+    /*
+     * Compute Grenn's matrix to use as LMS inputs, initialize weights and
+     * compute centers' widths
+     */
+    rbf_compute_center_widths(ann);
+    rbf_compute_green(ann, x);
+    matrix_fill_rand(&ann->weights, -1, 1);
+
+    /*
+     * Computing weights using LMS algorthm
+     */
+    n = malloc(sizeof(struct neuron) * ann->output_size);
 
     lms_initialize(&l, ann->learning_rate_weights);
 
-    for (s = 0; s < ann->output_size; s++)
-    {
-        neuron_initialize(&n[s], ann->n_centers);
 
-        for (i = 0; i < ann->n_centers + 1; i++)
-            n[s].weights[i] = *matrix_value(&ann->weights, i, s);
+    for (i = 0; i < ann->output_size; i++)
+    {
+        /*
+         * We do not initialize neurons because we just use its structure to
+         * adjust weights using LMS
+         */
+        n[i].weights = matrix_value(&ann->weights, i, 0);
+        n[i].n_weights = ann->weights.rows - 1;
     }
 
     do
@@ -276,6 +244,8 @@ rbf_learning_self_organized(struct rbf *ann,
 
         for (i = 0; i < ann->n_inputs; i++)
         {
+            v = 0;
+
             for (j = 0; j < ann->output_size; j++)
             {
                 lms_learn(&n[j],
@@ -283,17 +253,15 @@ rbf_learning_self_organized(struct rbf *ann,
                           matrix_value(&ann->green, i, 0),
                           matrix_value(d, i, j));
 
-                e += CLANN_POW(n[j].error, 2);
+                v += n[j].error * n[j].error;
             }
+
+            e += CLANN_SQRT(v);
         }
 
         e = e / ann->n_inputs;
     }
     while (e > ann->desired_error);
-
-    for (s = 0; s < ann->output_size; s++)
-        for (i = 0; i < ann->n_centers + 1; i++)
-            *matrix_value(&ann->weights, i, s) = n[s].weights[i];
 
     free((void *) n);
 }
@@ -305,16 +273,16 @@ rbf_compute_center_widths(struct rbf *ann)
     unsigned int i, j, s;
     clann_real_type v, d, maximum = 0;
 
-    for (i = 0; i < ann->centers.cols; i++)
+    for (i = 0; i < ann->centers.rows; i++)
     {
-        for (j = 0; j < ann->centers.cols; j++)
+        for (j = 0; j < ann->centers.rows; j++)
         {
             v = 0;
 
-            for (s = 0; s < ann->centers.rows; s++)
+            for (s = 0; s < ann->centers.cols; s++)
             {
-                d = *matrix_value(&ann->centers, s, i);
-                d = d - *matrix_value(&ann->centers, s, j);
+                d = *matrix_value(&ann->centers, i, s);
+                d = d - *matrix_value(&ann->centers, j, s);
                 v += d * d;
             }
 
@@ -360,9 +328,9 @@ rbf_initialize_centers_at_random(struct rbf *ann,
             s[c++] = i;
     }
 
-    for (i = 0; i < ann->centers.cols; i++)
+    for (i = 0; i < ann->centers.rows; i++)
     {
-        for (j = 0; j < ann->centers.rows; j++)
-            *matrix_value(&ann->centers, j, i) = *matrix_value(x, s[i], j);
+        for (j = 0; j < ann->centers.cols; j++)
+            *matrix_value(&ann->centers, i, j) = *matrix_value(x, s[i], j);
     }
 }

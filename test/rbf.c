@@ -33,8 +33,12 @@ int main(int argc, char **argv)
 
     reader_read_double_data_file(argv[1], &x, &d);
 
-    rbf_initialize(&r, 2, 1, 4, 4);
+    rbf_initialize(&r, 2, 1, 4, 2);
+    //r.learning_strategy = RBF_LEARNING_FIXED;
     rbf_learn(&r, &x, &d);
+
+    printf("centers:\n");
+    matrix_print(&r.centers);
 
     printf("input:\n");
     matrix_print(&x);
