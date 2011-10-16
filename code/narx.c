@@ -101,7 +101,7 @@ narx_save(struct narx *ann,
             {
                 fprintf(fd, "\n" CLANN_PRINTF, l->neurons[j].weights[0]);
 
-                for (k = 1; k <= l->neurons[j].number_of_weights; k++)
+                for (k = 1; k <= l->neurons[j].n_weights; k++)
                     fprintf(fd, " " CLANN_PRINTF, l->neurons[j].weights[k]);
 
                 fprintf(fd, "\n%d", l->neurons[j].activation_function);

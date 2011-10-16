@@ -199,7 +199,7 @@ mlp_fill(struct mlp *ann,
 
         for (j = 0; j < l->size; j++)
         {
-            for (k = 0; k <= l->neurons[j].number_of_weights; k++)
+            for (k = 0; k <= l->neurons[j].n_weights; k++)
                 l->neurons[j].weights[k] = w->values[p + k];
 
             l->neurons[j].activation_function = (unsigned int) f->values[c];

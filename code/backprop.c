@@ -31,7 +31,7 @@ backprop_adjust_weights(struct neuron *n,
 {
     unsigned int i;
 
-    for (i = 0; i < n->number_of_weights; i++)
+    for (i = 0; i < n->n_weights; i++)
     {
         n->weights[i] += momentum * n->old_weights[i];
         n->weights[i] += learing_rate * (*g) * y[i];
