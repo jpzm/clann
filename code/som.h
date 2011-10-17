@@ -34,6 +34,8 @@
 #include "reader.h"
 #include "clann.h"
 
+#define SOM_FILE_HEADER "SOM"
+
 #define SOM_GRID_1D 1
 #define SOM_GRID_2D 2
 #define SOM_GRID_3D 3

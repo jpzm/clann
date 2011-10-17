@@ -22,13 +22,18 @@
 #ifndef TLFN_H
 #define TLFN_H
 
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "reader.h"
 #include "clann.h"
 #include "mlp.h"
+
+#define TLFN_FILE_HEADER    "TLFN"
 
 /**
  * Time lagged feedforward network structure

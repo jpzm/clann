@@ -277,7 +277,7 @@ som_save(struct som *ann,
     {
         unsigned int i, j;
 
-        fprintf(fd, "%s\n", FILE_HEADER_SOM);
+        fprintf(fd, "%s\n", SOM_FILE_HEADER);
 
         fprintf(fd, CLANN_SIZE_PRINTF" ", ann->input_size);
         fprintf(fd, CLANN_SIZE_PRINTF" ", ann->grid.width);

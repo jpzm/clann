@@ -22,13 +22,18 @@
 #ifndef NARX_H
 #define NARX_H
 
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "reader.h"
 #include "clann.h"
 #include "mlp.h"
+
+#define NARX_FILE_HEADER    "NARX"
 
 /**
  * NARX network structure

@@ -44,11 +44,6 @@
 #define CLANN_VERBOSE       1
 #define CLANN_DEBUG         1
 
-#define FILE_HEADER_MLP     "MLP"
-#define FILE_HEADER_SOM     "SOM"
-#define FILE_HEADER_TLFN    "TLFN"
-#define FILE_HEADER_NARX    "NARX"
-
 #define CLANN_SWAP(a,b)     {(a) += (b); (b) = (a) - (b); (a) -= (b);}
 #define CLANN_SCALE(v,a,b)  (2 * (((v) - (b)) / ((a) - (b))) - 1)
 

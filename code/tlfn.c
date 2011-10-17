@@ -67,7 +67,7 @@ tlfn_save(struct tlfn *ann,
         unsigned int i, j, k;
         struct mlp_layer *l;
 
-        fprintf(fd, "%s\n", FILE_HEADER_TLFN);
+        fprintf(fd, "%s\n", TLFN_FILE_HEADER);
 
         fprintf(fd, "%d", ann->ann.architecture[0]);
 
@@ -115,7 +115,7 @@ tlfn_open(struct tlfn *ann,
 
         getline(&line, &len, fd);
 
-        if (!strncmp(FILE_HEADER_TLFN, line, (4 > len ? len: 4)))
+        if (!strncmp(TLFN_FILE_HEADER, line, (4 > len ? len: 4)))
         {
             struct matrix a, o, w, f;
             unsigned int i;

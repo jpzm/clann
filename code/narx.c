@@ -83,7 +83,7 @@ narx_save(struct narx *ann,
         unsigned int i, j, k;
         struct mlp_layer *l;
 
-        fprintf(fd, "%s\n", FILE_HEADER_NARX);
+        fprintf(fd, "%s\n", NARX_FILE_HEADER);
 
         fprintf(fd, "%d", ann->ann.architecture[0]);
 
@@ -131,7 +131,7 @@ narx_open(struct narx *ann,
 
         getline(&line, &len, fd);
 
-        if (!strncmp(FILE_HEADER_NARX, line, (4 > len ? len: 4)))
+        if (!strncmp(NARX_FILE_HEADER, line, (4 > len ? len: 4)))
         {
             struct matrix a, o, w, f;
             unsigned int i;
