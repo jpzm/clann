@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
             input[6] = 1;
             input[0] = v2;
 
-            lms_learn(&n, &l, input, &x);
+            lms_learn(&n, &l, input, x);
 
             printf(CLANN_PRINTF" "CLANN_PRINTF" "CLANN_PRINTF" "\
                     CLANN_PRINTF"\n", s, x, v, n.error);

@@ -50,6 +50,6 @@ inline void
 lms_learn(struct neuron *n,
           struct lms *l,
           const clann_real_type *x,
-          const clann_real_type *d);
+          const clann_real_type d);
 
 #endif

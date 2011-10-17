@@ -33,11 +33,11 @@ void
 lms_learn(struct neuron *n,
           struct lms *l,
           const clann_real_type *x,
-          const clann_real_type *d)
+          const clann_real_type d)
 {
     neuron_compute_output(n, x);
 
-    n->error = *d - n->output;
+    n->error = d - n->output;
 #if CLANN_VERBOSE
     printf("N. [LMS] Error: " CLANN_PRINTF ".\n", n->error);
 #endif
