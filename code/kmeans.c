@@ -29,6 +29,7 @@ kmeans_initialize(struct kmeans *ann,
     ann->n_centers = n_centers;
     ann->center_size = center_size;
     ann->noticeable_change_rate = noticeable_change_rate;
+    ann->old_centers = NULL;
 
     matrix_initialize(&ann->centers, ann->n_centers, ann->center_size);
     matrix_fill_rand(&ann->centers, -1, 1);
@@ -46,7 +47,9 @@ kmeans_train(struct kmeans *ann,
              clann_real_type learning_rate)
 {
     clann_size_type s, i, *mess = malloc(sizeof(clann_size_type) * x->rows);
-    clann_real_type e, delta, distance, minimun, *sample, *winner = NULL;
+    clann_real_type e, distance, minimun, *sample, *winner = NULL;
+
+    ann->old_centers = matrix_copy_new(&ann->centers);
 
     /*
      * Index vector used to shuffle the input presentation sequence
@@ -90,22 +93,28 @@ kmeans_train(struct kmeans *ann,
             /*
              * Adjust winning center positions
              */
-            distance = 0;
-
             for (i = 0; i < ann->center_size; i++)
-            {
-                delta = learning_rate * (sample[i] - winner[i]);
-                winner[i] += delta;
-                distance += delta * delta;
-            }
+                winner[i] += learning_rate * (sample[i] - winner[i]);
+        }
 
-            e += CLANN_SQRT(distance);
+        /*
+         * Compute the mean of changes
+         */
+        for (i = 0; i < ann->n_centers; i++)
+        {
+            e += metric_euclidean(matrix_value(&ann->centers, i, 0),
+                                  matrix_value(ann->old_centers, i, 0),
+                                  ann->center_size);
         }
 
         e = e / ann->n_centers;
 #if CLANN_VERBOSE
-        printf("N. [KMEANS] Mean distance: " CLANN_PRINTF ".\n", e);
+        printf("N. [KMEANS] Mean centers' update: " CLANN_PRINTF ".\n", e);
 #endif
+        matrix_copy(&ann->centers, ann->old_centers);
     }
     while (e > ann->noticeable_change_rate);
+
+    free((void *) ann->old_centers);
+    ann->old_centers = NULL;
 }

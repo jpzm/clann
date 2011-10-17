@@ -35,6 +35,7 @@ struct kmeans
     clann_size_type n_centers;
     clann_real_type noticeable_change_rate;
     struct matrix centers;
+    struct matrix *old_centers;
     clann_size_type center_size;
 };
 
