@@ -44,8 +44,8 @@ rbf_initialize(struct rbf *ann,
     ann->learning_strategy = RBF_LEARNING_SELF_ORGANIZED;
     ann->green_function = FUNCTION_GREEN_GAUSSIAN;
 
-    ann->desired_error = 1e-5;
-    ann->noticeable_change_rate = 2 * 1e-3;
+    ann->desired_error = 1e-7;
+    ann->noticeable_change_rate = 1e-7;
 
     ann->learning_rate_centers = 1e-3;
     ann->learning_rate_weights = 1e-3;
@@ -196,13 +196,13 @@ rbf_learning_self_organized(struct rbf *ann,
                             const struct matrix *d)
 {
     clann_size_type i, j;
-    clann_real_type v, e;
+    clann_real_type e;
     struct kmeans k;
     struct neuron *n;
     struct lms l;
 
     /*
-     * K-means clustering algorthm
+     * K-means clustering algorithm and in-place initialization
      */
     rbf_initialize_centers_at_random(ann, x);
     k.n_centers = ann->n_centers;
@@ -212,6 +212,10 @@ rbf_learning_self_organized(struct rbf *ann,
 
     kmeans_train(&k, x, ann->learning_rate_centers);
 
+#if CLANN_VERBOSE
+    printf("N. [RBF] Centers: \n");
+    matrix_print(&ann->centers);
+#endif
     /*
      * Compute Grenn's matrix to use as LMS inputs, initialize weights and
      * compute centers' widths
@@ -244,22 +248,21 @@ rbf_learning_self_organized(struct rbf *ann,
 
         for (i = 0; i < ann->n_inputs; i++)
         {
-            v = 0;
-
             for (j = 0; j < ann->output_size; j++)
             {
                 lms_learn(&n[j],
                           &l,
                           matrix_value(&ann->green, i, 0),
-                          matrix_value(d, i, j));
+                          *matrix_value(d, i, j));
 
-                v += n[j].error * n[j].error;
+                e += n[j].error * n[j].error;
             }
-
-            e += CLANN_SQRT(v);
         }
 
-        e = e / ann->n_inputs;
+        e = e / (ann->n_inputs * ann->output_size);
+#if CLANN_VERBOSE
+    printf("N. [RBF] LMS mean error: " CLANN_PRINTF ".\n", e);
+#endif
     }
     while (e > ann->desired_error);
 
