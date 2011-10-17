@@ -93,6 +93,12 @@ matrix_copy(const struct matrix *a,
 /**
  *
  */
+inline struct matrix *
+matrix_copy_new(const struct matrix *a);
+
+/**
+ *
+ */
 inline void
 matrix_transpose(const struct matrix *a,
                  struct matrix *b);

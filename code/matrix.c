@@ -90,11 +90,26 @@ void
 matrix_copy(const struct matrix *a,
             struct matrix *b)
 {
-    matrix_initialize(b, a->rows, a->cols);
+    if (b->rows != a->rows || b->cols != a->cols)
+    {
+        matrix_finalize(b);
+        matrix_initialize(b, a->rows, a->cols);
+    }
 
     unsigned int i;
     for (i = 0; i < a->rows * a->cols; i++)
         b->values[i] = a->values[i];
+}
+
+struct matrix *
+matrix_copy_new(const struct matrix *a)
+{
+    struct matrix *b = malloc(sizeof(struct matrix));
+
+    matrix_initialize(b, a->rows, a->cols);
+    matrix_copy(a, b);
+
+    return b;
 }
 
 void
