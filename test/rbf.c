@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
     reader_read_double_data_file(argv[1], &x, &d);
 
-    rbf_initialize(&r, 2, 1, 4, 2);
+    rbf_initialize(&r, 2, 1, 4, 4);
     //r.learning_strategy = RBF_LEARNING_FIXED;
     rbf_learn(&r, &x, &d);
 
