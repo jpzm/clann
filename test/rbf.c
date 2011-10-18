@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
     struct rbf r;
     struct matrix x, d;
-    unsigned int i;
+    clann_size_type i;
 
     clann_initialize();
 
