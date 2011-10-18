@@ -27,14 +27,14 @@ void
 reader_extract_numbers(struct matrix *m,
                        const char *line)
 {
-    unsigned int total = 0,
-                 index = 0,
-                 count = 0,
-                 point = 0,
-                 sline = strlen(line);
+    clann_size_type total = 0,
+                    index = 0,
+                    count = 0,
+                    point = 0,
+                    sline = (clann_size_type) strlen(line);
     clann_real_type number,
-               max = 0,
-               min = 0;
+                    max = 0,
+                    min = 0;
 
     while (sline > point)
     {
@@ -70,7 +70,6 @@ reader_extract_numbers(struct matrix *m,
     /*
      * Refresh the max and min numbers in the matrix structure.
      */
-
     if (m->cols == 0)
     {
         m->cols = count;
