@@ -126,6 +126,8 @@ rbf_compute_weights(struct rbf *ann,
 {
     struct matrix p;
 
+    matrix_initialize(&p, 0, 0);
+
     if (matrix_pseudo_inverse(&ann->green, &p))
     {
         matrix_finalize(&ann->weights);
@@ -273,7 +275,7 @@ rbf_learning_self_organized(struct rbf *ann,
 void
 rbf_compute_center_widths(struct rbf *ann)
 {
-    unsigned int i, j, s;
+    clann_size_type i, j, s;
     clann_real_type v, d, maximum = 0;
 
     for (i = 0; i < ann->centers.rows; i++)
