@@ -44,8 +44,8 @@ struct matrix
  */
 inline void
 matrix_initialize(struct matrix *a,
-                  const unsigned int rows,
-                  const unsigned int cols);
+                  clann_size_type rows,
+                  clann_size_type cols);
 
 /**
  * Finalize an given matrix
@@ -58,8 +58,8 @@ matrix_finalize(struct matrix *a);
  */
 inline clann_real_type*
 matrix_value(const struct matrix *a,
-             const unsigned int i,
-             const unsigned int j);
+             const clann_size_type i,
+             const clann_size_type j);
 
 /**
  *
@@ -81,7 +81,7 @@ matrix_fill_rand(struct matrix *a,
  */
 inline void
 matrix_identity(struct matrix *a,
-                const unsigned int n);
+                const clann_size_type n);
 
 /**
  *

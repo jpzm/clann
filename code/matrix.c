@@ -24,10 +24,10 @@
 
 void
 matrix_initialize(struct matrix *a,
-                  const unsigned int rows,
-                  const unsigned int cols)
+                  clann_size_type rows,
+                  clann_size_type cols)
 {
-    unsigned int size = rows * cols;
+    clann_size_type size = rows * cols;
 
     if (size)
         a->values = (clann_real_type *) malloc(sizeof(clann_real_type) * size);
@@ -41,13 +41,17 @@ matrix_initialize(struct matrix *a,
 void
 matrix_finalize(struct matrix *a)
 {
-    free((void *) a->values);
+    if (a->values != NULL)
+        free((void *) a->values);
+
+    a->rows = 0;
+    a->cols = 0;
 }
 
 clann_real_type*
 matrix_value(const struct matrix *a,
-             const unsigned int i,
-             const unsigned int j)
+             const clann_size_type i,
+             const clann_size_type j)
 {
     if (i < a->rows && j < a->cols)
         return &a->values[a->cols * i + j];
@@ -59,7 +63,7 @@ void
 matrix_fill(struct matrix *a,
             const clann_real_type v)
 {
-    unsigned int i;
+    clann_size_type i;
     for (i = 0; i < a->rows * a->cols; i++)
         a->values[i] = v;
 }
@@ -69,18 +73,18 @@ matrix_fill_rand(struct matrix *a,
                  clann_real_type min,
                  clann_real_type max)
 {
-    unsigned int i;
+    clann_size_type i;
     for (i = 0; i < a->rows * a->cols; i++)
         a->values[i] = clann_rand(min, max);
 }
 
 void
 matrix_identity(struct matrix *a,
-                const unsigned int n)
+                const clann_size_type n)
 {
     matrix_initialize(a, n, n);
 
-    unsigned int i, j;
+    clann_size_type i, j;
     for (i = 0; i < a->rows; i++)
         for (j = 0; j < a->cols; j++)
             *matrix_value(a, i, j) = (clann_real_type) (i == j) ? 1 : 0;
@@ -96,7 +100,7 @@ matrix_copy(const struct matrix *a,
         matrix_initialize(b, a->rows, a->cols);
     }
 
-    unsigned int i;
+    clann_size_type i;
     for (i = 0; i < a->rows * a->cols; i++)
         b->values[i] = a->values[i];
 }
@@ -118,7 +122,7 @@ matrix_transpose(const struct matrix *a,
 {
     matrix_initialize(b, a->cols, a->rows);
 
-    unsigned int i, j;
+    clann_size_type i, j;
     for (i = 0; i < b->rows; i++)
         for (j = 0; j < b->cols; j++)
             *matrix_value(b, i, j) = *matrix_value(a, j, i);
@@ -135,7 +139,7 @@ matrix_add(const struct matrix *a,
     matrix_initialize(c, a->rows, a->cols);
     matrix_fill(c, 0);
 
-    unsigned int i, j;
+    clann_size_type i, j;
     for (i = 0; i < a->rows; i++)
         for (j = 0; j < a->cols; j++)
         {
@@ -157,7 +161,7 @@ matrix_subtract(const struct matrix *a,
     matrix_initialize(c, a->rows, a->cols);
     matrix_fill(c, 0);
 
-    unsigned int i, j;
+    clann_size_type i, j;
     for (i = 0; i < a->rows; i++)
         for (j = 0; j < a->cols; j++)
         {
@@ -179,7 +183,7 @@ matrix_product(const struct matrix *a,
     matrix_initialize(c, a->rows, b->cols);
     matrix_fill(c, 0);
 
-    unsigned int i, j, s;
+    clann_size_type i, j, s;
     for (i = 0; i < c->rows; i++)
         for (j = 0; j < c->cols; j++)
             for (s = 0; s < a->cols; s++)
@@ -198,10 +202,12 @@ matrix_inverse(const struct matrix *a,
 
     struct matrix c;
 
+    matrix_initialize(&c, 0, 0);
+
     matrix_copy(a, &c);
     matrix_identity(b, a->rows);
 
-    unsigned int i, j, p = 0;
+    clann_size_type i, j, p = 0;
     clann_real_type v;
 
     while (p < a->rows)
@@ -263,7 +269,7 @@ matrix_pseudo_inverse(const struct matrix *a,
 int
 matrix_isnull(const struct matrix *a)
 {
-    unsigned int i;
+    clann_size_type i;
     for (i = 0; i < a->rows * a->cols; i++)
         if (a->values[i] != (clann_real_type) 0)
             return 1;
