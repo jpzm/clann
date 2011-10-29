@@ -256,10 +256,10 @@ ilpso_run(struct ilpso *s,
         if (delta != 0 || iteration == 1)
         {
 #if CLANN_VERBOSE
-            printf("N. [ILPSO] Fitness: " CLANN_PRINTF ", from: %X "
+            printf("N. [ILPSO] Fitness: " CLANN_PRINTF ", from: %p "
                    "(Generation: %d).\n",
                    best_fitness,
-                   (int) s->last_best,
+                   s->last_best,
                    iteration);
 #endif
             if (delta != 0)
