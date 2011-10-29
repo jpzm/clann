@@ -278,7 +278,7 @@ svm_constraint_function(struct svm *s,
         if (CLANN_FABS(error) > c_sum)
         {
 #if CLANN_DEBUG
-            printf("W. [SVM] Solution %X filled with zeros.\n", (int) l);
+            printf("W. [SVM] Solution %p filled with zeros.\n", l);
 #endif
             for (i = 0; i < s->number_of_inputs; i++)
                 l[i] = 0;
