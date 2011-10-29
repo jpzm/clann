@@ -1,7 +1,7 @@
 default: all
 
 all:
-	cd code; cc -ggdb -Wall `pkg-config --cflags gtk+-2.0` -c *.c
+	cd code; cc -ggdb -Wall -shared -fPIC `pkg-config --cflags gtk+-2.0` -c *.c
 	cd test; cc -ggdb -Wall -lm matrix.c -o matrix.o \
 		../code/matrix.o \
 		../code/clann.o \
