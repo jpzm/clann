@@ -111,7 +111,7 @@ tlfn_open(struct tlfn *ann,
     if ((fd = fopen(file, "r")))
     {
         char *line = NULL;
-        unsigned int len;
+        size_t len;
 
         getline(&line, &len, fd);
 

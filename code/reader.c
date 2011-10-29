@@ -99,7 +99,7 @@ reader_read_double_data_file(const char *path,
 
     if ((fd = fopen(path, "r")))
     {
-        unsigned int length;
+        size_t length;
         int c = 1;
         char *line = NULL;
 
@@ -134,7 +134,7 @@ reader_read_data_file(const char *path,
     if ((fd = fopen(path, "r")))
     {
         char *line = NULL;
-        unsigned int len;
+        size_t len;
 
         while (getline(&line, &len, fd) != -1)
             reader_extract_numbers(v, line);
