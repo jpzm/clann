@@ -30,12 +30,17 @@ matrix_initialize(struct matrix *a,
     clann_size_type size = rows * cols;
 
     if (size)
+    {
         a->values = (clann_real_type *) malloc(sizeof(clann_real_type) * size);
+        a->rows = rows;
+        a->cols = cols;
+    }
     else
+    {
         a->values = (clann_real_type *) NULL;
-
-    a->rows = rows;
-    a->cols = cols;
+        a->rows = 0;
+        a->cols = 0;
+    }
 }
 
 void
