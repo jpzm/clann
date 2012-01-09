@@ -55,7 +55,7 @@ hopfield_compute_output(struct hopfield *ann,
     // TODO: all of it.
 }
 
-clann_list_type *
+struct matrix *
 hopfield_find_spurious_states(struct hopfield *ann)
 {
     // TODO: all of it.

@@ -1,3 +1,11 @@
 *.o
 *.so
 *.swp
+
+# test files
+test/fft
+test/lms
+test/matrix
+test/rbf
+test/som
+test/svm

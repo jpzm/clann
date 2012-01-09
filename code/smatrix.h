@@ -42,7 +42,7 @@ struct value
  */
 struct smatrix
 {
-    clann_list_type *l_values;
+//    clann_list_type *l_values;
     unsigned long int rows;
     unsigned long int cols;
 };

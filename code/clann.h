@@ -1,7 +1,6 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
+ * Copyright (C) 2008--2011 Joao Paulo de Souza Medeiros
  * Copyright (C) 2009 Adriano Monteiro Marques
- * Copyright (C) 2010 Joao Paulo de Souza Medeiros
  *
  * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -57,43 +56,6 @@ typedef clann_uint_type clann_id_type;
 typedef clann_uint_type clann_size_type;
 typedef enum {false, true} clann_bool_type;
 typedef enum {off, on} clann_key_type;
-
-typedef struct clann_list
-{
-    void *info;
-    struct clann_list *next;
-} clann_list_type;
-
-
-/**
- *
- */
-void
-clann_list_initialize(clann_list_type *l);
-
-/**
- *
- */
-void
-clann_list_finalize(clann_list_type *l);
-
-/**
- *
- */
-clann_size_type
-clann_list_size(clann_list_type *l);
-
-/**
- *
- */
-clann_bool_type
-clann_list_insert(clann_list_type **l, void *i);
-
-/**
- *
- */
-clann_bool_type
-clann_list_remove(clann_list_type **l, void *i);
 
 /**
  *
