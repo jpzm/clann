@@ -20,7 +20,8 @@ from distutils.core import setup, Extension
 
 matrix_module = Extension('matrix',
                           include_dirs = ['../'],
-                          extra_objects = ['../code/matrix.o'],
+                          extra_objects = ['../code/matrix.o',
+                                           '../code/clann.o'],
                           extra_compile_args = ['-Wall', '-ggdb'],
                           sources = ['matrix.c'])
 
