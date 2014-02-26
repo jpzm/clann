@@ -1,7 +1,7 @@
 /**
- * Copyright (C) 2011 Joao Paulo de Souza Medeiros
+ * Copyright (C) 2011-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,25 +39,25 @@ struct kalman
     clann_size_type n_measure;
     clann_size_type n_control;
 
-    struct matrix state[2];
-    struct matrix measure;
-    struct matrix control;
+    struct matrix state[2];     // state, x
+    struct matrix measure;      // measure, y
+    struct matrix control;      // control (input), u
 
-    struct matrix m_process;    // state transition matrix
-    struct matrix m_measure;    // measurement matrix
-    struct matrix m_control;    // control matrix
-    struct matrix m_gain;       // kalman gain matrix
-    struct matrix m_predict[2]; // kalman prediction error covariance matrix
+    struct matrix m_process;    // state transition matrix, A
+    struct matrix m_control;    // control (input) matrix, B
+    struct matrix m_measure;    // measurement matrix, C
+    struct matrix m_gain;       // kalman gain matrix, K
+    struct matrix m_predict[2]; // prediction error covariance matrix, P
 
-    struct matrix process_noise_cov;
-    struct matrix measure_noise_cov;
+    struct matrix process_noise_cov;    // process noise covariance, Q
+    struct matrix measure_noise_cov;    // measurement noise covariance, R
 };
 
 
 /**
  * Initialize an given kalman structure description
  */
-inline void
+void
 kalman_initialize(struct kalman *k,
                   clann_size_type n_state,
                   clann_size_type n_measure,
@@ -66,21 +66,25 @@ kalman_initialize(struct kalman *k,
 /**
  * Finalize an given kalman structure description
  */
-inline void
+void
 kalman_finalize(struct kalman *k);
 
 /**
  * 
  */
-inline void
-kalman_predict(struct kalman *k,
-               const clann_real_type *c);
+void
+kalman_default(struct kalman *k);
 
 /**
  * 
  */
-inline void
-kalman_correct(struct kalman *kf,
-               const clann_real_type *m);
+void
+kalman_predict(struct kalman *k);
+
+/**
+ * 
+ */
+void
+kalman_correct(struct kalman *k);
 
 #endif

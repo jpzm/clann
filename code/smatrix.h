@@ -51,7 +51,7 @@ struct smatrix
 /**
  * Initialize a given matrix
  */
-inline void
+void
 matrix_initialize(struct smatrix *a,
                   const unsigned long int rows,
                   const unsigned long int cols);
@@ -59,13 +59,13 @@ matrix_initialize(struct smatrix *a,
 /**
  * Finalize a given matrix
  */
-inline void
+void
 matrix_finalize(struct smatrix *a);
 
 /**
  * Return a matrix element
  */
-inline clann_real_type*
+clann_real_type*
 matrix_value(const struct smatrix *a,
              const unsigned int i,
              const unsigned int j);
@@ -73,35 +73,35 @@ matrix_value(const struct smatrix *a,
 /**
  *
  */
-inline void
+void
 matrix_fill(struct smatrix *a,
             const clann_real_type v);
 
 /**
  *
  */
-inline void
+void
 matrix_identity(struct smatrix *a,
                 const unsigned int n);
 
 /**
  *
  */
-inline void
+void
 matrix_copy(const struct smatrix *a,
             struct smatrix *b);
 
 /**
  *
  */
-inline void
+void
 matrix_transpose(const struct smatrix *a,
                  struct smatrix *b);
 
 /**
  *
  */
-inline struct smatrix*
+struct smatrix*
 matrix_add(const struct smatrix *a,
            const struct smatrix *b,
            struct smatrix *c);
@@ -109,7 +109,7 @@ matrix_add(const struct smatrix *a,
 /**
  *
  */
-inline struct smatrix*
+struct smatrix*
 matrix_subtract(const struct smatrix *a,
                 const struct smatrix *b,
                 struct smatrix *c);
@@ -117,7 +117,7 @@ matrix_subtract(const struct smatrix *a,
 /**
  *
  */
-inline struct smatrix*
+struct smatrix*
 matrix_product(const struct smatrix *a,
                const struct smatrix *b,
                struct smatrix *c);
@@ -125,21 +125,21 @@ matrix_product(const struct smatrix *a,
 /**
  *
  */
-inline struct smatrix*
+struct smatrix*
 matrix_inverse(const struct smatrix *a,
                struct smatrix *b);
 
 /**
  *
  */
-inline struct smatrix*
+struct smatrix*
 matrix_pseudo_inverse(const struct smatrix *a,
                       struct smatrix *b);
 
 /**
  *
  */
-inline int
+int
 matrix_isnull(const struct smatrix *a);
 
 #endif

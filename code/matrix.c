@@ -1,6 +1,5 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -43,12 +42,22 @@ matrix_initialize(struct matrix *a,
     }
 }
 
+struct matrix *
+matrix_new(clann_size_type rows,
+           clann_size_type cols)
+{
+    struct matrix *m = (struct matrix *) malloc(sizeof(struct matrix));
+    matrix_initialize(m, rows, cols);
+    return m;
+}
+
 void
 matrix_finalize(struct matrix *a)
 {
     if (a->values != NULL)
         free((void *) a->values);
 
+    a->values = (clann_real_type *) NULL;
     a->rows = 0;
     a->cols = 0;
 }
@@ -83,16 +92,22 @@ matrix_fill_rand(struct matrix *a,
         a->values[i] = clann_rand(min, max);
 }
 
-void
+struct matrix *
 matrix_identity(struct matrix *a,
                 const clann_size_type n)
 {
-    matrix_initialize(a, n, n);
+    if (a->rows != n || a->cols != n)
+    {
+        matrix_finalize(a);
+        matrix_initialize(a, n, n);
+    }
 
     clann_size_type i, j;
     for (i = 0; i < a->rows; i++)
         for (j = 0; j < a->cols; j++)
             *matrix_value(a, i, j) = (clann_real_type) (i == j) ? 1 : 0;
+
+    return a;
 }
 
 void
@@ -125,7 +140,11 @@ void
 matrix_transpose(const struct matrix *a,
                  struct matrix *b)
 {
-    matrix_initialize(b, a->cols, a->rows);
+    if (b->rows != a->cols || b->cols != a->rows)
+    {
+        matrix_finalize(b);
+        matrix_initialize(b, a->cols, a->rows);
+    }
 
     clann_size_type i, j;
     for (i = 0; i < b->rows; i++)
@@ -141,16 +160,17 @@ matrix_add(const struct matrix *a,
     if (a->rows != b->rows || a->cols != b->cols)
         return (struct matrix*) NULL;
 
-    matrix_initialize(c, a->rows, a->cols);
-    matrix_fill(c, 0);
+    if (c->rows != a->rows || c->cols != b->cols)
+    {
+        matrix_finalize(c);
+        matrix_initialize(c, a->rows, b->cols);
+    }
 
     clann_size_type i, j;
     for (i = 0; i < a->rows; i++)
         for (j = 0; j < a->cols; j++)
-        {
-            *matrix_value(c, i, j) += *matrix_value(a, i, j);
-            *matrix_value(c, i, j) += *matrix_value(b, i, j);
-        }
+            *matrix_value(c, i, j) = *matrix_value(a, i, j) +
+                                     *matrix_value(b, i, j);
 
     return c;
 }
@@ -163,16 +183,17 @@ matrix_subtract(const struct matrix *a,
     if (a->rows != b->rows || a->cols != b->cols)
         return (struct matrix*) NULL;
 
-    matrix_initialize(c, a->rows, a->cols);
-    matrix_fill(c, 0);
+    if (c->rows != a->rows || c->cols != b->cols)
+    {
+        matrix_finalize(c);
+        matrix_initialize(c, a->rows, b->cols);
+    }
 
     clann_size_type i, j;
     for (i = 0; i < a->rows; i++)
         for (j = 0; j < a->cols; j++)
-        {
-            *matrix_value(c, i, j) += *matrix_value(a, i, j);
-            *matrix_value(c, i, j) -= *matrix_value(b, i, j);
-        }
+            *matrix_value(c, i, j) = *matrix_value(a, i, j) -
+                                     *matrix_value(b, i, j);
 
     return c;
 }
@@ -183,9 +204,14 @@ matrix_product(const struct matrix *a,
                struct matrix *c)
 {
     if (a->cols != b->rows)
-        return (struct matrix*) NULL;
+        return (struct matrix *) NULL;
 
-    matrix_initialize(c, a->rows, b->cols);
+    if (c->rows != a->rows || c->cols != b->cols)
+    {
+        matrix_finalize(c);
+        matrix_initialize(c, a->rows, b->cols);
+    }
+
     matrix_fill(c, 0);
 
     clann_size_type i, j, s;
@@ -245,6 +271,8 @@ matrix_inverse(const struct matrix *a,
         p++;
     }
 
+    matrix_finalize(&c);
+
     return b;
 }
 
@@ -253,6 +281,10 @@ matrix_pseudo_inverse(const struct matrix *a,
                       struct matrix *b)
 {
     struct matrix c, d, e;
+
+    matrix_initialize(&c, 0, 0);
+    matrix_initialize(&d, 0, 0);
+    matrix_initialize(&e, 0, 0);
 
     matrix_transpose(a, &c);
 
@@ -280,6 +312,15 @@ matrix_isnull(const struct matrix *a)
             return 1;
 
     return 0;
+}
+
+void
+matrix_scale(const struct matrix *a,
+             clann_real_type s)
+{
+    clann_size_type i;
+    for (i = 0; i < a->rows * a->cols; i++)
+        a->values[i] = a->values[i] * s;
 }
 
 void

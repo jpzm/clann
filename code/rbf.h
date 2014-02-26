@@ -1,9 +1,8 @@
 /**
- * Copyright (C) 2008-2011 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
- *            José Macedo Firmino Filho <macedofirmino@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
+ *            Jose Macedo Firmino Filho <macedofirmino@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +66,7 @@ struct rbf
 /**
  * Initialize an given RBF
  */
-inline void
+void
 rbf_initialize(struct rbf *ann,
                clann_size_type input_size,
                clann_size_type output_size,
@@ -76,13 +75,13 @@ rbf_initialize(struct rbf *ann,
 /**
  *
  */
-inline void
+void
 rbf_finalize(struct rbf *ann);
 
 /**
  *
  */
-inline void
+void
 rbf_learn(struct rbf *ann,
           const struct matrix *x,
           const struct matrix *d);
@@ -90,7 +89,7 @@ rbf_learn(struct rbf *ann,
 /**
  *
  */
-inline void
+void
 rbf_learning_with_fixed_centers(struct rbf *ann,
                                 const struct matrix *x,
                                 const struct matrix *d);
@@ -98,7 +97,7 @@ rbf_learning_with_fixed_centers(struct rbf *ann,
 /**
  *
  */
-inline void
+void
 rbf_learning_supervised(struct rbf *ann,
                         const struct matrix *x,
                         const struct matrix *d);
@@ -106,7 +105,7 @@ rbf_learning_supervised(struct rbf *ann,
 /**
  *
  */
-inline void
+void
 rbf_learning_self_organized(struct rbf *ann,
                             const struct matrix *x,
                             const struct matrix *d);
@@ -114,35 +113,35 @@ rbf_learning_self_organized(struct rbf *ann,
 /**
  *
  */
-inline void
+void
 rbf_compute_green(struct rbf *ann,
                   const struct matrix *x);
 
 /**
  *
  */
-inline void
+void
 rbf_compute_weights(struct rbf *ann,
                     const struct matrix *d);
 
 /**
  *
  */
-inline void
+void
 rbf_compute_output(struct rbf *ann,
                    clann_real_type *x);
 
 /**
  *
  */
-inline void
+void
 rbf_initialize_centers_at_random(struct rbf *ann,
                                  const struct matrix *x);
 
 /**
  *
  */
-inline void
+void
 rbf_compute_center_widths(struct rbf *ann);
 
 #endif

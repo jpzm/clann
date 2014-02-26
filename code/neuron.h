@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,20 +43,20 @@ struct neuron
 /**
  * Initialize an given neuron
  */
-inline void
+void
 neuron_initialize(struct neuron *n,
                   const unsigned int n_weights);
 
 /**
  * Initialize an given neuron
  */
-inline void
+void
 neuron_finalize(struct neuron *n);
 
 /**
  * Compute neuron output given a neuron and its input
  */
-inline void
+void
 neuron_compute_output(struct neuron *n,
                       const clann_real_type *x);
 

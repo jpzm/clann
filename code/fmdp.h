@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +59,7 @@ struct fmdp
 /**
  *
  */
-inline void
+void
 fmdp_initialize(struct fmdp *mdp,
                 clann_real_type discount_rate,
                 unsigned int number_of_states,
@@ -69,7 +68,7 @@ fmdp_initialize(struct fmdp *mdp,
 /**
  *
  */
-inline void
+void
 fmdp_finalize(struct fmdp *mdp);
 
 /**

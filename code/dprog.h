@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,14 +44,14 @@ dprog_value_iteration(struct fmdp *mdp,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 dprog_state_value_function(struct fmdp *mdp,
                            unsigned int state);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 dprog_action_value_function(struct fmdp *mdp,
                             unsigned int state,
                             unsigned int action);
@@ -60,7 +59,7 @@ dprog_action_value_function(struct fmdp *mdp,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 dprog_deterministic_state_value_function(struct fmdp *mdp,
                                          unsigned int state,
                                          unsigned int action);

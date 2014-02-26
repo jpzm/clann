@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,14 +38,14 @@ struct lms
 /**
  * Initialize LMS structure
  */
-inline void
+void
 lms_initialize(struct lms *l,
                const clann_real_type learing_rate);
 
 /**
  * LMS function
  */
-inline void
+void
 lms_learn(struct neuron *n,
           struct lms *l,
           const clann_real_type *x,

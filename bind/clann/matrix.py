@@ -1,6 +1,6 @@
-# Copyright (C) 2009 Adriano Monteiro Marques
+# Copyright (C) 2009-2014 Joao Paulo de Souza Medeiros
 #
-# Author: Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
+# Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,24 +21,25 @@
 
 import clann.matrix
 
+
 class Matrix(object):
     """
     """
     def __init__(self, rows=0, cols=0, fill=0):
         """
         """
-        self.matrix = clann.matrix.new(rows, cols)
-        clann.matrix.fill(self.matrix, fill)
+        self.__matrix = clann.matrix.new(rows, cols)
+        clann.matrix.fill(self.__matrix, fill)
 
     def __nonzero__(self):
         """
         """
-        return clann.matrix.isnull(self.matrix)
+        return clann.matrix.isnull(self.__matrix)
 
     def __len__(self):
         """
         """
-        return sum(clann.matrix.size(self.matrix))
+        return sum(clann.matrix.size(self.__matrix))
 
     def __getitem__(self, key):
         """
@@ -47,7 +48,7 @@ class Matrix(object):
             raise IndexError, "invalid index size"
 
         i, j = key
-        return clann.matrix.get(self.matrix, i, j)
+        return clann.matrix.get(self.__matrix, i, j)
 
     def __setitem__(self, key, value):
         """
@@ -56,28 +57,28 @@ class Matrix(object):
             raise IndexError, "invalid index size"
 
         i, j = key
-        return clann.matrix.set(self.matrix, i, j, value)
+        return clann.matrix.set(self.__matrix, i, j, value)
 
     def __add__(self, m):
         """
         """
         n = Matrix()
-        n.matrix = clann.matrix.add(self.matrix, m.matrix)
-        
+        n.matrix = clann.matrix.add(self.__matrix, m.matrix)
+
         return n
 
     def __sub__(self, m):
         """
         """
         n = Matrix()
-        n.matrix = clann.matrix.subtract(self.matrix, m.matrix)
-        
+        n.matrix = clann.matrix.subtract(self.__matrix, m.matrix)
+
         return n
 
     def __mul__(self, m):
         """
         """
         n = Matrix()
-        n.matrix = clann.matrix.product(self.matrix, m.matrix)
-        
+        n.matrix = clann.matrix.product(self.__matrix, m.matrix)
+
         return n

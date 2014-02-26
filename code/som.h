@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +76,7 @@ struct som
 /**
  *
  */
-inline void
+void
 som_initialize(struct som *ann,
                som_grid_type grid_type,
                clann_size_type input_size,
@@ -86,7 +85,7 @@ som_initialize(struct som *ann,
 /**
  *
  */
-inline void
+void
 som_finalize(struct som *ann);
 
 /**
@@ -117,7 +116,7 @@ som_train_batch(struct som *ann,
 /**
  *
  */
-inline void 
+void 
 som_incremental_adjust_of_weights(struct som *ann,
                                   clann_real_type *x,
                                   clann_real_type *winner);
@@ -125,7 +124,7 @@ som_incremental_adjust_of_weights(struct som *ann,
 /**
  *
  */
-inline void 
+void 
 som_batch_adjust_of_weights(struct som *ann,
                             clann_real_type *x,
                             clann_real_type *winner);
@@ -133,26 +132,26 @@ som_batch_adjust_of_weights(struct som *ann,
 /**
  *
  */
-inline void
+void
 som_adjust_width(struct som *ann);
 
 /**
  *
  */
-inline void
+void
 som_adjust_learning_rate(struct som *ann);
 
 /**
  *
  */
-inline clann_real_type*
+clann_real_type*
 som_grid_get_weights(struct som *ann,
                      unsigned int index);
 
 /**
  *
  */
-inline void
+void
 som_find_winner_neuron(struct som *ann,
                        clann_real_type *x,
                        clann_real_type **winner);

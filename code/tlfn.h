@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +47,7 @@ struct tlfn
 /**
  *
  */
-inline void
+void
 tlfn_initialize(struct tlfn *ann,
                 unsigned int *architecture,
                 const unsigned int number_of_layers);
@@ -56,13 +55,13 @@ tlfn_initialize(struct tlfn *ann,
 /**
  *
  */
-inline void
+void
 tlfn_finalize(struct tlfn *ann);
 
 /**
  *
  */
-inline void
+void
 tlfn_insert_input(struct tlfn *ann,
                   const clann_real_type x);
 

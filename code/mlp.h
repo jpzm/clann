@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,20 +54,20 @@ struct mlp
 /**
  * Initialize an given layer
  */
-inline void
+void
 mlp_layer_initialize(struct mlp_layer *l,
                      const unsigned int input_size,
                      const unsigned int number_of_neurons);
 /**
  * Finalize an given layer
  */
-inline void
+void
 mlp_layer_finalize(struct mlp_layer *l);
 
 /**
  *
  */
-inline void
+void
 mlp_initialize(struct mlp *ann,
                unsigned int *architecture,
                const unsigned int number_of_layers);
@@ -76,47 +75,47 @@ mlp_initialize(struct mlp *ann,
 /**
  *
  */
-inline void
+void
 mlp_finalize(struct mlp *ann);
 
 /**
  *
  */
-inline void
+void
 mlp_forward_computation(struct mlp *ann,
                         const clann_real_type *x);
 
 /**
  *
  */
-inline void
+void
 mlp_compute_layer_output(struct mlp_layer *l,
                          const clann_real_type *x);
 
 /**
  *
  */
-inline void
+void
 mlp_compute_instantaneous_error(struct mlp *ann);
 
 /**
  *
  */
-inline void
+void
 mlp_compute_avarage_error(struct mlp *ann,
                           const unsigned int n);
 
 /**
  *
  */
-inline void
+void
 mlp_compute_output_error(struct mlp *ann,
                          const clann_real_type *d);
 
 /**
  *
  */
-inline void
+void
 mlp_validate(struct mlp *ann,
              const clann_real_type *x,
              const clann_real_type *d);
@@ -124,7 +123,7 @@ mlp_validate(struct mlp *ann,
 /**
  *
  */
-inline void
+void
 mlp_validate_epoch(struct mlp *ann,
                    const struct matrix *x,
                    const struct matrix *d);

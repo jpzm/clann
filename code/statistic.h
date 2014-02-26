@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,34 +28,34 @@
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_mean(const clann_real_type *list,
                const unsigned int length);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_mean_matrix(const struct matrix *m);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_mean_matrix_row(const struct matrix *m,
                           const unsigned int row);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_mean_matrix_col(const struct matrix *m,
                           const unsigned int col);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_variance(const clann_real_type *list,
                    const clann_real_type *probability,
                    const unsigned int length);
@@ -64,14 +63,14 @@ statistic_variance(const clann_real_type *list,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_variance_matrix(const struct matrix *m,
                           const clann_real_type *probability);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_variance_matrix_row(const struct matrix *m,
                               const clann_real_type *probability,
                               const unsigned int row);
@@ -79,7 +78,7 @@ statistic_variance_matrix_row(const struct matrix *m,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 statistic_variance_matrix_col(const struct matrix *m,
                               const clann_real_type *probability,
                               const unsigned int col);

@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +73,7 @@ struct svm
 /**
  * Initialize an given SVM
  */
-inline void
+void
 svm_initialize(struct svm *s,
                const unsigned int input_size,
                const unsigned int number_of_inputs);
@@ -82,7 +81,7 @@ svm_initialize(struct svm *s,
 /**
  *
  */
-inline void
+void
 svm_compute_weights(struct svm *s,
                     const struct matrix *x,
                     const struct matrix *d);
@@ -90,35 +89,35 @@ svm_compute_weights(struct svm *s,
 /**
  *
  */
-inline void
+void
 svm_compute_output(struct svm *s,
                    const clann_real_type *x);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 svm_compute_fitness_function(struct svm *s,
                              const clann_real_type *l);
 
 /**
  *
  */
-inline void
+void
 svm_constraint_function(struct svm *s,
                         clann_real_type *l);
 
 /**
  *
  */
-inline void
+void
 svm_solve_by_ilpso(struct svm *s,
                    clann_real_type *l);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 svm_compute_kernel(struct svm *s,
                    const clann_real_type *a,
                    const clann_real_type *b);

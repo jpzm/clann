@@ -1,6 +1,5 @@
 /**
- * Copyright (C) 2009 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2009-2014 Joao Paulo de Souza Medeiros
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -44,7 +43,7 @@ struct periodogram
 /**
  * Initialize an given periodogram
  */
-inline void
+void
 periodogram_initialize(struct periodogram *p,
                        unsigned int q,
                        unsigned int l,
@@ -53,13 +52,13 @@ periodogram_initialize(struct periodogram *p,
 /**
  * Finalize an given periodogram
  */
-inline void
+void
 periodogram_finalize(struct periodogram *a);
 
 /**
  * Periodogram averaging function
  */
-inline void
+void
 periodogram(struct periodogram *p,
             complex const *x,
             unsigned int n);

@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +49,7 @@ struct narx
 /**
  *
  */
-inline void
+void
 narx_initialize(struct narx *ann,
                 unsigned int *architecture,
                 const unsigned int number_of_layers,
@@ -59,13 +58,13 @@ narx_initialize(struct narx *ann,
 /**
  *
  */
-inline void
+void
 narx_finalize(struct narx *ann);
 
 /**
  *
  */
-inline void
+void
 narx_insert_input(struct narx *ann,
                   const clann_real_type x);
 

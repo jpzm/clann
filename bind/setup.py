@@ -1,6 +1,6 @@
-# Copyright (C) 2009 Adriano Monteiro Marques
+# Copyright (C) 2009-2014 Joao Paulo de Souza Medeiros
 #
-# Author: Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
+# Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ matrix_module = Extension('matrix',
 metric_module = Extension('metric',
                           include_dirs = ['../'],
                           extra_objects = ['../code/metric.o',
-                                           '../code/matrix.o'],
+                                           '../code/matrix.o',
+                                           '../code/clann.o'],
                           extra_compile_args = ['-Wall', '-ggdb'],
                           sources = ['metric.c'])
 

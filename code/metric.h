@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +30,7 @@
 /**
  * Normalize
  */
-inline clann_real_type
+clann_real_type
 metric_scale(clann_real_type value,
              clann_real_type *from,
              clann_real_type *to);
@@ -39,7 +38,7 @@ metric_scale(clann_real_type value,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_euclidean_pow2(const clann_real_type *a,
                       const clann_real_type *b,
                       const unsigned int length);
@@ -47,7 +46,7 @@ metric_euclidean_pow2(const clann_real_type *a,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_euclidean(const clann_real_type *a,
                  const clann_real_type *b,
                  const unsigned int length);
@@ -55,14 +54,14 @@ metric_euclidean(const clann_real_type *a,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_norm(const clann_real_type *a,
             const unsigned int length);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_dot_product(const clann_real_type *a,
                    const clann_real_type *b,
                    const unsigned int length);
@@ -70,21 +69,21 @@ metric_dot_product(const clann_real_type *a,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_hausdorff(const struct matrix *a,
                  const struct matrix *b);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_hausdorff_symmetric(const struct matrix *a,
                            const struct matrix *b);
 
 /**
  *
  */
-inline unsigned int
+unsigned int
 metric_hausdorff_limit(const struct matrix *a,
                        const struct matrix *b,
                        clann_real_type limit);
@@ -92,7 +91,7 @@ metric_hausdorff_limit(const struct matrix *a,
 /**
  *
  */
-inline unsigned int
+unsigned int
 metric_hausdorff_limit_symmetric(const struct matrix *a,
                                  const struct matrix *b,
                                  clann_real_type limit);
@@ -100,21 +99,21 @@ metric_hausdorff_limit_symmetric(const struct matrix *a,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_hausdorff_mean(const struct matrix *a,
                       const struct matrix *b);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 metric_hausdorff_mean_symmetric(const struct matrix *a,
                                 const struct matrix *b);
 
 /**
  *
  */
-inline unsigned int
+unsigned int
 metric_hausdorff_angle(const struct matrix *a,
                        const struct matrix *b,
                        clann_real_type limit);
@@ -122,7 +121,7 @@ metric_hausdorff_angle(const struct matrix *a,
 /**
  *
  */
-inline unsigned int
+unsigned int
 metric_hausdorff_angle_symmetric(const struct matrix *a,
                                  const struct matrix *b,
                                  clann_real_type limit);

@@ -1,6 +1,5 @@
 /**
- * Copyright (C) 2009 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2009-2014 Joao Paulo de Souza Medeiros
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -32,7 +31,7 @@
 /**
  * FFT function
  */
-inline void
+void
 fft(complex **x,
     unsigned int *n,
     const unsigned char mode);
@@ -40,14 +39,14 @@ fft(complex **x,
 /**
  *
  */
-inline void
+void
 fft_reverse(complex *x,
             const unsigned int n);
 
 /**
  *
  */
-inline void
+void
 fft_perform(complex *x,
             const unsigned int n,
             const unsigned char mode);

@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008--2011 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,26 +59,26 @@ typedef enum {off, on} clann_key_type;
 /**
  *
  */
-inline void
+void
 clann_shuffle(clann_int_type *list,
               clann_size_type length);
 
 /**
  *
  */
-inline void
+void
 clann_initialize(void);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 clann_nrand(void);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 clann_rand(const clann_real_type min,
            const clann_real_type max);
 
@@ -93,20 +92,20 @@ clann_randint(const clann_int_type min,
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 clann_factorial(const clann_uint_type v);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 clann_binomial(const clann_uint_type n,
                const clann_uint_type k);
 
 /**
  *
  */
-inline clann_uint_type
+clann_uint_type
 clann_nextpow2(clann_uint_type n);
 
 #endif

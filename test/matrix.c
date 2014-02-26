@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2009-2014 Joao Paulo de Souza Medeiros
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -29,12 +29,15 @@
 int main(int argc, char** argv)
 {
     struct matrix a, b;
-    unsigned i, j;
 
     clann_initialize();
 
     matrix_initialize(&a, M, N);
+    matrix_initialize(&b, 0, 0);
 
+    matrix_fill_rand(&a, -9, 9);
+
+    /*
     *matrix_value(&a, 0, 0) = 1;
     *matrix_value(&a, 0, 1) = 2;
     *matrix_value(&a, 0, 2) = 6;
@@ -50,17 +53,15 @@ int main(int argc, char** argv)
     *matrix_value(&a, 3, 0) = 1;
     *matrix_value(&a, 3, 1) = 0;
     *matrix_value(&a, 3, 2) = 2;
+    */
+
+    printf("Matrix:\n");
+    matrix_print(&a);
 
     if (matrix_pseudo_inverse(&a, &b) != NULL)
     {
         printf("Pseudo-inverse:\n");
-        for (i = 0; i < N; i++)
-        {
-            for (j = 0; j < M; j++)
-                printf(CLANN_PRINTF " ", *matrix_value(&b, i, j));
-
-            printf("\n");
-        }
+        matrix_print(&b);
     }
     else
         printf("No pseudo-inverse.\n");

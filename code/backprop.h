@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +31,7 @@
 /**
  * Adjust weights function
  */
-inline void
+void
 backprop_adjust_weights(struct neuron *n,
                         const clann_real_type *y,
                         const clann_real_type *g,
@@ -42,7 +41,7 @@ backprop_adjust_weights(struct neuron *n,
 /**
  *
  */
-inline void
+void
 backprop_learn(struct mlp *ann,
                const clann_real_type *x,
                const clann_real_type *d,
@@ -52,7 +51,7 @@ backprop_learn(struct mlp *ann,
 /**
  *
  */
-inline void
+void
 backprop_learn_epoch(struct mlp *ann,
                      const struct matrix *x,
                      const struct matrix *d,
@@ -88,7 +87,7 @@ backprop_train_with_validation(struct mlp *ann,
 /**
  *
  */
-inline void
+void
 backprop_backward_computation(struct mlp *ann,
                               const clann_real_type *x,
                               const clann_real_type *d,
@@ -98,7 +97,7 @@ backprop_backward_computation(struct mlp *ann,
 /**
  *
  */
-inline void
+void
 backprop_compute_gradient(struct mlp *ann,
                           const unsigned int l,
                           const unsigned int j,

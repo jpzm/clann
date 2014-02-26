@@ -1,7 +1,7 @@
 /**
- * Copyright (C) 2011 Joao Paulo de Souza Medeiros
+ * Copyright (C) 2011-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ struct hopfield
 /**
  * Initialize an given Hopfield network
  */
-inline void
+void
 hopfield_initialize(struct hopfield *ann,
                     clann_size_type n_neurons,
                     clann_size_type n_memories);
@@ -49,7 +49,7 @@ hopfield_initialize(struct hopfield *ann,
 /**
  * Finalize an given Hopfield network
  */
-inline void
+void
 hopfield_finalize(struct hopfield *ann);
 
 /**

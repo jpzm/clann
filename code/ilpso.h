@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +63,7 @@ struct ilpso
 /**
  *
  */
-inline void
+void
 ilpso_initialize(struct ilpso *s,
                  void *problem,
                  const unsigned int particle_length);
@@ -72,13 +71,13 @@ ilpso_initialize(struct ilpso *s,
 /**
  *
  */
-inline void
+void
 ilpso_finalize(struct ilpso *s);
 
 /**
  *
  */
-inline void
+void
 ilpso_run(struct ilpso *s,
           const unsigned int max_iterations,
           const clann_real_type noticeable_change_rate);
@@ -86,13 +85,13 @@ ilpso_run(struct ilpso *s,
 /**
  *
  */
-inline void
+void
 ilpso_initialize_positions_and_velocities(struct ilpso *s);
 
 /**
  *
  */
-inline clann_real_type
+clann_real_type
 ilpso_compute_probability_of_mutation(struct ilpso *s);
 
 #endif

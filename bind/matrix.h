@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2009-2014 Joao Paulo de Souza Medeiros
  *
  * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
@@ -119,8 +119,7 @@ inverse(PyObject *self, PyObject *args);
 /**
  *
  */
-static char pseudo_inverse__doc__[] = "Create a pseudo inverse for a given \
-matrix";
+static char pseudo_inverse__doc__[] = "Compute the pseudo inverse of a matrix";
 
 static PyObject*
 pseudo_inverse(PyObject *self, PyObject *args);

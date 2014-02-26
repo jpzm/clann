@@ -1,8 +1,7 @@
 /**
- * Copyright (C) 2008 Joao Paulo de Souza Medeiros
- * Copyright (C) 2009 Adriano Monteiro Marques
+ * Copyright (C) 2008-2014 Joao Paulo de Souza Medeiros
  *
- * Author(s): João Paulo de Souza Medeiros <ignotus21@gmail.com>
+ * Author(s): Joao Paulo de Souza Medeiros <ignotus21@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,32 +38,32 @@
 /**
  * Activation step function
  */
-inline clann_real_type
+clann_real_type
 function_step(const clann_real_type value);
 
 /**
  * Activation signal function
  */
-inline clann_real_type
+clann_real_type
 function_signal(const clann_real_type value);
 
 /**
  * Activation sigmoid function
  */
-inline clann_real_type
+clann_real_type
 function_sigmoid(const clann_real_type value);
 
 /**
  * Activation hyperbolic tangent function
  */
-inline clann_real_type
+clann_real_type
 function_tanh(const clann_real_type value);
 
 
 /**
  * Green Gaussian function
  */
-inline clann_real_type
+clann_real_type
 function_green_gaussian(const clann_real_type sigma,
                         const clann_real_type value);
 
