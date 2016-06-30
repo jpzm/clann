@@ -5,18 +5,18 @@ all:
 	cd test; cc -ggdb -Wall matrix.c -o matrix \
 		../code/matrix.o \
 		../code/clann.o \
-		../code/reader.o -lm
+		../code/io.o -lm
 	cd test; cc -ggdb -Wall kalman.c -o kalman \
 		../code/kalman.o \
 		../code/matrix.o \
 		../code/clann.o \
-		../code/reader.o -lm
+		../code/io.o -lm
 	cd test; cc -ggdb -Wall fft.c -o fft \
 		../code/fft.o \
 		../code/matrix.o \
 		../code/clann.o \
 		../code/statistic.o \
-		../code/reader.o -lm
+		../code/io.o -lm
 	cd test; cc -ggdb -Wall lms.c -o lms \
 		../code/matrix.o \
 		../code/clann.o \
@@ -32,7 +32,7 @@ all:
 		../code/function.o \
 		../code/clann.o \
 		../code/lms.o \
-		../code/reader.o -lm
+		../code/io.o -lm
 	cd test; cc -ggdb -Wall svm.c -o svm \
 		../code/svm.o \
 		../code/ilpso.o \
@@ -40,13 +40,13 @@ all:
 		../code/neuron.o \
 		../code/function.o \
 		../code/clann.o \
-		../code/reader.o -lm
+		../code/io.o -lm
 	cd test; cc -Wall som.c -lm -lpthread -lGL -lglut -o som \
 		../code/clann.o \
 		../code/som.o \
 		../code/matrix.o \
 		../code/metric.o \
-		../code/reader.o
+		../code/io.o
 	cd bind; python2 setup.py build_ext -f -b clann
 
 clean:
