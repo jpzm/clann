@@ -6,6 +6,11 @@ all:
 		../code/matrix.o \
 		../code/clann.o \
 		../code/reader.o -lm
+	cd test; cc -ggdb -Wall kalman.c -o kalman \
+		../code/kalman.o \
+		../code/matrix.o \
+		../code/clann.o \
+		../code/reader.o -lm
 	cd test; cc -ggdb -Wall fft.c -o fft \
 		../code/fft.o \
 		../code/matrix.o \
@@ -36,13 +41,13 @@ all:
 		../code/function.o \
 		../code/clann.o \
 		../code/reader.o -lm
-	cd test; cc -Wall som.c -lpthread -lglut -o som \
+	cd test; cc -Wall som.c -lm -lpthread -lGL -lglut -o som \
 		../code/clann.o \
 		../code/som.o \
 		../code/matrix.o \
 		../code/metric.o \
 		../code/reader.o
-	cd bind; python setup.py build_ext -f -b clann
+	cd bind; python2 setup.py build_ext -f -b clann
 
 clean:
 	cd code; rm -rf *.o
@@ -52,7 +57,8 @@ clean:
 		matrix \
 		rbf \
 		svm \
-		som
+		som \
+		kalman
 	cd bind; rm -rf clann/*.so clann/*.pyc \
 		rm -rf build/
 

@@ -9,3 +9,4 @@ test/matrix
 test/rbf
 test/som
 test/svm
+test/kalman
