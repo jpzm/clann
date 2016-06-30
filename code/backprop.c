@@ -21,7 +21,7 @@
 #include "backprop.h"
 
 
-void
+clann_void_type
 backprop_adjust_weights(struct neuron *n,
                         const clann_real_type *y,
                         const clann_real_type *g,
@@ -43,7 +43,7 @@ backprop_adjust_weights(struct neuron *n,
 }
 
 
-void
+clann_void_type
 backprop_learn(struct mlp *ann,
                const clann_real_type *x,
                const clann_real_type *d,
@@ -55,10 +55,10 @@ backprop_learn(struct mlp *ann,
 }
 
 
-void
+clann_void_type
 backprop_learn_epoch(struct mlp *ann,
-                     const struct matrix *x,
-                     const struct matrix *d,
+                     const clann_matrix_type *x,
+                     const clann_matrix_type *d,
                      clann_real_type momentum,
                      clann_real_type learing_rate)
 {
@@ -68,8 +68,8 @@ backprop_learn_epoch(struct mlp *ann,
     for (i = 0; i < x->rows; i++)
     {
         backprop_learn(ann,
-                       matrix_value(x, i, 0),
-                       matrix_value(d, i, 0),
+                       clann_matrix_value(x, i, 0),
+                       clann_matrix_value(d, i, 0),
                        momentum,
                        learing_rate);
 
@@ -79,10 +79,10 @@ backprop_learn_epoch(struct mlp *ann,
     mlp_compute_avarage_error(ann, x->rows);
 }
 
-void
+clann_void_type
 backprop_train(struct mlp *ann,
-               const struct matrix *x,
-               const struct matrix *d,
+               const clann_matrix_type *x,
+               const clann_matrix_type *d,
                clann_real_type momentum,
                clann_real_type learing_rate,
                clann_real_type desired_error,
@@ -111,12 +111,12 @@ backprop_train(struct mlp *ann,
            ann->avarage_error > desired_error);
 }
 
-void
+clann_void_type
 backprop_train_with_validation(struct mlp *ann,
-                               const struct matrix *tx,
-                               const struct matrix *td,
-                               const struct matrix *vx,
-                               const struct matrix *vd,
+                               const clann_matrix_type *tx,
+                               const clann_matrix_type *td,
+                               const clann_matrix_type *vx,
+                               const clann_matrix_type *vd,
                                clann_real_type momentum,
                                clann_real_type learing_rate,
                                clann_real_type desired_error,
@@ -153,7 +153,7 @@ backprop_train_with_validation(struct mlp *ann,
     while ((!max_epochs || e < max_epochs) && train_error > desired_error);
 }
 
-void
+clann_void_type
 backprop_backward_computation(struct mlp *ann,
                               const clann_real_type *x,
                               const clann_real_type *d,
@@ -189,7 +189,7 @@ backprop_backward_computation(struct mlp *ann,
     }
 }
 
-void
+clann_void_type
 backprop_compute_gradient(struct mlp *ann,
                           const unsigned int l,
                           const unsigned int j,

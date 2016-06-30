@@ -21,9 +21,9 @@
 #include "bind/matrix.h"
 
 void
-delete_matrix(struct matrix *a)
+delete_matrix(clann_matrix_type *a)
 {
-    matrix_finalize(a);
+    clann_matrix_finalize(a);
     free((void *) a);
 }
 
@@ -41,7 +41,7 @@ size(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) PyCObject_AsVoidPtr(m);
+    clann_matrix_type *a = (clann_matrix_type *) PyCObject_AsVoidPtr(m);
 
     /**
      * Convert output
@@ -63,9 +63,9 @@ new(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *a = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    matrix_initialize(a, rows, cols);
+    clann_matrix_initialize(a, rows, cols);
 
     /**
      * Convert output
@@ -88,7 +88,7 @@ get(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) PyCObject_AsVoidPtr(m);
+    clann_matrix_type *a = (clann_matrix_type *) PyCObject_AsVoidPtr(m);
 
     if (row >= a->rows || col >= a->cols)
     {
@@ -99,7 +99,7 @@ get(PyObject *self, PyObject *args)
     /**
      * Convert output
      */
-    return Py_BuildValue("d", (double) *matrix_value(a, row, col));
+    return Py_BuildValue("d", (double) *clann_matrix_value(a, row, col));
 }
 
 PyObject*
@@ -118,7 +118,7 @@ set(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) PyCObject_AsVoidPtr(m);
+    clann_matrix_type *a = (clann_matrix_type *) PyCObject_AsVoidPtr(m);
 
     if (row >= a->rows || col >= a->cols)
     {
@@ -126,7 +126,7 @@ set(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    *matrix_value(a, row, col) = (clann_real_type) value;
+    *clann_matrix_value(a, row, col) = (clann_real_type) value;
 
     /**
      * Convert output
@@ -150,9 +150,9 @@ fill(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) PyCObject_AsVoidPtr(m);
+    clann_matrix_type *a = (clann_matrix_type *) PyCObject_AsVoidPtr(m);
 
-    matrix_fill(a, (clann_real_type) value);
+    clann_matrix_fill(a, (clann_real_type) value);
 
     /**
      * Convert output
@@ -175,9 +175,9 @@ identity(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *a = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    matrix_identity(a, n);
+    clann_matrix_identity(a, n);
 
     /**
      * Convert output
@@ -199,9 +199,9 @@ transpose(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *a = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    matrix_transpose(PyCObject_AsVoidPtr(m), a);
+    clann_matrix_transpose(PyCObject_AsVoidPtr(m), a);
 
     /**
      * Convert output
@@ -224,9 +224,9 @@ add(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *p = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *p = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    if (!matrix_add(PyCObject_AsVoidPtr(a), PyCObject_AsVoidPtr(b), p))
+    if (!clann_matrix_add(PyCObject_AsVoidPtr(a), PyCObject_AsVoidPtr(b), p))
     {
         PyErr_SetString(PyExc_RuntimeError, "matrices' sizes are not equal");
         return NULL;
@@ -253,9 +253,9 @@ subtract(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *p = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *p = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    if (!matrix_subtract(PyCObject_AsVoidPtr(a), PyCObject_AsVoidPtr(b), p))
+    if (!clann_matrix_subtract(PyCObject_AsVoidPtr(a), PyCObject_AsVoidPtr(b), p))
     {
         PyErr_SetString(PyExc_RuntimeError, "matrices' sizes are not equal");
         return NULL;
@@ -282,9 +282,9 @@ product(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *p = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *p = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    if (!matrix_product(PyCObject_AsVoidPtr(a), PyCObject_AsVoidPtr(b), p))
+    if (!clann_matrix_product(PyCObject_AsVoidPtr(a), PyCObject_AsVoidPtr(b), p))
     {
         PyErr_SetString(PyExc_RuntimeError,
                         "matrices' sizes does not match for product");
@@ -311,9 +311,9 @@ inverse(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *a = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    if (!matrix_inverse(PyCObject_AsVoidPtr(m), a))
+    if (!clann_matrix_inverse(PyCObject_AsVoidPtr(m), a))
     {
         PyErr_SetString(PyExc_RuntimeError, "matrix does not have inverse");
         return NULL;
@@ -339,9 +339,9 @@ pseudo_inverse(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) malloc(sizeof(struct matrix));
+    clann_matrix_type *a = (clann_matrix_type *) malloc(sizeof(clann_matrix_type));
 
-    if (!matrix_pseudo_inverse(PyCObject_AsVoidPtr(m), a))
+    if (!clann_matrix_pseudo_inverse(PyCObject_AsVoidPtr(m), a))
     {
         PyErr_SetString(PyExc_RuntimeError,
                         "matrix does not have pseudo inverse");
@@ -368,8 +368,8 @@ isnull(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *a = (struct matrix *) PyCObject_AsVoidPtr(m);
-    PyObject *r = matrix_isnull(a) ? Py_True : Py_False;
+    clann_matrix_type *a = (clann_matrix_type *) PyCObject_AsVoidPtr(m);
+    PyObject *r = clann_matrix_isnull(a) ? Py_True : Py_False;
 
     /**
      * Convert output

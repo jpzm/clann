@@ -44,9 +44,9 @@
  */
 struct rbf
 {
-    struct matrix green;
-    struct matrix centers;
-    struct matrix weights;
+    clann_matrix_type green;
+    clann_matrix_type centers;
+    clann_matrix_type weights;
     clann_size_type n_inputs;
     clann_size_type n_centers;
     clann_size_type input_size;
@@ -66,7 +66,7 @@ struct rbf
 /**
  * Initialize an given RBF
  */
-void
+clann_void_type
 rbf_initialize(struct rbf *ann,
                clann_size_type input_size,
                clann_size_type output_size,
@@ -75,73 +75,73 @@ rbf_initialize(struct rbf *ann,
 /**
  *
  */
-void
+clann_void_type
 rbf_finalize(struct rbf *ann);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_learn(struct rbf *ann,
-          const struct matrix *x,
-          const struct matrix *d);
+          const clann_matrix_type *x,
+          const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_learning_with_fixed_centers(struct rbf *ann,
-                                const struct matrix *x,
-                                const struct matrix *d);
+                                const clann_matrix_type *x,
+                                const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_learning_supervised(struct rbf *ann,
-                        const struct matrix *x,
-                        const struct matrix *d);
+                        const clann_matrix_type *x,
+                        const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_learning_self_organized(struct rbf *ann,
-                            const struct matrix *x,
-                            const struct matrix *d);
+                            const clann_matrix_type *x,
+                            const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_compute_green(struct rbf *ann,
-                  const struct matrix *x);
+                  const clann_matrix_type *x);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_compute_weights(struct rbf *ann,
-                    const struct matrix *d);
+                    const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_compute_output(struct rbf *ann,
                    clann_real_type *x);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_initialize_centers_at_random(struct rbf *ann,
-                                 const struct matrix *x);
+                                 const clann_matrix_type *x);
 
 /**
  *
  */
-void
+clann_void_type
 rbf_compute_center_widths(struct rbf *ann);
 
 #endif

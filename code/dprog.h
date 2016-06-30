@@ -28,7 +28,7 @@
 /**
  *
  */
-void
+clann_void_type
 dprog_policy_iteration(struct fmdp *mdp,
                        clann_real_type limit,
                        unsigned int max_epochs);
@@ -36,7 +36,7 @@ dprog_policy_iteration(struct fmdp *mdp,
 /**
  *
  */
-void
+clann_void_type
 dprog_value_iteration(struct fmdp *mdp,
                       clann_real_type limit,
                       unsigned int max_epochs);

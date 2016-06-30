@@ -21,7 +21,7 @@
 #include "tlfn.h"
 
 
-void
+clann_void_type
 tlfn_initialize(struct tlfn *ann,
                 unsigned int *architecture,
                 const unsigned int number_of_layers)
@@ -36,15 +36,15 @@ tlfn_initialize(struct tlfn *ann,
     mlp_initialize(&ann->ann, architecture, number_of_layers);
 }
 
-void
+clann_void_type
 tlfn_finalize(struct tlfn *ann)
 {
-    free((void *) ann->input);
+    free((clann_void_type *) ann->input);
 
     mlp_finalize(&ann->ann);
 }
 
-void
+clann_void_type
 tlfn_insert_input(struct tlfn *ann,
                   const clann_real_type x)
 {
@@ -116,24 +116,24 @@ tlfn_open(struct tlfn *ann,
 
         if (!strncmp(TLFN_FILE_HEADER, line, (4 > len ? len: 4)))
         {
-            struct matrix a, o, w, f;
+            clann_matrix_type a, o, w, f;
             unsigned int i;
             int c = 1;
 
-            matrix_initialize(&a, 0, 0);
-            matrix_initialize(&o, 0, 0);
-            matrix_initialize(&w, 0, 0);
-            matrix_initialize(&f, 0, 0);
+            clann_matrix_initialize(&a, 0, 0);
+            clann_matrix_initialize(&o, 0, 0);
+            clann_matrix_initialize(&w, 0, 0);
+            clann_matrix_initialize(&f, 0, 0);
 
             getline(&line, &len, fd);
-            reader_extract_numbers(&a, line);
+            clann_io_extract_numbers(&a, line);
 
             unsigned int arch[a.cols];
             for (i = 0; i < a.cols; i++)
                 arch[i] = (unsigned int) a.values[i];
 
             getline(&line, &len, fd);
-            reader_extract_numbers(&o, line);
+            clann_io_extract_numbers(&o, line);
 
             tlfn_initialize(ann, arch, a.cols);
             ann->ann.avarage_error = o.values[0];
@@ -143,9 +143,9 @@ tlfn_open(struct tlfn *ann,
                 if (getline(&line, &len, fd) == -1) break;
 
                 if (c == 1)
-                    reader_extract_numbers(&w, line);
+                    clann_io_extract_numbers(&w, line);
                 else
-                    reader_extract_numbers(&f, line);
+                    clann_io_extract_numbers(&f, line);
 
                 c *= -1;
             }

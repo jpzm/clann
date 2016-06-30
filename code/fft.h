@@ -31,7 +31,7 @@
 /**
  * FFT function
  */
-void
+clann_void_type
 fft(complex **x,
     unsigned int *n,
     const unsigned char mode);
@@ -39,14 +39,14 @@ fft(complex **x,
 /**
  *
  */
-void
+clann_void_type
 fft_reverse(complex *x,
             const unsigned int n);
 
 /**
  *
  */
-void
+clann_void_type
 fft_perform(complex *x,
             const unsigned int n,
             const unsigned char mode);

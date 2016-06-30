@@ -21,41 +21,41 @@
 #include "hopfield.h"
 
 
-void
+clann_void_type
 hopfield_initialize(struct hopfield *ann,
                     clann_size_type n_neurons,
                     clann_size_type n_memories)
 {
-    matrix_initialize(&ann->weights, n_neurons, n_memories);
+    clann_matrix_initialize(&ann->weights, n_neurons, n_memories);
     ann->n_neurons = n_neurons;
     ann->n_memories = n_memories;
     ann->output = malloc(sizeof(clann_real_type) * n_neurons);
 }
 
 
-void
+clann_void_type
 hopfield_finalize(struct hopfield *ann)
 {
-    matrix_finalize(&ann->weights);
+    clann_matrix_finalize(&ann->weights);
 
     free(ann->output);
 }
 
-void
+clann_void_type
 hopfield_train(struct hopfield *ann,
-               struct matrix *memories)
+               clann_matrix_type *memories)
 {
     // TODO: all of it.
 }
 
-void
+clann_void_type
 hopfield_compute_output(struct hopfield *ann,
                         clann_real_type *input)
 {
     // TODO: all of it.
 }
 
-struct matrix *
+clann_matrix_type *
 hopfield_find_spurious_states(struct hopfield *ann)
 {
     // TODO: all of it.

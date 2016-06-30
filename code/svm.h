@@ -52,8 +52,8 @@ struct svm
     unsigned int number_of_inputs;
     unsigned int number_of_support_vectors;
 
-    const struct matrix *x_set;
-    const struct matrix *d_set;
+    const clann_matrix_type *x_set;
+    const clann_matrix_type *d_set;
 
     clann_real_type output;
     clann_real_type *weights;
@@ -66,14 +66,14 @@ struct svm
     clann_real_type mlp_vartheta;
     clann_real_type poly_order;
 
-    void *network;
+    clann_void_type *network;
 };
 
 
 /**
  * Initialize an given SVM
  */
-void
+clann_void_type
 svm_initialize(struct svm *s,
                const unsigned int input_size,
                const unsigned int number_of_inputs);
@@ -81,15 +81,15 @@ svm_initialize(struct svm *s,
 /**
  *
  */
-void
+clann_void_type
 svm_compute_weights(struct svm *s,
-                    const struct matrix *x,
-                    const struct matrix *d);
+                    const clann_matrix_type *x,
+                    const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 svm_compute_output(struct svm *s,
                    const clann_real_type *x);
 
@@ -103,14 +103,14 @@ svm_compute_fitness_function(struct svm *s,
 /**
  *
  */
-void
+clann_void_type
 svm_constraint_function(struct svm *s,
                         clann_real_type *l);
 
 /**
  *
  */
-void
+clann_void_type
 svm_solve_by_ilpso(struct svm *s,
                    clann_real_type *l);
 

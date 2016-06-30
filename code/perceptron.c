@@ -21,7 +21,7 @@
 #include "perceptron.h"
 
 
-void
+clann_void_type
 perceptron_adjust_weights(struct neuron *n,
                           const clann_real_type *x,
                           const clann_real_type *d,
@@ -40,7 +40,7 @@ perceptron_adjust_weights(struct neuron *n,
 }
 
 
-void
+clann_void_type
 perceptron_learn(struct neuron *n,
                  const clann_real_type *x,
                  const clann_real_type *d,
@@ -51,10 +51,10 @@ perceptron_learn(struct neuron *n,
 }
 
 
-void
+clann_void_type
 perceptron_learn_set(struct neuron *n,
-                     const struct matrix *x,
-                     const struct matrix *d,
+                     const clann_matrix_type *x,
+                     const clann_matrix_type *d,
                      const clann_real_type learing_rate,
                      const unsigned int number_of_epochs)
 {
@@ -64,8 +64,8 @@ perceptron_learn_set(struct neuron *n,
     {
         for (i = 0; i < x->rows; i++)
             perceptron_learn(n,
-                             matrix_value(x, i, 0),
-                             matrix_value(d, i, 0),
+                             clann_matrix_value(x, i, 0),
+                             clann_matrix_value(d, i, 0),
                              learing_rate);
 
         e++;

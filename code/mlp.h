@@ -54,20 +54,20 @@ struct mlp
 /**
  * Initialize an given layer
  */
-void
+clann_void_type
 mlp_layer_initialize(struct mlp_layer *l,
                      const unsigned int input_size,
                      const unsigned int number_of_neurons);
 /**
  * Finalize an given layer
  */
-void
+clann_void_type
 mlp_layer_finalize(struct mlp_layer *l);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_initialize(struct mlp *ann,
                unsigned int *architecture,
                const unsigned int number_of_layers);
@@ -75,47 +75,47 @@ mlp_initialize(struct mlp *ann,
 /**
  *
  */
-void
+clann_void_type
 mlp_finalize(struct mlp *ann);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_forward_computation(struct mlp *ann,
                         const clann_real_type *x);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_compute_layer_output(struct mlp_layer *l,
                          const clann_real_type *x);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_compute_instantaneous_error(struct mlp *ann);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_compute_avarage_error(struct mlp *ann,
                           const unsigned int n);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_compute_output_error(struct mlp *ann,
                          const clann_real_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_validate(struct mlp *ann,
              const clann_real_type *x,
              const clann_real_type *d);
@@ -123,17 +123,17 @@ mlp_validate(struct mlp *ann,
 /**
  *
  */
-void
+clann_void_type
 mlp_validate_epoch(struct mlp *ann,
-                   const struct matrix *x,
-                   const struct matrix *d);
+                   const clann_matrix_type *x,
+                   const clann_matrix_type *d);
 
 /**
  *
  */
-void
+clann_void_type
 mlp_fill(struct mlp *ann,
-         const struct matrix *w,
-         const struct matrix *f);
+         const clann_matrix_type *w,
+         const clann_matrix_type *f);
 
 #endif

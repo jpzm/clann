@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifndef READER_H
-#define READER_H
+#ifndef CLANN_IO_H
+#define CLANN_IO_H
 
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -43,9 +43,9 @@
  * @param m     A structure of matrix type
  * @param line  The line to be parsed
  */
-void
-reader_extract_numbers(struct matrix *m,
-                       const char *line);
+clann_void_type
+clann_io_extract_numbers(clann_matrix_type *m,
+                         const clann_string_type line);
 
 /**
  * Reader for input data files (with pairs of data, i.e. a input line followed
@@ -54,12 +54,12 @@ reader_extract_numbers(struct matrix *m,
  * @param path  X
  * @param x     X
  * @param d     X
- * @return      Return 0 (zero) for error and 1 (one) for success.
+ * @return      Return false (zero) for error and true (one) for success.
  */
-int
-reader_read_double_data_file(const char *path,
-                             struct matrix *x,
-                             struct matrix *d);
+clann_bool_type
+clann_io_read_double_data_file(const clann_string_type path,
+                               clann_matrix_type *x,
+                               clann_matrix_type *d);
 
 /**
  * Reader for multidimensional time series files.
@@ -67,8 +67,8 @@ reader_read_double_data_file(const char *path,
  * @param path  X
  * @return      Return 0 (zero) for error and 1 (one) for success.
  */
-int
-reader_read_data_file(const char *path,
-                      struct matrix *v);
+clann_bool_type
+clann_io_read_data_file(const clann_string_type path,
+                        clann_matrix_type *v);
 
 #endif

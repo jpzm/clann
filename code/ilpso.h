@@ -33,16 +33,16 @@
 
 struct ilpso
 {
-    void *problem;
-    void (*f_constraint)(void *, clann_real_type *);
-    clann_real_type (*f_fitness)(void *, clann_real_type *);
+    clann_void_type *problem;
+    clann_void_type (*f_constraint)(clann_void_type *, clann_real_type *);
+    clann_real_type (*f_fitness)(clann_void_type *, clann_real_type *);
 
     unsigned int particle_length;
     unsigned int number_of_particles;
 
-    struct matrix positions;
-    struct matrix velocities;
-    struct matrix best_positions;
+    clann_matrix_type positions;
+    clann_matrix_type velocities;
+    clann_matrix_type best_positions;
 
     clann_real_type rand_max;
     clann_real_type rand_min;
@@ -63,21 +63,21 @@ struct ilpso
 /**
  *
  */
-void
+clann_void_type
 ilpso_initialize(struct ilpso *s,
-                 void *problem,
+                 clann_void_type *problem,
                  const unsigned int particle_length);
 
 /**
  *
  */
-void
+clann_void_type
 ilpso_finalize(struct ilpso *s);
 
 /**
  *
  */
-void
+clann_void_type
 ilpso_run(struct ilpso *s,
           const unsigned int max_iterations,
           const clann_real_type noticeable_change_rate);
@@ -85,7 +85,7 @@ ilpso_run(struct ilpso *s,
 /**
  *
  */
-void
+clann_void_type
 ilpso_initialize_positions_and_velocities(struct ilpso *s);
 
 /**

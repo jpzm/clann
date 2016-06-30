@@ -30,7 +30,7 @@
 /**
  * Adjust weights function
  */
-void
+clann_void_type
 perceptron_adjust_weights(struct neuron *n,
                           const clann_real_type *x,
                           const clann_real_type *d,
@@ -39,7 +39,7 @@ perceptron_adjust_weights(struct neuron *n,
 /**
  * Perceptron learning function
  */
-void
+clann_void_type
 perceptron_learn(struct neuron *n,
                  const clann_real_type *x,
                  const clann_real_type *d,
@@ -48,10 +48,10 @@ perceptron_learn(struct neuron *n,
 /**
  * Perceptron learning function
  */
-void
+clann_void_type
 perceptron_learn_set(struct neuron *n,
-                     const struct matrix *x,
-                     const struct matrix *d,
+                     const clann_matrix_type *x,
+                     const clann_matrix_type *d,
                      const clann_real_type learing_rate,
                      const unsigned int number_of_epochs);
 

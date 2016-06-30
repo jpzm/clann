@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-#include "reader.h"
+#include "io.h"
 #include "clann.h"
 
 
@@ -34,9 +34,9 @@
  */
 struct fmdp
 {
-    struct matrix policy;
-    struct matrix state_value;
-    struct matrix action_value;
+    clann_matrix_type policy;
+    clann_matrix_type state_value;
+    clann_matrix_type action_value;
 
     clann_real_type (*f_returns)(struct fmdp *,
                                  clann_real_type,
@@ -59,7 +59,7 @@ struct fmdp
 /**
  *
  */
-void
+clann_void_type
 fmdp_initialize(struct fmdp *mdp,
                 clann_real_type discount_rate,
                 unsigned int number_of_states,
@@ -68,7 +68,7 @@ fmdp_initialize(struct fmdp *mdp,
 /**
  *
  */
-void
+clann_void_type
 fmdp_finalize(struct fmdp *mdp);
 
 /**

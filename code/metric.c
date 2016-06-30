@@ -91,8 +91,8 @@ metric_dot_product(const clann_real_type *a,
 }
 
 clann_real_type
-metric_hausdorff(const struct matrix *a,
-                 const struct matrix *b)
+metric_hausdorff(const clann_matrix_type *a,
+                 const clann_matrix_type *b)
 {
     unsigned int i, j;
     clann_real_type inf,
@@ -104,11 +104,11 @@ metric_hausdorff(const struct matrix *a,
     for (i = 0; i < a->rows; i++)
     {
         inf = (clann_real_type) INT_MAX;
-        x = matrix_value(a, i, 0);
+        x = clann_matrix_value(a, i, 0);
 
         for (j = 0; j < b->rows; j++)
         {
-            y = matrix_value(b, j, 0);
+            y = clann_matrix_value(b, j, 0);
             d = metric_euclidean(x, y, a->cols);
 
             if (d < inf)
@@ -123,8 +123,8 @@ metric_hausdorff(const struct matrix *a,
 }
 
 clann_real_type
-metric_hausdorff_symmetric(const struct matrix *a,
-                           const struct matrix *b)
+metric_hausdorff_symmetric(const clann_matrix_type *a,
+                           const clann_matrix_type *b)
 {
     clann_real_type ab, ba; 
 
@@ -135,8 +135,8 @@ metric_hausdorff_symmetric(const struct matrix *a,
 }
 
 unsigned int
-metric_hausdorff_limit(const struct matrix *a,
-                       const struct matrix *b,
+metric_hausdorff_limit(const clann_matrix_type *a,
+                       const clann_matrix_type *b,
                        clann_real_type limit)
 {
     unsigned int i, j, count = 0;
@@ -148,11 +148,11 @@ metric_hausdorff_limit(const struct matrix *a,
     for (i = 0; i < a->rows; i++)
     {
         inf = (clann_real_type) INT_MAX;
-        x = matrix_value(a, i, 0);
+        x = clann_matrix_value(a, i, 0);
 
         for (j = 0; j < b->rows; j++)
         {
-            y = matrix_value(b, j, 0);
+            y = clann_matrix_value(b, j, 0);
             d = metric_euclidean(x, y, a->cols);
 
             if (d < inf)
@@ -167,8 +167,8 @@ metric_hausdorff_limit(const struct matrix *a,
 }
 
 unsigned int
-metric_hausdorff_limit_symmetric(const struct matrix *a,
-                                 const struct matrix *b,
+metric_hausdorff_limit_symmetric(const clann_matrix_type *a,
+                                 const clann_matrix_type *b,
                                  clann_real_type limit)
 {
     unsigned int ab, ba; 
@@ -180,8 +180,8 @@ metric_hausdorff_limit_symmetric(const struct matrix *a,
 }
 
 clann_real_type
-metric_hausdorff_mean(const struct matrix *a,
-                      const struct matrix *b)
+metric_hausdorff_mean(const clann_matrix_type *a,
+                      const clann_matrix_type *b)
 {
     unsigned int i, j;
     clann_real_type inf,
@@ -193,11 +193,11 @@ metric_hausdorff_mean(const struct matrix *a,
     for (i = 0; i < a->rows; i++)
     {
         inf = (clann_real_type) INT_MAX;
-        x = matrix_value(a, i, 0);
+        x = clann_matrix_value(a, i, 0);
 
         for (j = 0; j < b->rows; j++)
         {
-            y = matrix_value(b, j, 0);
+            y = clann_matrix_value(b, j, 0);
             d = metric_euclidean(x, y, a->cols);
 
             if (d < inf)
@@ -211,8 +211,8 @@ metric_hausdorff_mean(const struct matrix *a,
 }
 
 clann_real_type
-metric_hausdorff_mean_symmetric(const struct matrix *a,
-                                const struct matrix *b)
+metric_hausdorff_mean_symmetric(const clann_matrix_type *a,
+                                const clann_matrix_type *b)
 {
     clann_real_type ab, ba; 
 
@@ -223,8 +223,8 @@ metric_hausdorff_mean_symmetric(const struct matrix *a,
 }
 
 unsigned int
-metric_hausdorff_angle(const struct matrix *a,
-                       const struct matrix *b,
+metric_hausdorff_angle(const clann_matrix_type *a,
+                       const clann_matrix_type *b,
                        clann_real_type limit)
 {
     unsigned int i, j, length;
@@ -240,11 +240,11 @@ metric_hausdorff_angle(const struct matrix *a,
     for (i = 0; i < a->rows; i++)
     {
         inf = (clann_real_type) INT_MAX;
-        x = matrix_value(a, i, 0);
+        x = clann_matrix_value(a, i, 0);
 
         for (j = 0; j < b->rows; j++)
         {
-            y = matrix_value(b, j, 0);
+            y = clann_matrix_value(b, j, 0);
             d = metric_euclidean(x, y, length);
 
             if (d < inf)
@@ -270,8 +270,8 @@ metric_hausdorff_angle(const struct matrix *a,
 }
 
 unsigned int
-metric_hausdorff_angle_symmetric(const struct matrix *a,
-                                 const struct matrix *b,
+metric_hausdorff_angle_symmetric(const clann_matrix_type *a,
+                                 const clann_matrix_type *b,
                                  clann_real_type limit)
 {
     unsigned int ab, ba; 

@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include "matrix.h"
 #include "metric.h"
-#include "reader.h"
+#include "io.h"
 #include "clann.h"
 
 #define SOM_FILE_HEADER "SOM"
@@ -56,8 +56,8 @@ struct som_grid
     clann_size_type width;
     clann_size_type dimension;
     clann_size_type n_neurons;
-    struct matrix indexes;
-    struct matrix weights;
+    clann_matrix_type indexes;
+    clann_matrix_type weights;
 };
 
 struct som
@@ -76,7 +76,7 @@ struct som
 /**
  *
  */
-void
+clann_void_type
 som_initialize(struct som *ann,
                som_grid_type grid_type,
                clann_size_type input_size,
@@ -85,13 +85,13 @@ som_initialize(struct som *ann,
 /**
  *
  */
-void
+clann_void_type
 som_finalize(struct som *ann);
 
 /**
  *
  */
-void
+clann_void_type
 som_grid_indexes(struct som *ann,
                  clann_size_type index,
                  clann_real_type *buffer,
@@ -100,23 +100,23 @@ som_grid_indexes(struct som *ann,
 /**
  *
  */
-void
+clann_void_type
 som_train_incremental(struct som *ann,
-                      struct matrix *x,
+                      clann_matrix_type *x,
                       unsigned int epochs);
 
 /**
  *
  */
-void
+clann_void_type
 som_train_batch(struct som *ann,
-                struct matrix *x,
+                clann_matrix_type *x,
                 unsigned int epochs);
 
 /**
  *
  */
-void 
+clann_void_type 
 som_incremental_adjust_of_weights(struct som *ann,
                                   clann_real_type *x,
                                   clann_real_type *winner);
@@ -124,7 +124,7 @@ som_incremental_adjust_of_weights(struct som *ann,
 /**
  *
  */
-void 
+clann_void_type 
 som_batch_adjust_of_weights(struct som *ann,
                             clann_real_type *x,
                             clann_real_type *winner);
@@ -132,13 +132,13 @@ som_batch_adjust_of_weights(struct som *ann,
 /**
  *
  */
-void
+clann_void_type
 som_adjust_width(struct som *ann);
 
 /**
  *
  */
-void
+clann_void_type
 som_adjust_learning_rate(struct som *ann);
 
 /**
@@ -151,7 +151,7 @@ som_grid_get_weights(struct som *ann,
 /**
  *
  */
-void
+clann_void_type
 som_find_winner_neuron(struct som *ann,
                        clann_real_type *x,
                        clann_real_type **winner);

@@ -31,7 +31,7 @@
  */
 struct hopfield
 {
-    struct matrix weights;
+    clann_matrix_type weights;
     clann_size_type n_neurons;
     clann_size_type n_memories;
     clann_real_type *output;
@@ -41,7 +41,7 @@ struct hopfield
 /**
  * Initialize an given Hopfield network
  */
-void
+clann_void_type
 hopfield_initialize(struct hopfield *ann,
                     clann_size_type n_neurons,
                     clann_size_type n_memories);
@@ -49,27 +49,27 @@ hopfield_initialize(struct hopfield *ann,
 /**
  * Finalize an given Hopfield network
  */
-void
+clann_void_type
 hopfield_finalize(struct hopfield *ann);
 
 /**
  * 
  */
-void
+clann_void_type
 hopfield_train(struct hopfield *ann,
-               struct matrix *memories);
+               clann_matrix_type *memories);
 
 /**
  * 
  */
-void
+clann_void_type
 hopfield_compute_output(struct hopfield *ann,
                         clann_real_type *input);
 
 /**
  * 
  */
-struct matrix *
+clann_matrix_type *
 hopfield_find_spurious_states(struct hopfield *ann);
 
 #endif

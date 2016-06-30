@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef CLANN_MATRIX_H
+#define CLANN_MATRIX_H
 
 #include <stdlib.h>
 #include "clann.h"
@@ -28,142 +28,142 @@
 /**
  * Matrix structure
  */
-struct matrix
+typedef struct clann_matrix
 {
     clann_real_type *values;
     clann_size_type rows;
     clann_size_type cols;
     clann_real_type max;
     clann_real_type min;
-};
+} clann_matrix_type;
 
 
 /**
  * Initialize an given matrix
  */
-void
-matrix_initialize(struct matrix *a,
-                  clann_size_type rows,
-                  clann_size_type cols);
+clann_void_type
+clann_matrix_initialize(clann_matrix_type *a,
+                        clann_size_type rows,
+                        clann_size_type cols);
 
 /**
  * Create a new matrix
  */
-struct matrix *
-matrix_new(clann_size_type rows,
-           clann_size_type cols);
+clann_matrix_type *
+clann_matrix_new(clann_size_type rows,
+                 clann_size_type cols);
 
 /**
  * Finalize an given matrix
  */
-void
-matrix_finalize(struct matrix *a);
+clann_void_type
+clann_matrix_finalize(clann_matrix_type *a);
 
 /**
  * Return an matrix element
  */
 clann_real_type*
-matrix_value(const struct matrix *a,
-             const clann_size_type i,
-             const clann_size_type j);
+clann_matrix_value(const clann_matrix_type *a,
+                   const clann_size_type i,
+                   const clann_size_type j);
 
 /**
  *
  */
-void
-matrix_fill(struct matrix *a,
-            const clann_real_type v);
+clann_void_type
+clann_matrix_fill(clann_matrix_type *a,
+                  const clann_real_type v);
 
 /**
  *
  */
-void
-matrix_fill_rand(struct matrix *a,
-                 clann_real_type min,
-                 clann_real_type max);
+clann_void_type
+clann_matrix_fill_rand(clann_matrix_type *a,
+                       clann_real_type min,
+                       clann_real_type max);
 
 /**
  *
  */
-struct matrix *
-matrix_identity(struct matrix *a,
-                const clann_size_type n);
+clann_matrix_type *
+clann_matrix_identity(clann_matrix_type *a,
+                      const clann_size_type n);
 
 /**
  *
  */
-void
-matrix_copy(const struct matrix *a,
-            struct matrix *b);
+clann_void_type
+clann_matrix_copy(const clann_matrix_type *a,
+                  clann_matrix_type *b);
 
 /**
  *
  */
-struct matrix *
-matrix_copy_new(const struct matrix *a);
+clann_matrix_type *
+clann_matrix_copy_new(const clann_matrix_type *a);
 
 /**
  *
  */
-void
-matrix_transpose(const struct matrix *a,
-                 struct matrix *b);
+clann_void_type
+clann_matrix_transpose(const clann_matrix_type *a,
+                       clann_matrix_type *b);
 
 /**
  *
  */
-struct matrix*
-matrix_add(const struct matrix *a,
-           const struct matrix *b,
-           struct matrix *c);
+clann_matrix_type*
+clann_matrix_add(const clann_matrix_type *a,
+                 const clann_matrix_type *b,
+                 clann_matrix_type *c);
 
 /**
  *
  */
-struct matrix*
-matrix_subtract(const struct matrix *a,
-                const struct matrix *b,
-                struct matrix *c);
+clann_matrix_type*
+clann_matrix_subtract(const clann_matrix_type *a,
+                      const clann_matrix_type *b,
+                      clann_matrix_type *c);
 
 /**
  *
  */
-struct matrix*
-matrix_product(const struct matrix *a,
-               const struct matrix *b,
-               struct matrix *c);
+clann_matrix_type*
+clann_matrix_product(const clann_matrix_type *a,
+                     const clann_matrix_type *b,
+                     clann_matrix_type *c);
 
 /**
  *
  */
-struct matrix*
-matrix_inverse(const struct matrix *a,
-               struct matrix *b);
+clann_matrix_type*
+clann_matrix_inverse(const clann_matrix_type *a,
+                     clann_matrix_type *b);
 
 /**
  *
  */
-struct matrix*
-matrix_pseudo_inverse(const struct matrix *a,
-                      struct matrix *b);
+clann_matrix_type*
+clann_matrix_pseudo_inverse(const clann_matrix_type *a,
+                            clann_matrix_type *b);
 
 /**
  *
  */
-int
-matrix_isnull(const struct matrix *a);
+clann_bool_type
+clann_matrix_isnull(const clann_matrix_type *a);
 
 /**
  *
  */
-void
-matrix_scale(const struct matrix *a,
-             clann_real_type s);
+clann_void_type
+clann_matrix_scale(const clann_matrix_type *a,
+                   clann_real_type s);
 
 /**
  *
  */
-void
-matrix_print(const struct matrix *a);
+clann_void_type
+clann_matrix_print(const clann_matrix_type *a);
 
 #endif

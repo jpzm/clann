@@ -28,7 +28,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "reader.h"
+#include "io.h"
 #include "clann.h"
 #include "mlp.h"
 
@@ -49,7 +49,7 @@ struct narx
 /**
  *
  */
-void
+clann_void_type
 narx_initialize(struct narx *ann,
                 unsigned int *architecture,
                 const unsigned int number_of_layers,
@@ -58,13 +58,13 @@ narx_initialize(struct narx *ann,
 /**
  *
  */
-void
+clann_void_type
 narx_finalize(struct narx *ann);
 
 /**
  *
  */
-void
+clann_void_type
 narx_insert_input(struct narx *ann,
                   const clann_real_type x);
 

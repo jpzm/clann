@@ -21,7 +21,7 @@
 #include "mlp.h"
 
 
-void
+clann_void_type
 mlp_layer_initialize(struct mlp_layer *l,
                      const unsigned int input_size,
                      const unsigned int number_of_neurons)
@@ -42,20 +42,20 @@ mlp_layer_initialize(struct mlp_layer *l,
     }
 }
 
-void
+clann_void_type
 mlp_layer_finalize(struct mlp_layer *l)
 {
     unsigned int i;
     for (i = 0; i < l->size; i++)
         neuron_finalize(&l->neurons[i]);
 
-    free((void *) l->neurons);
-    free((void *) l->gradients);
+    free((clann_void_type *) l->neurons);
+    free((clann_void_type *) l->gradients);
 
     l->size = 0;
 }
 
-void
+clann_void_type
 mlp_initialize(struct mlp *ann,
                unsigned int *architecture,
                const unsigned int number_of_layers)
@@ -78,20 +78,20 @@ mlp_initialize(struct mlp *ann,
     ann->output_layer = &ann->layers[number_of_layers - 2];
 }
 
-void
+clann_void_type
 mlp_finalize(struct mlp *ann)
 {
     unsigned int i;
     for (i = 0; i < ann->number_of_layers - 1; i++)
         mlp_layer_finalize(&ann->layers[i]);
 
-    free((void *) ann->layers);
+    free((clann_void_type *) ann->layers);
 
     ann->number_of_layers = 0;
     ann->architecture = (unsigned int *) NULL;
 }
 
-void
+clann_void_type
 mlp_forward_computation(struct mlp *ann,
                         const clann_real_type *x)
 {
@@ -106,7 +106,7 @@ mlp_forward_computation(struct mlp *ann,
     }
 }
 
-void
+clann_void_type
 mlp_compute_layer_output(struct mlp_layer *l,
                          const clann_real_type *x)
 {
@@ -119,7 +119,7 @@ mlp_compute_layer_output(struct mlp_layer *l,
     }
 }
 
-void
+clann_void_type
 mlp_compute_instantaneous_error(struct mlp *ann)
 {
     clann_real_type error = 0;
@@ -131,14 +131,14 @@ mlp_compute_instantaneous_error(struct mlp *ann)
     ann->error += error / 2;
 }
 
-void
+clann_void_type
 mlp_compute_avarage_error(struct mlp *ann,
                           const unsigned int n)
 {
     ann->avarage_error = ann->error / n;
 }
 
-void
+clann_void_type
 mlp_compute_output_error(struct mlp *ann,
                          const clann_real_type *d)
 {
@@ -152,7 +152,7 @@ mlp_compute_output_error(struct mlp *ann,
     }
 }
 
-void
+clann_void_type
 mlp_validate(struct mlp *ann,
              const clann_real_type *x,
              const clann_real_type *d)
@@ -162,10 +162,10 @@ mlp_validate(struct mlp *ann,
 }
 
 
-void
+clann_void_type
 mlp_validate_epoch(struct mlp *ann,
-                   const struct matrix *x,
-                   const struct matrix *d)
+                   const clann_matrix_type *x,
+                   const clann_matrix_type *d)
 {
     unsigned int i;
 
@@ -174,8 +174,8 @@ mlp_validate_epoch(struct mlp *ann,
     for (i = 0; i < x->rows; i++)
     {
         mlp_validate(ann,
-                     matrix_value(x, i, 0),
-                     matrix_value(d, i, 0));
+                     clann_matrix_value(x, i, 0),
+                     clann_matrix_value(d, i, 0));
 
         mlp_compute_instantaneous_error(ann);
     }
@@ -184,10 +184,10 @@ mlp_validate_epoch(struct mlp *ann,
 }
 
 
-void
+clann_void_type
 mlp_fill(struct mlp *ann,
-         const struct matrix *w,
-         const struct matrix *f)
+         const clann_matrix_type *w,
+         const clann_matrix_type *f)
 {
     unsigned int i, j, k, c = 0, p = 0;
     struct mlp_layer *l;

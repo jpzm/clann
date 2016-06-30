@@ -28,7 +28,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "reader.h"
+#include "io.h"
 #include "clann.h"
 #include "mlp.h"
 
@@ -47,7 +47,7 @@ struct tlfn
 /**
  *
  */
-void
+clann_void_type
 tlfn_initialize(struct tlfn *ann,
                 unsigned int *architecture,
                 const unsigned int number_of_layers);
@@ -55,13 +55,13 @@ tlfn_initialize(struct tlfn *ann,
 /**
  *
  */
-void
+clann_void_type
 tlfn_finalize(struct tlfn *ann);
 
 /**
  *
  */
-void
+clann_void_type
 tlfn_insert_input(struct tlfn *ann,
                   const clann_real_type x);
 

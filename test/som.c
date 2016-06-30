@@ -26,7 +26,7 @@
 #include "../code/som.h"
 #include "../code/clann.h"
 #include "../code/matrix.h"
-#include "../code/reader.h"
+#include "../code/io.h"
 
 
 #define X           0
@@ -49,7 +49,7 @@ unsigned int show[4] = {1, 1, 1, 1};
 unsigned int epochs;
 int axis_y, axis_x, axis_z;
 char *file;
-struct matrix x, a;
+clann_matrix_type x, a;
 struct som ann;
 pthread_t thread;
 
@@ -106,9 +106,9 @@ cb_display(void)
 
         for (i = 0; i < x.rows; i++)
         {
-            glVertex3f((GLfloat) *matrix_value(&x, i, X),
-                       (GLfloat) *matrix_value(&x, i, Y),
-                       (GLfloat) *matrix_value(&x, i, Z));
+            glVertex3f((GLfloat) *clann_matrix_value(&x, i, X),
+                       (GLfloat) *clann_matrix_value(&x, i, Y),
+                       (GLfloat) *clann_matrix_value(&x, i, Z));
         }
 
         glEnd();
@@ -166,7 +166,7 @@ cb_display(void)
 
         for (j = 0; j < ann.grid.n_neurons; j++)
         {
-            w = matrix_value(&ann.grid.weights, j, 0);
+            w = clann_matrix_value(&ann.grid.weights, j, 0);
 
             glVertex3f((GLfloat) w[X],
                        (GLfloat) w[Y],
@@ -271,7 +271,7 @@ main(int argc, char *argv[])
     {
         clann_initialize();
 
-        reader_read_data_file(argv[1], &x);
+        clann_io_read_data_file(argv[1], &x);
         clann_size_type width = atoi(argv[3]);
         ann.epoch = atoi(argv[4]);
         epochs = atoi(argv[5]);

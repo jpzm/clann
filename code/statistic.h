@@ -36,20 +36,20 @@ statistic_mean(const clann_real_type *list,
  *
  */
 clann_real_type
-statistic_mean_matrix(const struct matrix *m);
+statistic_mean_matrix(const clann_matrix_type *m);
 
 /**
  *
  */
 clann_real_type
-statistic_mean_matrix_row(const struct matrix *m,
+statistic_mean_matrix_row(const clann_matrix_type *m,
                           const unsigned int row);
 
 /**
  *
  */
 clann_real_type
-statistic_mean_matrix_col(const struct matrix *m,
+statistic_mean_matrix_col(const clann_matrix_type *m,
                           const unsigned int col);
 
 /**
@@ -64,14 +64,14 @@ statistic_variance(const clann_real_type *list,
  *
  */
 clann_real_type
-statistic_variance_matrix(const struct matrix *m,
+statistic_variance_matrix(const clann_matrix_type *m,
                           const clann_real_type *probability);
 
 /**
  *
  */
 clann_real_type
-statistic_variance_matrix_row(const struct matrix *m,
+statistic_variance_matrix_row(const clann_matrix_type *m,
                               const clann_real_type *probability,
                               const unsigned int row);
 
@@ -79,7 +79,7 @@ statistic_variance_matrix_row(const struct matrix *m,
  *
  */
 clann_real_type
-statistic_variance_matrix_col(const struct matrix *m,
+statistic_variance_matrix_col(const clann_matrix_type *m,
                               const clann_real_type *probability,
                               const unsigned int col);
 

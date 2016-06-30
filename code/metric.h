@@ -70,60 +70,60 @@ metric_dot_product(const clann_real_type *a,
  *
  */
 clann_real_type
-metric_hausdorff(const struct matrix *a,
-                 const struct matrix *b);
+metric_hausdorff(const clann_matrix_type *a,
+                 const clann_matrix_type *b);
 
 /**
  *
  */
 clann_real_type
-metric_hausdorff_symmetric(const struct matrix *a,
-                           const struct matrix *b);
+metric_hausdorff_symmetric(const clann_matrix_type *a,
+                           const clann_matrix_type *b);
 
 /**
  *
  */
 unsigned int
-metric_hausdorff_limit(const struct matrix *a,
-                       const struct matrix *b,
+metric_hausdorff_limit(const clann_matrix_type *a,
+                       const clann_matrix_type *b,
                        clann_real_type limit);
 
 /**
  *
  */
 unsigned int
-metric_hausdorff_limit_symmetric(const struct matrix *a,
-                                 const struct matrix *b,
+metric_hausdorff_limit_symmetric(const clann_matrix_type *a,
+                                 const clann_matrix_type *b,
                                  clann_real_type limit);
 
 /**
  *
  */
 clann_real_type
-metric_hausdorff_mean(const struct matrix *a,
-                      const struct matrix *b);
+metric_hausdorff_mean(const clann_matrix_type *a,
+                      const clann_matrix_type *b);
 
 /**
  *
  */
 clann_real_type
-metric_hausdorff_mean_symmetric(const struct matrix *a,
-                                const struct matrix *b);
+metric_hausdorff_mean_symmetric(const clann_matrix_type *a,
+                                const clann_matrix_type *b);
 
 /**
  *
  */
 unsigned int
-metric_hausdorff_angle(const struct matrix *a,
-                       const struct matrix *b,
+metric_hausdorff_angle(const clann_matrix_type *a,
+                       const clann_matrix_type *b,
                        clann_real_type limit);
 
 /**
  *
  */
 unsigned int
-metric_hausdorff_angle_symmetric(const struct matrix *a,
-                                 const struct matrix *b,
+metric_hausdorff_angle_symmetric(const clann_matrix_type *a,
+                                 const clann_matrix_type *b,
                                  clann_real_type limit);
 
 #endif

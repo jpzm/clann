@@ -21,7 +21,7 @@
 #include "svm.h"
 
 
-void
+clann_void_type
 svm_initialize(struct svm *s,
                const unsigned int input_size,
                const unsigned int number_of_inputs)
@@ -39,13 +39,13 @@ svm_initialize(struct svm *s,
 
     s->poly_order = 3;
 
-    s->network = (void *)NULL;
+    s->network = (clann_void_type *)NULL;
 }
 
-void
+clann_void_type
 svm_compute_weights(struct svm *s,
-                    const struct matrix *x,
-                    const struct matrix *d)
+                    const clann_matrix_type *x,
+                    const clann_matrix_type *d)
 {
     clann_real_type *reference, multipliers[s->number_of_inputs];
     unsigned int i, j, total;
@@ -78,7 +78,7 @@ svm_compute_weights(struct svm *s,
             total = sizeof(clann_real_type *) * (s->number_of_support_vectors + 1);
             s->support_vectors = realloc(s->support_vectors, total);
 
-            reference = matrix_value(s->x_set, i, 0);
+            reference = clann_matrix_value(s->x_set, i, 0);
             s->support_vectors[s->number_of_support_vectors] = reference;
 
             s->number_of_support_vectors++;
@@ -110,10 +110,10 @@ svm_compute_weights(struct svm *s,
 
             for (j = 0; j < s->number_of_inputs; j++)
             {
-                reference = matrix_value(s->x_set, j, 0);
+                reference = clann_matrix_value(s->x_set, j, 0);
 
                 s->weights[i] += s->multipliers[j];
-                s->weights[i] *= *matrix_value(s->d_set, j, 0);
+                s->weights[i] *= *clann_matrix_value(s->d_set, j, 0);
                 s->weights[i] *= svm_compute_kernel(s,
                                                     reference,
                                                     s->support_vectors[i]);
@@ -134,7 +134,7 @@ svm_compute_weights(struct svm *s,
                        s->support_vectors,
                        s->weights);
 
-            s->network = (void *) r;*/
+            s->network = (clann_void_type *) r;*/
         }
         else
         {
@@ -152,7 +152,7 @@ svm_compute_weights(struct svm *s,
     }
 }
 
-void
+clann_void_type
 svm_compute_output(struct svm *s,
                    const clann_real_type *x)
 {
@@ -174,18 +174,18 @@ svm_compute_output(struct svm *s,
     }
 }
 
-void
+clann_void_type
 svm_solve_by_ilpso(struct svm *s,
                    clann_real_type *l)
 {
     struct ilpso pso;
     unsigned int i;
 
-    ilpso_initialize(&pso, (void *) s, s->number_of_inputs);
+    ilpso_initialize(&pso, (clann_void_type *) s, s->number_of_inputs);
 
     pso.rand_max = s->punishment_factor;
-    pso.f_fitness = (void *) &svm_compute_fitness_function;
-    pso.f_constraint = (void *) &svm_constraint_function;
+    pso.f_fitness = (clann_void_type *) &svm_compute_fitness_function;
+    pso.f_constraint = (clann_void_type *) &svm_constraint_function;
 
     ilpso_run(&pso,
               ILPSO_DEFAULT_MAXITERATIONS,
@@ -213,8 +213,8 @@ svm_compute_fitness_function(struct svm *s,
         for (j = 0; j < s->number_of_inputs; j++)
         {
             v = svm_compute_kernel(s,
-                                   matrix_value(s->x_set, i, 0),
-                                   matrix_value(s->x_set, j, 0));
+                                   clann_matrix_value(s->x_set, i, 0),
+                                   clann_matrix_value(s->x_set, j, 0));
 
             t2 += l[i] * l[j] * s->d_set->values[i] * s->d_set->values[j] * v;
         }
@@ -222,7 +222,7 @@ svm_compute_fitness_function(struct svm *s,
     return t1 - t2 / 2;
 }
 
-void
+clann_void_type
 svm_constraint_function(struct svm *s,
                         clann_real_type *l)
 {

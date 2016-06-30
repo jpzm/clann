@@ -21,32 +21,32 @@
 #include "../code/clann.h"
 #include "../code/rbf.h"
 #include "../code/matrix.h"
-#include "../code/reader.h"
+#include "../code/io.h"
 
 int main(int argc, char **argv)
 {
     struct rbf r;
-    struct matrix x, d;
+    clann_matrix_type x, d;
     clann_size_type i;
 
     clann_initialize();
 
-    reader_read_double_data_file(argv[1], &x, &d);
+    clann_io_read_double_data_file(argv[1], &x, &d);
 
     rbf_initialize(&r, 2, 1, 4, 4);
     //r.learning_strategy = RBF_LEARNING_FIXED;
     rbf_learn(&r, &x, &d);
 
     printf("centers:\n");
-    matrix_print(&r.centers);
+    clann_matrix_print(&r.centers);
 
     printf("input:\n");
-    matrix_print(&x);
+    clann_matrix_print(&x);
 
     printf("output:\n");
     for (i = 0; i < x.rows; i++)
     {
-        rbf_compute_output(&r, matrix_value(&x, i, 0));
+        rbf_compute_output(&r, clann_matrix_value(&x, i, 0));
         printf(CLANN_PRINTF "\n", r.output[0]);
     }
 

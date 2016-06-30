@@ -28,40 +28,40 @@
 
 int main(int argc, char** argv)
 {
-    struct matrix a, b;
+    clann_matrix_type a, b;
 
     clann_initialize();
 
-    matrix_initialize(&a, M, N);
-    matrix_initialize(&b, 0, 0);
+    clann_matrix_initialize(&a, M, N);
+    clann_matrix_initialize(&b, 0, 0);
 
-    matrix_fill_rand(&a, -9, 9);
+    clann_matrix_fill_rand(&a, -9, 9);
 
     /*
-    *matrix_value(&a, 0, 0) = 1;
-    *matrix_value(&a, 0, 1) = 2;
-    *matrix_value(&a, 0, 2) = 6;
+    *clann_matrix_value(&a, 0, 0) = 1;
+    *clann_matrix_value(&a, 0, 1) = 2;
+    *clann_matrix_value(&a, 0, 2) = 6;
 
-    *matrix_value(&a, 1, 0) = 3;
-    *matrix_value(&a, 1, 1) = 5;
-    *matrix_value(&a, 1, 2) = 4;
+    *clann_matrix_value(&a, 1, 0) = 3;
+    *clann_matrix_value(&a, 1, 1) = 5;
+    *clann_matrix_value(&a, 1, 2) = 4;
 
-    *matrix_value(&a, 2, 0) = 2;
-    *matrix_value(&a, 2, 1) = 6;
-    *matrix_value(&a, 2, 2) = 8;
+    *clann_matrix_value(&a, 2, 0) = 2;
+    *clann_matrix_value(&a, 2, 1) = 6;
+    *clann_matrix_value(&a, 2, 2) = 8;
 
-    *matrix_value(&a, 3, 0) = 1;
-    *matrix_value(&a, 3, 1) = 0;
-    *matrix_value(&a, 3, 2) = 2;
+    *clann_matrix_value(&a, 3, 0) = 1;
+    *clann_matrix_value(&a, 3, 1) = 0;
+    *clann_matrix_value(&a, 3, 2) = 2;
     */
 
     printf("Matrix:\n");
-    matrix_print(&a);
+    clann_matrix_print(&a);
 
-    if (matrix_pseudo_inverse(&a, &b) != NULL)
+    if (clann_matrix_pseudo_inverse(&a, &b) != NULL)
     {
         printf("Pseudo-inverse:\n");
-        matrix_print(&b);
+        clann_matrix_print(&b);
     }
     else
         printf("No pseudo-inverse.\n");

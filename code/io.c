@@ -18,12 +18,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "reader.h"
+#include "io.h"
 
 
-void
-reader_extract_numbers(struct matrix *m,
-                       const char *line)
+clann_void_type
+clann_io_extract_numbers(clann_matrix_type *m,
+                         const clann_string_type line)
 {
     clann_size_type total = 0,
                     index = 0,
@@ -85,15 +85,15 @@ reader_extract_numbers(struct matrix *m,
 }
 
 
-int
-reader_read_double_data_file(const char *path,
-                             struct matrix *x,
-                             struct matrix *d)
+clann_bool_type
+clann_io_read_double_data_file(const clann_string_type path,
+                               clann_matrix_type *x,
+                               clann_matrix_type *d)
 {
     FILE *fd;
 
-    matrix_initialize(x, 0, 0);
-    matrix_initialize(d, 0, 0);
+    clann_matrix_initialize(x, 0, 0);
+    clann_matrix_initialize(d, 0, 0);
 
     if ((fd = fopen(path, "r")))
     {
@@ -101,33 +101,33 @@ reader_read_double_data_file(const char *path,
         int c = 1;
         char *line = NULL;
 
-        while (1)
+        while (true)
         {
             if (getline(&line, &length, fd) == -1)
                 break;
 
             if (c == 1)
-                reader_extract_numbers(x, line);
+                clann_io_extract_numbers(x, line);
             else
-                reader_extract_numbers(d, line);
+                clann_io_extract_numbers(d, line);
 
             c *= -1;
         }
 
-        return (c != 1) ? 0 : 1;
+        return (c != 1) ? false : true;
     }
 
-    return 0;
+    return false;
 }
 
 
-int
-reader_read_data_file(const char *path,
-                      struct matrix *v)
+clann_bool_type
+clann_io_read_data_file(const clann_string_type path,
+                        clann_matrix_type *v)
 {
     FILE *fd;
 
-    matrix_initialize(v, 0, 0);
+    clann_matrix_initialize(v, 0, 0);
 
     if ((fd = fopen(path, "r")))
     {
@@ -135,10 +135,10 @@ reader_read_data_file(const char *path,
         size_t len;
 
         while (getline(&line, &len, fd) != -1)
-            reader_extract_numbers(v, line);
+            clann_io_extract_numbers(v, line);
 
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }

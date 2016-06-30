@@ -20,7 +20,7 @@
 
 #include "fft.h"
 
-void fft(complex **x,
+clann_void_type fft(complex **x,
          unsigned int *n,
          const unsigned char mode)
 {
@@ -44,7 +44,7 @@ void fft(complex **x,
     fft_perform(*x, l, mode);
 }
 
-void fft_reverse(complex *x, const unsigned int n)
+clann_void_type fft_reverse(complex *x, const unsigned int n)
 {
     unsigned int m, i, j = 0;
     for (i = 0; i < n; ++i)
@@ -61,7 +61,7 @@ void fft_reverse(complex *x, const unsigned int n)
     }
 }
 
-void fft_perform(complex *x, const unsigned int n, const unsigned char mode)
+clann_void_type fft_perform(complex *x, const unsigned int n, const unsigned char mode)
 {
     unsigned int s, j, g, p, m;
     complex am, ap, f;

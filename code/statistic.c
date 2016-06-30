@@ -35,40 +35,40 @@ statistic_mean(const clann_real_type *list,
 }
 
 clann_real_type
-statistic_mean_matrix(const struct matrix *m)
+statistic_mean_matrix(const clann_matrix_type *m)
 {
     unsigned int i, j;
     clann_real_type sum = 0;
 
     for (i = 0; i < m->rows; i++)
         for (j = 0; j < m->cols; j++)
-            sum += *matrix_value(m, i, j);
+            sum += *clann_matrix_value(m, i, j);
 
     return sum / (m->rows * m->cols);
 }
 
 clann_real_type
-statistic_mean_matrix_row(const struct matrix *m,
+statistic_mean_matrix_row(const clann_matrix_type *m,
                           const unsigned int row)
 {
     unsigned int i;
     clann_real_type sum = 0;
 
     for (i = 0; i < m->cols; i++)
-        sum += *matrix_value(m, row, i);
+        sum += *clann_matrix_value(m, row, i);
 
     return sum / (m->cols);
 }
 
 clann_real_type
-statistic_mean_matrix_col(const struct matrix *m,
+statistic_mean_matrix_col(const clann_matrix_type *m,
                           const unsigned int col)
 {
     unsigned int i;
     clann_real_type sum = 0;
 
     for (i = 0; i < m->rows; i++)
-        sum += *matrix_value(m, i, col);
+        sum += *clann_matrix_value(m, i, col);
 
     return sum / (m->rows);
 }
@@ -96,7 +96,7 @@ statistic_variance(const clann_real_type *list,
 }
 
 clann_real_type
-statistic_variance_matrix(const struct matrix *m,
+statistic_variance_matrix(const clann_matrix_type *m,
                           const clann_real_type *probability)
 {
     unsigned int i, j;
@@ -109,18 +109,18 @@ statistic_variance_matrix(const struct matrix *m,
         {
             if (probability == NULL)
                 sum += (1 / (m->rows * m->cols)) *
-                       CLANN_POW(*matrix_value(m, i, j) - mean, 2.0);
+                       CLANN_POW(*clann_matrix_value(m, i, j) - mean, 2.0);
 
             else
                 sum += probability[i] *
-                       CLANN_POW(*matrix_value(m, i, j) - mean, 2.0);
+                       CLANN_POW(*clann_matrix_value(m, i, j) - mean, 2.0);
         }
 
     return sum;
 }
 
 clann_real_type
-statistic_variance_matrix_row(const struct matrix *m,
+statistic_variance_matrix_row(const clann_matrix_type *m,
                               const clann_real_type *probability,
                               const unsigned int row)
 {
@@ -133,18 +133,18 @@ statistic_variance_matrix_row(const struct matrix *m,
     {
         if (probability == NULL)
             sum += ((clann_real_type) 1 / m->cols) *
-                   CLANN_POW(*matrix_value(m, row, i) - mean, 2.0);
+                   CLANN_POW(*clann_matrix_value(m, row, i) - mean, 2.0);
 
         else
             sum += probability[i] *
-                   CLANN_POW(*matrix_value(m, row, i) - mean, 2.0);
+                   CLANN_POW(*clann_matrix_value(m, row, i) - mean, 2.0);
     }
 
     return sum;
 }
 
 clann_real_type
-statistic_variance_matrix_col(const struct matrix *m,
+statistic_variance_matrix_col(const clann_matrix_type *m,
                               const clann_real_type *probability,
                               const unsigned int col)
 {
@@ -157,11 +157,11 @@ statistic_variance_matrix_col(const struct matrix *m,
     {
         if (probability == NULL)
             sum += ((clann_real_type) 1 / m->rows) *
-                   CLANN_POW(*matrix_value(m, i, col) - mean, 2.0);
+                   CLANN_POW(*clann_matrix_value(m, i, col) - mean, 2.0);
 
         else
             sum += probability[i] *
-                   CLANN_POW(*matrix_value(m, i, col) - mean, 2.0);
+                   CLANN_POW(*clann_matrix_value(m, i, col) - mean, 2.0);
     }
 
     return sum;

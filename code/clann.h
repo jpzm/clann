@@ -45,6 +45,8 @@
 #define CLANN_SWAP(a,b)     {(a) += (b); (b) = (a) - (b); (a) -= (b);}
 #define CLANN_SCALE(v,a,b)  (2 * (((v) - (b)) / ((a) - (b))) - 1)
 
+typedef void clann_void_type;
+typedef void * clann_addr_type;
 typedef unsigned char clann_byte_type;
 typedef unsigned char clann_u8_type;
 typedef unsigned short int clann_u16_type;
@@ -55,25 +57,28 @@ typedef clann_uint_type clann_id_type;
 typedef clann_uint_type clann_size_type;
 typedef enum {false, true} clann_bool_type;
 typedef enum {off, on} clann_key_type;
+typedef size_t clann_size_t_type;
+typedef char * clann_string_type;
+typedef FILE * clann_file_type;
 
 /**
  *
  */
-void
+clann_void_type
 clann_shuffle(clann_int_type *list,
               clann_size_type length);
 
 /**
  *
  */
-void
-clann_initialize(void);
+clann_void_type
+clann_initialize(clann_void_type);
 
 /**
  *
  */
 clann_real_type
-clann_nrand(void);
+clann_nrand(clann_void_type);
 
 /**
  *

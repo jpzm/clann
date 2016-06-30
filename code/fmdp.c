@@ -21,7 +21,7 @@
 #include "fmdp.h"
 
 
-void
+clann_void_type
 fmdp_initialize(struct fmdp *mdp,
                 clann_real_type discount_rate,
                 unsigned int number_of_states,
@@ -31,15 +31,15 @@ fmdp_initialize(struct fmdp *mdp,
     mdp->number_of_states = number_of_states;
     mdp->number_of_actions = number_of_actions;
 
-    matrix_initialize(&mdp->policy,
-                      mdp->number_of_states,
-                      mdp->number_of_actions);
-    matrix_initialize(&mdp->state_value,
-                      mdp->number_of_states,
-                      1);
-    matrix_initialize(&mdp->action_value,
-                      mdp->number_of_states,
-                      mdp->number_of_actions);
+    clann_matrix_initialize(&mdp->policy,
+                            mdp->number_of_states,
+                            mdp->number_of_actions);
+    clann_matrix_initialize(&mdp->state_value,
+                            mdp->number_of_states,
+                            1);
+    clann_matrix_initialize(&mdp->action_value,
+                            mdp->number_of_states,
+                            mdp->number_of_actions);
 
     mdp->states = malloc(sizeof(clann_real_type) * mdp->number_of_states);
     mdp->actions = malloc(sizeof(clann_real_type) * mdp->number_of_actions);

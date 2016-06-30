@@ -20,7 +20,7 @@
 
 #include "kmeans.h"
 
-void
+clann_void_type
 kmeans_initialize(struct kmeans *ann,
                   clann_size_type n_centers,
                   clann_size_type center_size,
@@ -31,25 +31,25 @@ kmeans_initialize(struct kmeans *ann,
     ann->noticeable_change_rate = noticeable_change_rate;
     ann->old_centers = NULL;
 
-    matrix_initialize(&ann->centers, ann->n_centers, ann->center_size);
-    matrix_fill_rand(&ann->centers, -1, 1);
+    clann_matrix_initialize(&ann->centers, ann->n_centers, ann->center_size);
+    clann_matrix_fill_rand(&ann->centers, -1, 1);
 }
 
-void
+clann_void_type
 kmeans_finalize(struct kmeans *ann)
 {
-    matrix_finalize(&ann->centers);
+    clann_matrix_finalize(&ann->centers);
 }
 
-void
+clann_void_type
 kmeans_train(struct kmeans *ann,
-             const struct matrix *x,
+             const clann_matrix_type *x,
              clann_real_type learning_rate)
 {
     clann_size_type s, i, *mess = malloc(sizeof(clann_size_type) * x->rows);
     clann_real_type e, distance, minimun, *sample, *winner = NULL;
 
-    ann->old_centers = matrix_copy_new(&ann->centers);
+    ann->old_centers = clann_matrix_copy_new(&ann->centers);
 
     /*
      * Index vector used to shuffle the input presentation sequence
@@ -68,25 +68,25 @@ kmeans_train(struct kmeans *ann,
 
         for (s = 0; s < x->rows; s++)
         {
-            sample = matrix_value(x, mess[s], 0);
+            sample = clann_matrix_value(x, mess[s], 0);
 
             /*
              * Find the center most closer to current input sample
              */
             minimun = metric_euclidean(sample,
-                                       matrix_value(&ann->centers, 0, 0),
+                                       clann_matrix_value(&ann->centers, 0, 0),
                                        ann->center_size);
-            winner = matrix_value(&ann->centers, 0, 0);
+            winner = clann_matrix_value(&ann->centers, 0, 0);
 
             for (i = 1; i < ann->n_centers; i++)
             {
                 distance = metric_euclidean(sample,
-                                            matrix_value(&ann->centers, i, 0),
+                                            clann_matrix_value(&ann->centers, i, 0),
                                             ann->center_size);
                 if (distance < minimun)
                 {
                     minimun = distance;
-                    winner = matrix_value(&ann->centers, i, 0);
+                    winner = clann_matrix_value(&ann->centers, i, 0);
                 }
             }
 
@@ -102,8 +102,8 @@ kmeans_train(struct kmeans *ann,
          */
         for (i = 0; i < ann->n_centers; i++)
         {
-            e += metric_euclidean(matrix_value(&ann->centers, i, 0),
-                                  matrix_value(ann->old_centers, i, 0),
+            e += metric_euclidean(clann_matrix_value(&ann->centers, i, 0),
+                                  clann_matrix_value(ann->old_centers, i, 0),
                                   ann->center_size);
         }
 
@@ -111,10 +111,10 @@ kmeans_train(struct kmeans *ann,
 #if CLANN_VERBOSE
         printf("N. [KMEANS] Mean centers' update: " CLANN_PRINTF ".\n", e);
 #endif
-        matrix_copy(&ann->centers, ann->old_centers);
+        clann_matrix_copy(&ann->centers, ann->old_centers);
     }
     while (e > ann->noticeable_change_rate);
 
-    free((void *) ann->old_centers);
+    free((clann_void_type *) ann->old_centers);
     ann->old_centers = NULL;
 }

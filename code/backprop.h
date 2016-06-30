@@ -31,7 +31,7 @@
 /**
  * Adjust weights function
  */
-void
+clann_void_type
 backprop_adjust_weights(struct neuron *n,
                         const clann_real_type *y,
                         const clann_real_type *g,
@@ -41,7 +41,7 @@ backprop_adjust_weights(struct neuron *n,
 /**
  *
  */
-void
+clann_void_type
 backprop_learn(struct mlp *ann,
                const clann_real_type *x,
                const clann_real_type *d,
@@ -51,20 +51,20 @@ backprop_learn(struct mlp *ann,
 /**
  *
  */
-void
+clann_void_type
 backprop_learn_epoch(struct mlp *ann,
-                     const struct matrix *x,
-                     const struct matrix *d,
+                     const clann_matrix_type *x,
+                     const clann_matrix_type *d,
                      clann_real_type momentum,
                      clann_real_type learing_rate);
 
 /**
  *
  */
-void
+clann_void_type
 backprop_train(struct mlp *ann,
-               const struct matrix *x,
-               const struct matrix *d,
+               const clann_matrix_type *x,
+               const clann_matrix_type *d,
                clann_real_type momentum,
                clann_real_type learing_rate,
                clann_real_type desired_error,
@@ -73,12 +73,12 @@ backprop_train(struct mlp *ann,
 /**
  *
  */
-void
+clann_void_type
 backprop_train_with_validation(struct mlp *ann,
-                               const struct matrix *tx,
-                               const struct matrix *td,
-                               const struct matrix *vx,
-                               const struct matrix *vd,
+                               const clann_matrix_type *tx,
+                               const clann_matrix_type *td,
+                               const clann_matrix_type *vx,
+                               const clann_matrix_type *vd,
                                clann_real_type momentum,
                                clann_real_type learing_rate,
                                clann_real_type desired_error,
@@ -87,7 +87,7 @@ backprop_train_with_validation(struct mlp *ann,
 /**
  *
  */
-void
+clann_void_type
 backprop_backward_computation(struct mlp *ann,
                               const clann_real_type *x,
                               const clann_real_type *d,
@@ -97,7 +97,7 @@ backprop_backward_computation(struct mlp *ann,
 /**
  *
  */
-void
+clann_void_type
 backprop_compute_gradient(struct mlp *ann,
                           const unsigned int l,
                           const unsigned int j,

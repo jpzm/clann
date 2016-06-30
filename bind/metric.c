@@ -57,8 +57,8 @@ euclidean(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     if (x->cols != y->cols)
     {
@@ -89,7 +89,7 @@ norm(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a);
 
     clann_real_type v = metric_norm(x->values, x->cols);
 
@@ -114,8 +114,8 @@ dot_product(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     if (x->cols != y->cols)
     {
@@ -147,8 +147,8 @@ hausdorff(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff(x, y);
 
@@ -173,8 +173,8 @@ hausdorff_symmetric(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_symmetric(x, y);
 
@@ -200,8 +200,8 @@ hausdorff_limit(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_limit(x, y, limit);
 
@@ -227,8 +227,8 @@ hausdorff_limit_symmetric(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_limit_symmetric(x, y, limit);
 
@@ -253,8 +253,8 @@ hausdorff_mean(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_mean(x, y);
 
@@ -279,8 +279,8 @@ hausdorff_mean_symmetric(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_mean_symmetric(x, y);
 
@@ -306,8 +306,8 @@ hausdorff_angle(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_angle(x, y, limit);
 
@@ -333,8 +333,8 @@ hausdorff_angle_symmetric(PyObject *self, PyObject *args)
     /**
      * Call the function
      */
-    struct matrix *x = PyCObject_AsVoidPtr(a),
-                  *y = PyCObject_AsVoidPtr(b);
+    clann_matrix_type *x = PyCObject_AsVoidPtr(a),
+                      *y = PyCObject_AsVoidPtr(b);
 
     clann_real_type v = metric_hausdorff_angle_symmetric(x, y, limit);
 

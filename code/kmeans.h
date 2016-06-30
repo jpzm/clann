@@ -34,8 +34,8 @@ struct kmeans
 {
     clann_size_type n_centers;
     clann_real_type noticeable_change_rate;
-    struct matrix centers;
-    struct matrix *old_centers;
+    clann_matrix_type centers;
+    clann_matrix_type *old_centers;
     clann_size_type center_size;
 };
 
@@ -43,7 +43,7 @@ struct kmeans
 /**
  * Initialize a K-means structure
  */
-void
+clann_void_type
 kmeans_initialize(struct kmeans *ann,
                   clann_size_type n_centers,
                   clann_size_type center_size,
@@ -52,15 +52,15 @@ kmeans_initialize(struct kmeans *ann,
 /**
  * Finalize a K-means structure
  */
-void
+clann_void_type
 kmeans_finalize(struct kmeans *ann);
 
 /**
  * K-means train function
  */
-void
+clann_void_type
 kmeans_train(struct kmeans *ann,
-             const struct matrix *x,
+             const clann_matrix_type *x,
              clann_real_type learning_rate);
 
 #endif

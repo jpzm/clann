@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifndef KALMAN_H
-#define KALMAN_H
+#ifndef CLANN_KALMAN_H
+#define CLANN_KALMAN_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,58 +33,58 @@
 /**
  * Kalman filter basic structure
  */
-struct kalman
+typedef struct kalman
 {
     clann_size_type n_state;
     clann_size_type n_measure;
     clann_size_type n_control;
 
-    struct matrix state[2];     // state, x
-    struct matrix measure;      // measure, y
-    struct matrix control;      // control (input), u
+    clann_matrix_type state[2];     // state, x
+    clann_matrix_type measure;      // measure, y
+    clann_matrix_type control;      // control (input), u
 
-    struct matrix m_process;    // state transition matrix, A
-    struct matrix m_control;    // control (input) matrix, B
-    struct matrix m_measure;    // measurement matrix, C
-    struct matrix m_gain;       // kalman gain matrix, K
-    struct matrix m_predict[2]; // prediction error covariance matrix, P
+    clann_matrix_type m_process;    // state transition matrix, A
+    clann_matrix_type m_control;    // control (input) matrix, B
+    clann_matrix_type m_measure;    // measurement matrix, C
+    clann_matrix_type m_gain;       // kalman gain matrix, K
+    clann_matrix_type m_predict[2]; // prediction error covariance matrix, P
 
-    struct matrix process_noise_cov;    // process noise covariance, Q
-    struct matrix measure_noise_cov;    // measurement noise covariance, R
-};
+    clann_matrix_type process_noise_cov;    // process noise covariance, Q
+    clann_matrix_type measure_noise_cov;    // measurement noise covariance, R
+} clann_kalman_type;
 
 
 /**
  * Initialize an given kalman structure description
  */
-void
-kalman_initialize(struct kalman *k,
-                  clann_size_type n_state,
-                  clann_size_type n_measure,
-                  clann_size_type n_control);
+clann_void_type
+clann_kalman_initialize(clann_kalman_type *k,
+                        clann_size_type n_state,
+                        clann_size_type n_measure,
+                        clann_size_type n_control);
 
 /**
  * Finalize an given kalman structure description
  */
-void
-kalman_finalize(struct kalman *k);
+clann_void_type
+clann_kalman_finalize(clann_kalman_type *k);
 
 /**
  * 
  */
-void
-kalman_default(struct kalman *k);
+clann_void_type
+clann_kalman_default(clann_kalman_type *k);
 
 /**
  * 
  */
-void
-kalman_predict(struct kalman *k);
+clann_void_type
+clann_kalman_predict(clann_kalman_type *k);
 
 /**
  * 
  */
-void
-kalman_correct(struct kalman *k);
+clann_void_type
+clann_kalman_correct(clann_kalman_type *k);
 
 #endif

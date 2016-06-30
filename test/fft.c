@@ -21,19 +21,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../code/clann.h"
-#include "../code/reader.h"
+#include "../code/io.h"
 #include "../code/statistic.h"
 #include "../code/fft.h"
 
 int main(int argc, char** argv)
 {
-    struct matrix x;
+    clann_matrix_type x;
     unsigned int i;
     clann_real_type mean;
 
     clann_initialize();
 
-    reader_read_data_file(argv[1], &x);
+    clann_io_read_data_file(argv[1], &x);
 
     mean = statistic_mean_matrix_col(&x, 0);
 
@@ -42,10 +42,10 @@ int main(int argc, char** argv)
 
     for (i = 0; i < x.rows; i++)
     {
-        cx[i] = *matrix_value(&x, i, 0) - mean;
+        cx[i] = *clann_matrix_value(&x, i, 0) - mean;
 
         if (x.cols > 1)
-            cx[i] += *matrix_value(&x, i, 1) * I;
+            cx[i] += *clann_matrix_value(&x, i, 1) * I;
     }
 
     fft(&cx, &n, FFT_FORWARD);
@@ -54,7 +54,7 @@ int main(int argc, char** argv)
         printf("%f %fi\n", creal(cx[i]), cimag(cx[i]));
 
     free(cx);
-    matrix_finalize(&x);
+    clann_matrix_finalize(&x);
 
     return 0;
 }

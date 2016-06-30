@@ -31,7 +31,7 @@ dprog_state_value_function(struct fmdp *mdp,
     for (i = 0; i < mdp->number_of_actions; i++)
     {
         d = dprog_deterministic_state_value_function(mdp, state, i);
-        v += *matrix_value(&mdp->policy, state, i) * d;
+        v += *clann_matrix_value(&mdp->policy, state, i) * d;
     }
 
     return v;
@@ -62,7 +62,7 @@ dprog_deterministic_state_value_function(struct fmdp *mdp,
     return sum;
 }
 
-void
+clann_void_type
 dprog_policy_iteration(struct fmdp *mdp,
                        clann_real_type limit,
                        unsigned int max_epochs)
@@ -109,7 +109,7 @@ dprog_policy_iteration(struct fmdp *mdp,
 
             for (j = 0; j < mdp->number_of_actions; j++)
             {
-                policy_change[j] = *matrix_value(&mdp->policy, i, j);
+                policy_change[j] = *clann_matrix_value(&mdp->policy, i, j);
                 q[j] = dprog_deterministic_state_value_function(mdp, i, j);
 
                 if (q[j] >= max)
@@ -122,18 +122,18 @@ dprog_policy_iteration(struct fmdp *mdp,
             for (j = 0; j < mdp->number_of_actions; j++)
             {
                 if (q[j] == max)
-                    *matrix_value(&mdp->policy, i, j) = 1 / c;
+                    *clann_matrix_value(&mdp->policy, i, j) = 1 / c;
                 else
-                    *matrix_value(&mdp->policy, i, j) = 0;
+                    *clann_matrix_value(&mdp->policy, i, j) = 0;
 
-                if (policy_change[j] != *matrix_value(&mdp->policy, i, j))
+                if (policy_change[j] != *clann_matrix_value(&mdp->policy, i, j))
                     policy_stable = 0;
             }
         }
     }
 }
 
-void
+clann_void_type
 dprog_value_iteration(struct fmdp *mdp,
                       clann_real_type limit,
                       unsigned int max_epochs)
