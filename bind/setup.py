@@ -33,10 +33,10 @@ metric_module = Extension('metric',
                           extra_compile_args = ['-Wall', '-ggdb'],
                           sources = ['metric.c'])
 
-setup (name = 'clann',
-       version = '0.1',
-       author='Joao Medeiros',
-       author_email='joaomedeiros@dca.ufrn.br',
-       description = 'This is the CLANN package',
-       ext_modules = [matrix_module,
-                      metric_module])
+setup(name = 'clann',
+      version = '0.1',
+      author='Joao Medeiros',
+      author_email='jpsm1985@gmail.com',
+      description = 'This is the CLANN package',
+      ext_modules = [matrix_module,
+                     metric_module])
