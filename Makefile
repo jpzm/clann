@@ -41,13 +41,12 @@ all:
 		../code/function.o \
 		../code/clann.o \
 		../code/io.o -lm
-	cd test; cc -Wall som.c -lm -lpthread -lGL -lglut -o som \
+	cd test; cc -Wall som.c -lpthread -lGL -lglut -o som \
 		../code/clann.o \
 		../code/som.o \
 		../code/matrix.o \
 		../code/metric.o \
-		../code/io.o
-	cd bind; python2 setup.py build_ext -f -b clann
+		../code/io.o -lm
 
 clean:
 	cd code; rm -rf *.o
@@ -59,6 +58,4 @@ clean:
 		svm \
 		som \
 		kalman
-	cd bind; rm -rf clann/*.so clann/*.pyc \
-		rm -rf build/
 
