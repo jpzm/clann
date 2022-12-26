@@ -41,7 +41,13 @@ all:
 		../code/function.o \
 		../code/clann.o \
 		../code/io.o -lm
-	cd test; cc -Wall som.c -lpthread -lGL -lglut -o som \
+	cd test; cc -Wall somcg.c -lpthread -lGL -lglut -o somcg \
+		../code/clann.o \
+		../code/som.o \
+		../code/matrix.o \
+		../code/metric.o \
+		../code/io.o -lm
+	cd test; cc -Wall som.c -o som \
 		../code/clann.o \
 		../code/som.o \
 		../code/matrix.o \
@@ -56,6 +62,7 @@ clean:
 		matrix \
 		rbf \
 		svm \
+		somcg \
 		som \
 		kalman
 
