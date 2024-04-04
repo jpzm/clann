@@ -53,6 +53,14 @@ all:
 		../code/matrix.o \
 		../code/metric.o \
 		../code/io.o -lm
+	cd test; cc -Wall mlp.c -o mlp \
+		../code/mlp.o \
+		../code/matrix.o \
+		../code/neuron.o \
+		../code/clann.o \
+		../code/function.o \
+		../code/backprop.o \
+		../code/io.o -lm
 
 clean:
 	cd code; rm -rf *.o
